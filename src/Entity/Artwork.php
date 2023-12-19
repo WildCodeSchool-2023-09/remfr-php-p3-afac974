@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ArtworkRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArtworkRepository::class)]
@@ -15,30 +16,43 @@ class Artwork
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Reference = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $title = null;
 
     #[ORM\Column]
-    private ?int $Height = null;
+    private ?int $height = null;
 
     #[ORM\Column]
-    private ?int $Width = null;
+    private ?int $width = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $reference = null;
 
     #[ORM\Column]
-    private ?bool $Unique_or_not = null;
+    private ?bool $isUnique = null;
 
     #[ORM\Column]
-    private ?bool $Sign_or_not = null;
+    private ?bool $isSigned = null;
 
-    #[ORM\OneToMany(mappedBy: 'Link_Artwork_Favorites', targetEntity: Favorites::class)]
-    private Collection $Link_Artwork_Comments;
+    #[ORM\ManyToOne(inversedBy: 'artwork_Id')]
+    private ?Artist $artist_Id = null;
+
+    #[ORM\OneToMany(mappedBy: 'artwork_Id', targetEntity: Favorite::class)]
+    private Collection $favorite_Id;
+
+    #[ORM\OneToMany(mappedBy: 'artwork_Id', targetEntity: Comment::class)]
+    private Collection $comment_Id;
+
+    #[ORM\ManyToOne(inversedBy: 'artwork_Id')]
+    private ?Type $type_Id = null;
 
     public function __construct()
     {
-        $this->Link_Artwork_Comments = new ArrayCollection();
+        $this->favorite_Id = new ArrayCollection();
+        $this->comment_Id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,104 +60,170 @@ class Artwork
         return $this->id;
     }
 
-    public function getReference(): ?string
+    public function getDescription(): ?string
     {
-        return $this->Reference;
+        return $this->description;
     }
 
-    public function setReference(string $Reference): static
+    public function setDescription(string $description): static
     {
-        $this->Reference = $Reference;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->Name;
+        return $this->title;
     }
 
-    public function setName(string $Name): static
+    public function setTitle(string $title): static
     {
-        $this->Name = $Name;
+        $this->title = $title;
 
         return $this;
     }
 
     public function getHeight(): ?int
     {
-        return $this->Height;
+        return $this->height;
     }
 
-    public function setHeight(int $Height): static
+    public function setHeight(int $height): static
     {
-        $this->Height = $Height;
+        $this->height = $height;
 
         return $this;
     }
 
     public function getWidth(): ?int
     {
-        return $this->Width;
+        return $this->width;
     }
 
-    public function setWidth(int $Width): static
+    public function setWidth(int $width): static
     {
-        $this->Width = $Width;
+        $this->width = $width;
 
         return $this;
     }
 
-    public function isUniqueOrNot(): ?bool
+    public function getReference(): ?string
     {
-        return $this->Unique_or_not;
+        return $this->reference;
     }
 
-    public function setUniqueOrNot(bool $Unique_or_not): static
+    public function setReference(string $reference): static
     {
-        $this->Unique_or_not = $Unique_or_not;
+        $this->reference = $reference;
 
         return $this;
     }
 
-    public function isSignOrNot(): ?bool
+    public function isIsUnique(): ?bool
     {
-        return $this->Sign_or_not;
+        return $this->isUnique;
     }
 
-    public function setSignOrNot(bool $Sign_or_not): static
+    public function setIsUnique(bool $isUnique): static
     {
-        $this->Sign_or_not = $Sign_or_not;
+        $this->isUnique = $isUnique;
+
+        return $this;
+    }
+
+    public function isIsSigned(): ?bool
+    {
+        return $this->isSigned;
+    }
+
+    public function setIsSigned(bool $isSigned): static
+    {
+        $this->isSigned = $isSigned;
+
+        return $this;
+    }
+
+    public function getArtistId(): ?Artist
+    {
+        return $this->artist_Id;
+    }
+
+    public function setArtistId(?Artist $artist_Id): static
+    {
+        $this->artist_Id = $artist_Id;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Favorites>
+     * @return Collection<int, Favorite>
      */
-    public function getLinkArtworkComments(): Collection
+    public function getFavoriteId(): Collection
     {
-        return $this->Link_Artwork_Comments;
+        return $this->favorite_Id;
     }
 
-    public function addLinkArtworkComment(Favorites $linkArtworkComment): static
+    public function addFavoriteId(Favorite $favoriteId): static
     {
-        if (!$this->Link_Artwork_Comments->contains($linkArtworkComment)) {
-            $this->Link_Artwork_Comments->add($linkArtworkComment);
-            $linkArtworkComment->setLinkArtworkFavorites($this);
+        if (!$this->favorite_Id->contains($favoriteId)) {
+            $this->favorite_Id->add($favoriteId);
+            $favoriteId->setArtworkId($this);
         }
 
         return $this;
     }
 
-    public function removeLinkArtworkComment(Favorites $linkArtworkComment): static
+    public function removeFavoriteId(Favorite $favoriteId): static
     {
-        if ($this->Link_Artwork_Comments->removeElement($linkArtworkComment)) {
+        if ($this->favorite_Id->removeElement($favoriteId)) {
             // set the owning side to null (unless already changed)
-            if ($linkArtworkComment->getLinkArtworkFavorites() === $this) {
-                $linkArtworkComment->setLinkArtworkFavorites(null);
+            if ($favoriteId->getArtworkId() === $this) {
+                $favoriteId->setArtworkId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getCommentId(): Collection
+    {
+        return $this->comment_Id;
+    }
+
+    public function addCommentId(Comment $commentId): static
+    {
+        if (!$this->comment_Id->contains($commentId)) {
+            $this->comment_Id->add($commentId);
+            $commentId->setArtworkId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentId(Comment $commentId): static
+    {
+        if ($this->comment_Id->removeElement($commentId)) {
+            // set the owning side to null (unless already changed)
+            if ($commentId->getArtworkId() === $this) {
+                $commentId->setArtworkId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTypeId(): ?Type
+    {
+        return $this->type_Id;
+    }
+
+    public function setTypeId(?Type $type_Id): static
+    {
+        $this->type_Id = $type_Id;
 
         return $this;
     }

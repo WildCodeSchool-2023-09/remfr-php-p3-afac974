@@ -3,10 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ArtistRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
+#[Vich\Uploadable]
 class Artist
 {
     #[ORM\Id]
@@ -15,16 +20,22 @@ class Artist
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Description = null;
-
-    #[ORM\Column]
-    private ?int $Immatriculation = null;
+    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Photo = null;
+    private ?string $photoName = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Users $Link_Users_Artist = null;
+    private ?User $userId = null;
+    private ?File $artistPhoto = null;
+
+    #[ORM\OneToMany(mappedBy: 'artist_Id', targetEntity: Artwork::class)]
+    private Collection $artwork_Id;
+
+    public function __construct()
+    {
+        $this->artwork_Id = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -33,48 +44,77 @@ class Artist
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): static
+    public function setDescription(string $description): static
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getImmatriculation(): ?int
+    public function getPhotoName(): ?string
     {
-        return $this->Immatriculation;
+        return $this->photoName;
     }
 
-    public function setImmatriculation(int $Immatriculation): static
+    public function setPhotoName(string $photoName): static
     {
-        $this->Immatriculation = $Immatriculation;
+        $this->photoName = $photoName;
+
+        return $this;
+    }
+    #[Vich\UploadableField(mapping: 'artistPhoto', fileNameProperty: 'artistPhoto')]
+    public function getArtistPhoto(): ?string
+    {
+        return $this->photoName;
+    }
+
+    public function setArtistPhoto(string $photoName): static
+    {
+        $this->photoName = $photoName;
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): static
+    {
+        $this->userId = $userId;
 
         return $this;
     }
 
-    public function getPhoto(): ?string
+    /**
+     * @return Collection<int, Artwork>
+     */
+    public function getArtworkId(): Collection
     {
-        return $this->Photo;
+        return $this->artwork_Id;
     }
 
-    public function setPhoto(string $Photo): static
+    public function addArtworkId(Artwork $artworkId): static
     {
-        $this->Photo = $Photo;
+        if (!$this->artwork_Id->contains($artworkId)) {
+            $this->artwork_Id->add($artworkId);
+            $artworkId->setArtistId($this);
+        }
 
         return $this;
     }
 
-    public function getLinkUsersArtist(): ?Users
+    public function removeArtworkId(Artwork $artworkId): static
     {
-        return $this->Link_Users_Artist;
-    }
-
-    public function setLinkUsersArtist(?Users $Link_Users_Artist): static
-    {
-        $this->Link_Users_Artist = $Link_Users_Artist;
+        if ($this->artwork_Id->removeElement($artworkId)) {
+            // set the owning side to null (unless already changed)
+            if ($artworkId->getArtistId() === $this) {
+                $artworkId->setArtistId(null);
+            }
+        }
 
         return $this;
     }

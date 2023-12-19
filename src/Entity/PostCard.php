@@ -2,48 +2,67 @@
 
 namespace App\Entity;
 
-use App\Repository\PostCardRepository;
+use App\Repository\PostcardRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PostCardRepository::class)]
-class PostCard
+#[ORM\Entity(repositoryClass: PostcardRepository::class)]
+class Postcard
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
-    private ?Artwork $Link_Artwork_PostCard = null;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'postcards_Id')]
+    private Collection $user_Id;
 
-    #[ORM\ManyToOne]
-    private ?Users $Link_Users_PostCard = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Artwork $Artwork_Id = null;
+
+    public function __construct()
+    {
+        $this->user_Id = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLinkArtworkPostCard(): ?Artwork
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserId(): Collection
     {
-        return $this->Link_Artwork_PostCard;
+        return $this->user_Id;
     }
 
-    public function setLinkArtworkPostCard(?Artwork $Link_Artwork_PostCard): static
+    public function addUserId(User $userId): static
     {
-        $this->Link_Artwork_PostCard = $Link_Artwork_PostCard;
+        if (!$this->user_Id->contains($userId)) {
+            $this->user_Id->add($userId);
+        }
 
         return $this;
     }
 
-    public function getLinkUsersPostCard(): ?Users
+    public function removeUserId(User $userId): static
     {
-        return $this->Link_Users_PostCard;
+        $this->user_Id->removeElement($userId);
+
+        return $this;
     }
 
-    public function setLinkUsersPostCard(?Users $Link_Users_PostCard): static
+    public function getArtworkId(): ?Artwork
     {
-        $this->Link_Users_PostCard = $Link_Users_PostCard;
+        return $this->Artwork_Id;
+    }
+
+    public function setArtworkId(?Artwork $Artwork_Id): static
+    {
+        $this->Artwork_Id = $Artwork_Id;
 
         return $this;
     }

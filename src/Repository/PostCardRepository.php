@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\PostCard;
+use App\Entity\Postcard;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PostCard>
+ * @extends ServiceEntityRepository<Postcard>
  *
- * @method PostCard|null find($id, $lockMode = null, $lockVersion = null)
- * @method PostCard|null findOneBy(array $criteria, array $orderBy = null)
- * @method PostCard[]    findAll()
- * @method PostCard[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Postcard|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Postcard|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Postcard[]    findAll()
+ * @method Postcard[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostCardRepository extends ServiceEntityRepository
+class PostcardRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PostCard::class);
+        parent::__construct($registry, Postcard::class);
     }
 
 //    /**
-//     * @return PostCard[] Returns an array of PostCard objects
+//     * @return Postcard[] Returns an array of Postcard objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class PostCardRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?PostCard
+//    public function findOneBySomeField($value): ?Postcard
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
