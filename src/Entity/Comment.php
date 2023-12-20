@@ -18,7 +18,7 @@ class Comment
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?Users $Users = null;
+    private ?Users $users = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Artwork $artwork = null;
@@ -45,9 +45,9 @@ class Comment
         return $this->Users;
     }
 
-    public function setUsers(?Users $Users): static
+    public function setUsers(?Users $users): static
     {
-        $this->Users = $Users;
+        $this->Users = $users;
 
         return $this;
     }
