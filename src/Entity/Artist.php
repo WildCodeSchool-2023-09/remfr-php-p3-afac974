@@ -152,7 +152,7 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setUser(?Users $user): static
     {
-        $this->User = $User;
+        $this->User = $user;
 
         return $this;
     }
