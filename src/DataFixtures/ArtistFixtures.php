@@ -7,8 +7,6 @@ use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-;
-
 class ArtistFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
