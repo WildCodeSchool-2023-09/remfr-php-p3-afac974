@@ -23,7 +23,7 @@ class Favorite
 
     public function __construct()
     {
-        $this->Users = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
