@@ -14,7 +14,7 @@ class Postcard
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'postcards')]
-    private ?Users $Users = null;
+    private ?Users $users = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Artwork $artwork = null;
@@ -26,12 +26,12 @@ class Postcard
 
     public function getUsers(): ?Users
     {
-        return $this->Users;
+        return $this->users;
     }
 
-    public function setUsers(?Users $Users): static
+    public function setUsers(?Users $users): static
     {
-        $this->Users = $Users;
+        $this->users = $users;
 
         return $this;
     }

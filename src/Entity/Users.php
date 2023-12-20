@@ -41,7 +41,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Postcard::class)]
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Postcard::class)]
     private Collection $postcards;
 
     public function __construct()
