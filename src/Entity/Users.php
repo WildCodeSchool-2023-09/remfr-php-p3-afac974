@@ -41,14 +41,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Postcard::class)]
-    private Collection $postcards;
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: PostCard::class)]
+    private Collection $postCards;
 
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->postcards = new ArrayCollection();
+        $this->postCards = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,32 +203,33 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Postcard>
+     * @return Collection<int, PostCard>
      */
-    public function getPostcards(): Collection
+    public function getPostCards(): Collection
     {
-        return $this->postcards;
+        return $this->postCards;
     }
 
-    public function addPostcard(Postcard $postcard): static
+    public function addPostCard(PostCard $postCard): static
     {
-        if (!$this->postcards->contains($postcard)) {
-            $this->postcards->add($postcard);
-            $postcard->setUsers($this);
+        if (!$this->postCards->contains($postCard)) {
+            $this->postCards->add($postCard);
+            $postCard->setUsers($this);
         }
 
         return $this;
     }
 
-    public function removePostcard(Postcard $postcard): static
+    public function removePostCard(PostCard $postCard): static
     {
-        if ($this->postcards->removeElement($postcard)) {
+        if ($this->postCards->removeElement($postCard)) {
             // set the owning side to null (unless already changed)
-            if ($postcard->getUsers() === $this) {
-                $postcard->setUsers(null);
+            if ($postCard->getUsers() === $this) {
+                $postCard->setUsers(null);
             }
         }
 
         return $this;
     }
+
 }

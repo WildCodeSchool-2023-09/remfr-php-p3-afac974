@@ -6,7 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 ;
 
-class PostcardFixtures extends Fixture
+class PostCardFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {

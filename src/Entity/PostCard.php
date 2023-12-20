@@ -2,18 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\PostcardRepository;
+use App\Repository\PostCardRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PostcardRepository::class)]
-class Postcard
+#[ORM\Entity(repositoryClass: PostCardRepository::class)]
+class PostCard
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'postcards')]
+    #[ORM\ManyToOne(inversedBy: 'postCards')]
     private ?Users $users = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
