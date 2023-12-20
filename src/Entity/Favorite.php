@@ -36,13 +36,13 @@ class Favorite
      */
     public function getUsers(): Collection
     {
-        return $this->Users;
+        return $this->users;
     }
 
     public function addUser(Users $user): static
     {
-        if (!$this->Users->contains($user)) {
-            $this->Users->add($user);
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
         }
 
         return $this;
@@ -50,7 +50,7 @@ class Favorite
 
     public function removeUser(Users $user): static
     {
-        $this->Users->removeElement($user);
+        $this->users->removeElement($user);
 
         return $this;
     }
