@@ -1,0 +1,42 @@
+.gradient-navbar-ab{    
+     background: linear-gradient(90deg, #2885AA 0%, #730F46 100%); 
+} 
+
+.navbar-border{    
+     border:none !important; 
+}  
+
+.navbar-border:link{    
+     color: transparent; 
+}
+
+.navbar-toggler:focus{
+     box-shadow: none !important;
+}
+
+.list-group{
+    flex-direction: row !important;
+    justify-content: space-between;
+}
+
+.list-group li{
+    list-style: none ;
+    color: #fff;
+    font-size: 2.1rem;
+    padding: 1rem 2rem;
+}
+.list-group li:hover{
+     text-decoration: underline;
+     text-decoration-color: #fff;
+}
+.container-navbar img{
+    padding: 0 2rem;
+}
+
+.diamant-navbar-translate{
+     transition: transform 1s;
+}
+
+.diamant-navbar-translate:hover{
+     transform:rotate(90deg);
+}
