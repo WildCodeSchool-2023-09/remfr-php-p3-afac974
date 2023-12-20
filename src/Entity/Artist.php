@@ -37,7 +37,7 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photoName = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Users $User = null;
+    private ?Users $user = null;
 
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: News::class)]
     private Collection $news;
@@ -150,7 +150,7 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->User;
     }
 
-    public function setUser(?Users $User): static
+    public function setUser(?Users $user): static
     {
         $this->User = $User;
 
