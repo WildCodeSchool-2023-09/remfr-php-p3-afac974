@@ -16,7 +16,7 @@ class Favorite
     private ?int $id = null;
 
     #[ORM\ManyToMany(targetEntity: Users::class, inversedBy: 'favorites')]
-    private Collection $Users;
+    private Collection $users;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Artwork $artwork = null;
