@@ -10,7 +10,6 @@ class AdminFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $admin = new Admin();
         // $product = new Product();
         // $manager->persist($product);
 
