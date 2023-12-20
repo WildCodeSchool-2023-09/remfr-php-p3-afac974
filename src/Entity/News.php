@@ -5,9 +5,7 @@ namespace App\Entity;
 use App\Repository\NewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-#[Vich\Uploadable]
+
 #[ORM\Entity(repositoryClass: NewsRepository::class)]
 class News
 {
@@ -20,17 +18,15 @@ class News
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $desciption = null;
+    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $newsImageName = null;
-    #[Vich\UploadableField(mapping: 'news', fileNameProperty: 'news')]
-    private ?string $newsImagePhoto = null;
+    private ?string $photoNews = null;
 
-    #[ORM\ManyToOne]
-    private ?Artist $artistId = null;
+    #[ORM\ManyToOne(inversedBy: 'news')]
+    private ?Artist $artist = null;
 
-    #[ORM\ManyToOne(inversedBy: 'news_Id')]
+    #[ORM\ManyToOne(inversedBy: 'news')]
     private ?Newsletter $newsletter = null;
 
     public function getId(): ?int
@@ -50,49 +46,38 @@ class News
         return $this;
     }
 
-    public function getDesciption(): ?string
+    public function getDescription(): ?string
     {
-        return $this->desciption;
+        return $this->description;
     }
 
-    public function setDesciption(string $desciption): static
+    public function setDescription(string $description): static
     {
-        $this->desciption = $desciption;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getNewsImageName(): ?string
+    public function getPhotoNews(): ?string
     {
-        return $this->newsImageName;
+        return $this->photoNews;
     }
 
-    public function setNewsImageName(string $newsImageName): static
+    public function setPhotoNews(string $photoNews): static
     {
-        $this->newsImageName = $newsImageName;
-
-        return $this;
-    }
-    public function getNewsImagePhoto(): ?string
-    {
-        return $this->newsImagePhoto;
-    }
-
-    public function setNewsImagePhoto(string $newsImagePhoto): static
-    {
-        $this->newsImagePhoto = $newsImagePhoto;
+        $this->photoNews = $photoNews;
 
         return $this;
     }
 
-    public function getArtistId(): ?Artist
+    public function getArtist(): ?Artist
     {
-        return $this->artistId;
+        return $this->artist;
     }
 
-    public function setArtistId(?Artist $artistId): static
+    public function setArtist(?Artist $artist): static
     {
-        $this->artistId = $artistId;
+        $this->artist = $artist;
 
         return $this;
     }

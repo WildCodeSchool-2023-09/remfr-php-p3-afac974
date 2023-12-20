@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FavoriteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FavoriteRepository::class)]
@@ -13,37 +15,54 @@ class Favorite
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
-    private ?User $user_Id = null;
+    #[ORM\ManyToMany(targetEntity: Users::class, inversedBy: 'favorites')]
+    private Collection $Users;
 
-    #[ORM\ManyToOne(inversedBy: 'favorite_Id')]
-    private ?Artwork $artwork_Id = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Artwork $artwork = null;
+
+    public function __construct()
+    {
+        $this->Users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    /**
+     * @return Collection<int, Users>
+     */
+    public function getUsers(): Collection
     {
-        return $this->user_Id;
+        return $this->Users;
     }
 
-    public function setUserId(?User $user_Id): static
+    public function addUser(Users $user): static
     {
-        $this->user_Id = $user_Id;
+        if (!$this->Users->contains($user)) {
+            $this->Users->add($user);
+        }
 
         return $this;
     }
 
-    public function getArtworkId(): ?Artwork
+    public function removeUser(Users $user): static
     {
-        return $this->artwork_Id;
+        $this->Users->removeElement($user);
+
+        return $this;
     }
 
-    public function setArtworkId(?Artwork $artwork_Id): static
+    public function getArtwork(): ?Artwork
     {
-        $this->artwork_Id = $artwork_Id;
+        return $this->artwork;
+    }
+
+    public function setArtwork(?Artwork $artwork): static
+    {
+        $this->artwork = $artwork;
 
         return $this;
     }

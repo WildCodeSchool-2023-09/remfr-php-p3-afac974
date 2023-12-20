@@ -18,15 +18,15 @@ class Type
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'type_Id', targetEntity: Artwork::class)]
-    private Collection $artwork_Id;
+    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Technic::class)]
+    private Collection $technics;
 
-    #[ORM\OneToOne(mappedBy: 'type_Id', cascade: ['persist', 'remove'])]
-    private ?Technic $technic_Id = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Artwork $artwork = null;
 
     public function __construct()
     {
-        $this->artwork_Id = new ArrayCollection();
+        $this->technics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,53 +47,43 @@ class Type
     }
 
     /**
-     * @return Collection<int, Artwork>
+     * @return Collection<int, Technic>
      */
-    public function getArtworkId(): Collection
+    public function getTechnics(): Collection
     {
-        return $this->artwork_Id;
+        return $this->technics;
     }
 
-    public function addArtworkId(Artwork $artworkId): static
+    public function addTechnic(Technic $technic): static
     {
-        if (!$this->artwork_Id->contains($artworkId)) {
-            $this->artwork_Id->add($artworkId);
-            $artworkId->setTypeId($this);
+        if (!$this->technics->contains($technic)) {
+            $this->technics->add($technic);
+            $technic->setType($this);
         }
 
         return $this;
     }
 
-    public function removeArtworkId(Artwork $artworkId): static
+    public function removeTechnic(Technic $technic): static
     {
-        if ($this->artwork_Id->removeElement($artworkId)) {
+        if ($this->technics->removeElement($technic)) {
             // set the owning side to null (unless already changed)
-            if ($artworkId->getTypeId() === $this) {
-                $artworkId->setTypeId(null);
+            if ($technic->getType() === $this) {
+                $technic->setType(null);
             }
         }
 
         return $this;
     }
 
-    public function getTechnicId(): ?Technic
+    public function getArtwork(): ?Artwork
     {
-        return $this->technic_Id;
+        return $this->artwork;
     }
 
-    public function setTechnicId(?Technic $technic_Id): static
+    public function setArtwork(?Artwork $artwork): static
     {
-        // unset the owning side of the relation if necessary
-        if ($technic_Id === null && $this->technic_Id !== null) {
-            $this->technic_Id->setTypeId(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($technic_Id !== null && $technic_Id->getTypeId() !== $this) {
-            $technic_Id->setTypeId($this);
-        }
-
-        $this->technic_Id = $technic_Id;
+        $this->artwork = $artwork;
 
         return $this;
     }

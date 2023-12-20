@@ -20,11 +20,11 @@ class Newsletter
     private ?string $content = null;
 
     #[ORM\OneToMany(mappedBy: 'newsletter', targetEntity: News::class)]
-    private Collection $news_Id;
+    private Collection $news;
 
     public function __construct()
     {
-        $this->news_Id = new ArrayCollection();
+        $this->news = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,27 +47,27 @@ class Newsletter
     /**
      * @return Collection<int, News>
      */
-    public function getNewsId(): Collection
+    public function getNews(): Collection
     {
-        return $this->news_Id;
+        return $this->news;
     }
 
-    public function addNewsId(News $newsId): static
+    public function addNews(News $news): static
     {
-        if (!$this->news_Id->contains($newsId)) {
-            $this->news_Id->add($newsId);
-            $newsId->setNewsletter($this);
+        if (!$this->news->contains($news)) {
+            $this->news->add($news);
+            $news->setNewsletter($this);
         }
 
         return $this;
     }
 
-    public function removeNewsId(News $newsId): static
+    public function removeNews(News $news): static
     {
-        if ($this->news_Id->removeElement($newsId)) {
+        if ($this->news->removeElement($news)) {
             // set the owning side to null (unless already changed)
-            if ($newsId->getNewsletter() === $this) {
-                $newsId->setNewsletter(null);
+            if ($news->getNewsletter() === $this) {
+                $news->setNewsletter(null);
             }
         }
 

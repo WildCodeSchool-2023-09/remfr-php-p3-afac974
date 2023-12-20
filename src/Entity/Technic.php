@@ -16,8 +16,8 @@ class Technic
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToOne(inversedBy: 'technic_Id', cascade: ['persist', 'remove'])]
-    private ?Type $type_Id = null;
+    #[ORM\ManyToOne(inversedBy: 'technics')]
+    private ?Type $type = null;
 
     public function getId(): ?int
     {
@@ -36,14 +36,14 @@ class Technic
         return $this;
     }
 
-    public function getTypeId(): ?Type
+    public function getType(): ?Type
     {
-        return $this->type_Id;
+        return $this->type;
     }
 
-    public function setTypeId(?Type $type_Id): static
+    public function setType(?Type $type): static
     {
-        $this->type_Id = $type_Id;
+        $this->type = $type;
 
         return $this;
     }

@@ -15,51 +15,51 @@ class Comment
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Comments = null;
+    private ?string $content = null;
 
-    #[ORM\ManyToOne]
-    private ?User $user_Id = null;
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Users $Users = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comment_Id')]
-    private ?Artwork $artwork_Id = null;
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Artwork $artwork = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getComments(): ?string
+    public function getContent(): ?string
     {
-        return $this->Comments;
+        return $this->content;
     }
 
-    public function setComments(string $Comments): static
+    public function setContent(string $content): static
     {
-        $this->Comments = $Comments;
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUsers(): ?Users
     {
-        return $this->user_Id;
+        return $this->Users;
     }
 
-    public function setUserId(?User $user_Id): static
+    public function setUsers(?Users $Users): static
     {
-        $this->user_Id = $user_Id;
+        $this->Users = $Users;
 
         return $this;
     }
 
-    public function getArtworkId(): ?Artwork
+    public function getArtwork(): ?Artwork
     {
-        return $this->artwork_Id;
+        return $this->artwork;
     }
 
-    public function setArtworkId(?Artwork $artwork_Id): static
+    public function setArtwork(?Artwork $artwork): static
     {
-        $this->artwork_Id = $artwork_Id;
+        $this->artwork = $artwork;
 
         return $this;
     }

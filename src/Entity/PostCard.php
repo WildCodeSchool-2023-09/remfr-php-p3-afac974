@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PostcardRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostcardRepository::class)]
@@ -15,54 +13,37 @@ class Postcard
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'postcards_Id')]
-    private Collection $user_Id;
+    #[ORM\ManyToOne(inversedBy: 'postcards')]
+    private ?Users $Users = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Artwork $Artwork_Id = null;
-
-    public function __construct()
-    {
-        $this->user_Id = new ArrayCollection();
-    }
+    private ?Artwork $artwork = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
+    public function getUsers(): ?Users
     {
-        return $this->user_Id;
+        return $this->Users;
     }
 
-    public function addUserId(User $userId): static
+    public function setUsers(?Users $Users): static
     {
-        if (!$this->user_Id->contains($userId)) {
-            $this->user_Id->add($userId);
-        }
+        $this->Users = $Users;
 
         return $this;
     }
 
-    public function removeUserId(User $userId): static
+    public function getArtwork(): ?Artwork
     {
-        $this->user_Id->removeElement($userId);
-
-        return $this;
+        return $this->artwork;
     }
 
-    public function getArtworkId(): ?Artwork
+    public function setArtwork(?Artwork $artwork): static
     {
-        return $this->Artwork_Id;
-    }
-
-    public function setArtworkId(?Artwork $Artwork_Id): static
-    {
-        $this->Artwork_Id = $Artwork_Id;
+        $this->artwork = $artwork;
 
         return $this;
     }
