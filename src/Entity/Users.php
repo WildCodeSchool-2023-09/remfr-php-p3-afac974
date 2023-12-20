@@ -41,14 +41,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'users', targetEntity: PostCard::class)]
-    private Collection $postCards;
-
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->postCards = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,35 +197,4 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, PostCard>
-     */
-    public function getPostCards(): Collection
-    {
-        return $this->postCards;
-    }
-
-    public function addPostCard(PostCard $postCard): static
-    {
-        if (!$this->postCards->contains($postCard)) {
-            $this->postCards->add($postCard);
-            $postCard->setUsers($this);
-        }
-
-        return $this;
-    }
-
-    public function removePostCard(PostCard $postCard): static
-    {
-        if ($this->postCards->removeElement($postCard)) {
-            // set the owning side to null (unless already changed)
-            if ($postCard->getUsers() === $this) {
-                $postCard->setUsers(null);
-            }
-        }
-
-        return $this;
-    }
-
 }
