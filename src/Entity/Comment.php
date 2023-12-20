@@ -42,12 +42,12 @@ class Comment
 
     public function getUsers(): ?Users
     {
-        return $this->Users;
+        return $this->users;
     }
 
     public function setUsers(?Users $users): static
     {
-        $this->Users = $users;
+        $this->users = $users;
 
         return $this;
     }
