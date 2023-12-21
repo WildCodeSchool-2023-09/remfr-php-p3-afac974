@@ -21,4 +21,9 @@ class HomeController extends AbstractController
     {
         return $this->render('home/aboutUs.html.twig');
     }
+    #[Route('/gallery', name: 'gallery')]
+    public function showGallery(): Response
+    {
+        return $this->render('home/gallery.html.twig');
+    }
 }
