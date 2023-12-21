@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UsersRepository::class)]
-class Users implements UserInterface, PasswordAuthenticatedUserInterface
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,15 +35,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\ManyToMany(targetEntity: Favorite::class, mappedBy: 'Users')]
-    private Collection $favorites;
-
-    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Comment::class)]
     private Collection $comments;
 
     public function __construct()
     {
-        $this->favorites = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -142,33 +138,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Favorite>
-     */
-    public function getFavorites(): Collection
-    {
-        return $this->favorites;
-    }
-
-    public function addFavorite(Favorite $favorite): static
-    {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites->add($favorite);
-            $favorite->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavorite(Favorite $favorite): static
-    {
-        if ($this->favorites->removeElement($favorite)) {
-            $favorite->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Comment>
      */
     public function getComments(): Collection
@@ -180,7 +149,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setUsers($this);
+            $comment->setUser($this);
         }
 
         return $this;
@@ -190,8 +159,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getUsers() === $this) {
-                $comment->setUsers(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
