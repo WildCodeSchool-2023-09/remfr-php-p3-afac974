@@ -1,3 +1,20 @@
 body{
     min-height: 100vh;
 }
+.border-general {
+    position: relative;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background: #fff;
+    background-clip: padding-box; 
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -1;
+        margin: -2px; /* !importanté */
+        border-radius: inherit; /* !importanté */
+        background:linear-gradient(to top left, #2885AA , #730F46 );
+    }   
+}
