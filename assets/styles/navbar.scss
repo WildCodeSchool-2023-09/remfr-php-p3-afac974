@@ -22,13 +22,22 @@
 .list-group li{
     list-style: none ;
     color: #fff;
-    font-size: 2.1rem;
+    font-size: 1.8rem;
     padding: 1rem 2rem;
 }
-.list-group li:hover{
-     text-decoration: underline;
-     text-decoration-color: #fff;
+.list-group li:after{
+     content: "";
+     width: 0%;
+     height: 2px;
+     display: block;
+     transition: all 0.5s ease;
+     bottom: 25%;
 }
+.list-group li:hover::after {
+     width: 100%;
+     height: 1px;
+     background-color: #fff;
+ }
 .container-navbar img{
     padding: 0 2rem;
 }
@@ -39,4 +48,7 @@
 
 .diamant-navbar-translate:hover{
      transform:rotate(90deg);
+}
+.user-icon{
+     width: 100px;
 }
