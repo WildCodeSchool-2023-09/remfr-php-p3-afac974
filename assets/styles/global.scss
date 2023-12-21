@@ -1,3 +1,6 @@
+$primary:#4E4A78;
+$bs-btn-color: #fff;
+
 body{
     min-height: 100vh;
 }
@@ -13,8 +16,14 @@ body{
         position: absolute;
         top: 0; right: 0; bottom: 0; left: 0;
         z-index: -1;
-        margin: -2px; /* !importanté */
-        border-radius: inherit; /* !importanté */
+        margin: -2px; 
+        border-radius: inherit;
         background:linear-gradient(to top left, #2885AA , #730F46 );
     }   
+}
+.btn-primary{
+    color: $bs-btn-color !important;
+}
+.bouton-general{
+    padding: 2rem 0;
 }

@@ -1,10 +1,6 @@
 .footer-lw{
-    margin: auto 0;
+    margin-bottom: 0!important;
     background: linear-gradient(90deg, #730F46 0%, #2885AA 100%);
-}
-.footer-list{
-    display:flex;
-    flex-direction: row;
 }
 .footer-lw .footer-list li:after {
     content: "";
