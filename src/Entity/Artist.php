@@ -37,13 +37,19 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photoName = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Users $user = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: News::class)]
     private Collection $news;
 
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Artwork::class)]
     private Collection $artworks;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastname = null;
 
     public function __construct()
     {
@@ -145,12 +151,12 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
@@ -213,6 +219,30 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
                 $artwork->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }
