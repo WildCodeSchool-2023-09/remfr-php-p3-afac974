@@ -10,15 +10,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('', name:'')]
+    #[Route('/', name:'index')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig');
     }
 
-    #[Route('/_a_propos', name: 'a_propos')]
+    #[Route('/aboutUs', name: 'about_us')]
     public function show(): Response
     {
-        return $this->render('home/_a_propos.html.twig');
+        return $this->render('home/aboutUs.html.twig');
+    }
+    #[Route('/gallery', name: 'gallery')]
+    public function showGallery(): Response
+    {
+        return $this->render('home/gallery.html.twig');
     }
 }
