@@ -1,17 +1,24 @@
 .footer-lw{
-    display:flex;
-    flex-direction: row;
-    margin-top: auto;
+    margin-bottom: 0!important;
     background: linear-gradient(90deg, #730F46 0%, #2885AA 100%);
-    position: 0;
+}
+.footer-lw .footer-list li:after {
+    content: "";
+    width: 0%;
+    height: 1px;
+    display: block;
+    transition: all 0.5s ease;
+    bottom: 25%;
+}
+  
+.footer-lw .footer-list li:hover::after {
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
 }
 .footer-li{ 
     list-style: none ;
     color: #fff;
     font-size: 1.2rem;
     padding: 1rem 2rem;
-}
-.footer-li:hover{
-    text-decoration: underline;
-    text-decoration-color: #fff;
 }
