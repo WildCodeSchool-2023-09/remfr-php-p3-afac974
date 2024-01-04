@@ -5,12 +5,15 @@
 
 {% block body %}
 <h1 class="text-center mt-5">TITRE DE L'OEUVRE</h1>
+
 <div class="container border-general mt-5 px-4">
+
     <div class="row justify-content-center gap-4">
+
         <img class="col-6" src="{{ asset('build/images/midjourney1.png') }}">
         
-
         <div class="card-body col-5">
+
             <h2 class="card-title mb-5">A propos de l'oeuvre</h2>
 
             <p class="pe-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper, sem vel vehicula placerat, elit 
@@ -25,8 +28,29 @@
 
             <p class="pe-3">70x70cm</p>
 
+            <h3 class="mt-5">Artiste</h3>
+
+            <p class="pe-3">Chaïma Assani</p>
+
         </div>
 
     </div>
+
 </div>
+
+<div class="container pt-5">
+    <div class="row">
+        <div class="col">
+            <p><img class="favorite" src="{{ asset('build/images/favorite.svg') }}"> Ajouter aux favoris</p>
+        </div>
+        <div class="col">
+            <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container divider mt-5">&nbsp;</div>
+
 {% endblock %}
