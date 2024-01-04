@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{# Remplacer par le nom de l'oeuvre en dynamique #}
+{% block title %}Oeuvre{% endblock %}
+
+{% block body %}
+<h1 class="text-center mt-5">TITRE DE L'OEUVRE</h1>
+
+<div class="container border-general mt-5 px-4">
+
+    <div class="row justify-content-center gap-4">
+
+        <img class="col-6" src="{{ asset('build/images/midjourney1.png') }}">
+        
+        <div class="card-body col-5">
+
+            <h2 class="card-title mb-5">A propos de l'oeuvre</h2>
+
+            <p class="pe-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper, sem vel vehicula placerat, elit 
+                nunc sollicitudin dolor, at fringilla justo tortor vel massa. Mauris id maximus sapien. Aliquam a ultricies
+                tellus, sed varius turpis. Aenean cursus mauris viverra lectus dictum tristique. Sed fringilla, sem et 
+                condimentum auctor, odio arcu volutpat erat, vel aliquet turpis nisi eget nibh. In sollicitudin scelerisque 
+                felis. Mauris ornare dictum tortor nec malesuada. Vivamus suscipit, ipsum eget tristique elementum, est neque 
+                posuere sem, eu porttitor sapien ex et tortor. In varius, massa at maximus ultrices, felis risus cursus 
+                magna, ac placerat libero erat sit amet felis. Integer suscipit leo scelerisque luctus rutrum.</p>
+
+            <h3 class="mt-5">Dimensions</h3>
+
+            <p class="pe-3">70x70cm</p>
+
+            <h3 class="mt-5">Artiste</h3>
+
+            <p class="pe-3">Chaïma Assani</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container pt-5">
+    <div class="row">
+        <div class="col">
+            <p><img class="favorite" src="{{ asset('build/images/favorite.svg') }}"> Ajouter aux favoris</p>
+        </div>
+        <div class="col">
+            <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container divider mt-5">&nbsp;</div>
+
+{% endblock %}
