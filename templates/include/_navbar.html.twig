@@ -1,0 +1,31 @@
+<div class="gradient-navbar-ab">
+	<div class="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
+		<div>
+			<ul class="list-group list-group-flush">
+				<li>Notre galerie</li>
+				<li>Nos artistes</li>
+				<li>Contact</li>
+				<li>Newsletter</li>
+			</ul>
+		</div>
+	</div>
+	<nav class="navbar">
+		<div class="container-fluid container-navbar">
+			<button class="navbar-toggler navbar-border" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+				<img class="diamant-navbar-translate" src="{{ asset('build/images/Frame.svg') }}">
+			</button>
+			<img src="{{ asset('build/images/AFAC.png') }}">
+			<a href="{{ path('app_login')}}">
+				<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
+				<p>
+					{% if app.user %}
+						{{ app.user.email }}
+						<a class="nav-link" href="{{ path('app_logout')}}">Logout</a>
+					{% else %}
+						<a class="nav-link" href="{{ path('app_login')}}">Login</a>
+					{% endif %}
+				</p>
+			</a>
+		</div>
+	</nav>
+</div>

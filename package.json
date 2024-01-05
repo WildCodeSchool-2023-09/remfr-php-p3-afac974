@@ -9,8 +9,8 @@
         "eslint": "^8.13.0",
         "file-loader": "^6.0.0",
         "regenerator-runtime": "^0.13.9",
-        "sass": "^1.56.0",
-        "sass-loader": "^13.1.0",
+        "sass": "^1.69.5",
+        "sass-loader": "^13.3.2",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",
         "webpack-notifier": "^1.15.0"
@@ -23,5 +23,8 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "5.3.2"
+    }
 }
