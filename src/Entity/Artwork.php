@@ -8,10 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArtworkRepository::class)]
 #[Vich\Uploadable]
+#[Assert\EnableAutoMapping]
 class Artwork
 {
     #[ORM\Id]
@@ -29,9 +31,15 @@ class Artwork
     private ?string $reference = null;
 
     #[ORM\Column]
+    #[Assert\Positive(
+        message: 'La valeur doit être positive'
+    )]
     private ?int $height = null;
 
     #[ORM\Column]
+    #[Assert\Positive(
+        message: 'La valeur doit être positive'
+    )]
     private ?int $width = null;
 
     #[ORM\Column]
@@ -43,6 +51,9 @@ class Artwork
     #[ORM\ManyToOne(inversedBy: 'artworks')]
     private ?Artist $artist = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Type $type = null;
+
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
     private Collection $comments;
 
@@ -50,6 +61,10 @@ class Artwork
     private ?string $picture = null;
 
     #[Vich\UploadableField(mapping: 'artwork', fileNameProperty: 'picture')]
+    #[Assert\File(
+        maxSize: '1M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    )]
     private ?File $pictureFile = null;
 
     public function __construct()
@@ -154,6 +169,18 @@ class Artwork
     public function setArtist(?Artist $artist): static
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

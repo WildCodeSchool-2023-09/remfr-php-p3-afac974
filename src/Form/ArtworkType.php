@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Artist;
 use App\Entity\Artwork;
+use App\Entity\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,7 +46,11 @@ class ArtworkType extends AbstractType
             ])
             ->add('artist', EntityType::class, [
                 'class' => Artist::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
+            ])
+            ->add('type', EntityType::class, [
+                'class' => Type::class,
+                'choice_label' => 'name',
             ])
         ;
     }
