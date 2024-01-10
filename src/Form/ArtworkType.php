@@ -22,7 +22,6 @@ class ArtworkType extends AbstractType
         $builder
             ->add('description', TextareaType::class)
             ->add('title', TextType::class)
-            ->add('reference', TextType::class)
             ->add('height', IntegerType::class)
             ->add('width', IntegerType::class)
             ->add('isUnique', ChoiceType::class, [
