@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - Nos artistes {% endblock %}
+
+{% block body %}
+<h1 class="p-3 d-flex justify-content-center">Nos artistes</h1>
+    <div class="col-sm-6 container border-general mb-4">
+        <div class="row justify-content-center">
+                {% for i in 0..7 %}
+                <div class="artist-card m-3" style="width: 18rem;">
+                    <img src="{{ asset('build/images/darksanta.png') }}" class="card-img-top" alt="...">
+                    <div class="artist-card-body">
+                        <p class="text-center">Nom de l'artiste</p>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
