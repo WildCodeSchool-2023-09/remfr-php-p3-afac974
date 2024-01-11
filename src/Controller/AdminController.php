@@ -97,8 +97,13 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $posterFile = $form->get('posterFile')->getData();
+            if ($posterFile) {
+                $artist->setPosterFile($posterFile);
+            }
             $entityManager->flush();
-
+            
             $this->addFlash('success', 'The artist has been edited successfully');
 
             return $this->redirectToRoute('admin_show_artists');

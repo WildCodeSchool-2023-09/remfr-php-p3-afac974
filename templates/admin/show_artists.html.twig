@@ -12,7 +12,7 @@
                  <th scope="col">Nom</th>
                  <th scope="col">Prénom</th>
                  <th scope="col">Description</th>
-                 <th scope="col">Nom de photo</th>
+                 <th scope="col">Photo</th>
                  <th scope="col">Email</th>
             </tr>
         </thead>
@@ -23,7 +23,13 @@
                     <td>{{ artist.name }}</td>
                     <td>{{ artist.lastname }}</td>
                     <td>{{ artist.description }}</td>
-                    <td>{{ artist.photoname }}</td>
+                    <td>
+                        {% if artist.poster != 'default_poster_value.svg' %}
+                            <img src="{{ vich_uploader_asset(artist)}}" alt="{{ artist.name }} Poster">
+                        {% else %}
+                            <img src="{{ asset ('build/images/artistPortfolio/' ~ artist.poster) }}" alt="{{ artist.name }} Poster">
+                        {% endif %}
+                    </td>
                     <td>{{ artist.email }}</td>
                     <td>
                         <a href="{{ path('admin_edit_artist', {'id': artist.id}) }}" class="btn btn-primary">Edit</a>

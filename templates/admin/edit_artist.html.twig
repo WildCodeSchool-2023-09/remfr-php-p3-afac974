@@ -6,11 +6,11 @@
     <h1 class="mx-auto pt-4">Modification du profil artiste</h1>
      <p>Artiste: {{ artist.getName() }}  {{ artist.getLastName() }}</p>
     <div class="container mx-auto border-general">
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
         {{ form_row(form.name) }}
         {{ form_row(form.lastname) }}
         {{ form_row(form.description) }}
-        {{ form_row(form.photoname) }}
+        {{ form_row(form.posterFile) }}
         {{ form_row(form.email) }}
 
         <button type="submit" class="btn btn-primary bouton-general"> Sauvegarder ses changements</button>
