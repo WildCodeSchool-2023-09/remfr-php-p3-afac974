@@ -11,7 +11,7 @@ use App\Repository\UserRepository;
 use App\Repository\ArtistRepository;
 use App\Entity\User;
 use App\Entity\Artist;
-use App\Form\AdmiunUserType;
+use App\Form\AdminUserType;
 use App\Form\ArtistType;
 use Doctrine\ORM\EntityManagerInterface;
 
