@@ -1,5 +1,6 @@
+$color-form: #c9dbe2 ;
 $primary:#4E4A78;
-$bs-btn-color: #fff;
+$bs-btn-color: #ffffff;
 
 body{
     min-height: 100vh;
@@ -26,4 +27,17 @@ body{
 }
 .bouton-general{
     padding: 2rem 0;
+}
+.form-control, .form-select{
+    border-color: $color-form !important;
+}
+.form-control:focus, .form-select:focus{
+    box-shadow: none !important;
+}
+a {
+    text-decoration: none !important;
+}
+
+textarea.form-control {
+    resize: none !important;
 }

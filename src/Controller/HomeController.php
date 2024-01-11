@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name:'index')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig');
@@ -33,5 +33,20 @@ class HomeController extends AbstractController
         $successMessage = $session->get('successConnection');
         return $this->render('base.html.twig', [
             'successMessage' => $successMessage,]);
+    }
+    #[Route('/artists', name: 'artists')]
+    public function showArtists(): Response
+    {
+        return $this->render('home/artists.html.twig');
+    }
+    #[Route('/biography', name: 'biography')]
+    public function showBiography(): Response
+    {
+        return $this->render('home/biography.html.twig');
+    }
+    #[Route('/mentions', name: 'mentions')]
+    public function showMentions(): Response
+    {
+        return $this->render('home/mentions.html.twig');
     }
 }
