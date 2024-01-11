@@ -5,7 +5,9 @@
 				<a href="{{ path('home_gallery') }}">
 					<li>Notre galerie</li>
 				</a>
-				<li>Nos artistes</li>
+				<a href="{{ path('home_artists')}}">
+					<li>Nos artistes</li>
+				</a>
 				<li>Contact</li>
 				<li>Newsletter</li>
 			</ul>
@@ -16,7 +18,9 @@
 			<button class="navbar-toggler navbar-border" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
 				<img class="diamant-navbar-translate" src="{{ asset('build/images/Frame.svg') }}">
 			</button>
-			<img src="{{ asset('build/images/AFAC.png') }}">
+			<a href="{{ path('home_index')}}">
+				<img src="{{ asset('build/images/AFAC.png') }}">
+			</a>
 			{% if app.user %}
 				<a href="{{ path('app_user_show', {'id': app.user.id} )}}">
 					Mon compte
