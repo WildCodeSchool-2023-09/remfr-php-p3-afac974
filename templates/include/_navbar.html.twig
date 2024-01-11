@@ -15,17 +15,22 @@
 				<img class="diamant-navbar-translate" src="{{ asset('build/images/Frame.svg') }}">
 			</button>
 			<img src="{{ asset('build/images/AFAC.png') }}">
-			<a href="{{ path('app_login')}}">
-				<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
-				<p>
-					{% if app.user %}
-						{{ app.user.email }}
-						<a class="nav-link" href="{{ path('app_logout')}}">Logout</a>
-					{% else %}
-						<a class="nav-link" href="{{ path('app_login')}}">Login</a>
-					{% endif %}
-				</p>
-			</a>
-		</div>
-	</nav>
-</div>
+
+			<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
+
+			{% if app.user %}
+				<a href="{{ path('app_user_show', {'id': app.user.id} )}}">
+					Mon compte
+				</a>
+				<a href="{{ path('app_logout')}}">
+					Déconnection
+				</a>
+
+			{% else %}
+				<a href="{{ path('app_login')}}">
+					Connexion
+				</a>
+			{% endif %}
+		</a>
+	</div>
+</nav></div>
