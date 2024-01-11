@@ -23,7 +23,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                enable_csrf: false
+                enable_csrf: true
             logout:
                 path: app_logout
             # activate different ways to authenticate
@@ -39,6 +39,7 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
+        ROLE_ARTIST:      [ROLE_USER]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
 when@test:

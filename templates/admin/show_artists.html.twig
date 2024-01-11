@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+<h1 class="mx-auto pt-4">Liste des Artistes</h1>
+
+    <table class="table px-4 table-striped table-hover">
+        <thead>
+            <tr>
+                 <th scope="col">#</th>
+                 <th scope="col">Nom</th>
+                 <th scope="col">Prénom</th>
+                 <th scope="col">Description</th>
+                 <th scope="col">Nom de photo</th>
+                 <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for artist in artists %}
+                <tr>
+                    <td>{{ artist.id }}</td>
+                    <td>{{ artist.name }}</td>
+                    <td>{{ artist.lastname }}</td>
+                    <td>{{ artist.description }}</td>
+                    <td>{{ artist.photoname }}</td>
+                    <td>{{ artist.email }}</td>
+                    <td>
+                        <a href="{{ path('admin_edit_artist', {'id': artist.id}) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ path('admin_delete_artist', {'id': artist.id}) }}" class="btn btn-secondary">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
