@@ -20,7 +20,7 @@ class ArtistType extends AbstractType
             ->add('description', TextType::class)
             ->add('posterFile', VichFileType::class, [
                 'required'      => false,
-                'allow_delete'  => true, 
+                'allow_delete'  => true,
                 'download_uri' => true,
                 ])
             ->add('email', TextType::class)

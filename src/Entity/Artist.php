@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
-#[Vich\Uploadable] 
+#[Vich\Uploadable]
 class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -140,7 +140,7 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPoster(string $poster): static
     {
-        $this->poster= $poster;
+        $this->poster = $poster;
 
         return $this;
     }
@@ -263,8 +263,8 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Get the value of posterFile
-     */ 
-    public function getPosterFile()
+     */
+    public function getPosterFile(): ?File
     {
         return $this->posterFile;
     }
@@ -273,8 +273,8 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
      * Set the value of posterFile
      *
      * @return  self
-     */ 
-    public function setPosterFile($posterFile)
+     */
+    public function setPosterFile(File $posterFile = null): Artist
     {
         $this->posterFile = $posterFile;
 
