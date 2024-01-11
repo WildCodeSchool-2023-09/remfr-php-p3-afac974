@@ -1,5 +1,5 @@
-<?php 
- 
+<?php
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -9,7 +9,7 @@ use App\Entity\Artist;
 
 class ArtistFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $artist1 = new Artist();
         $artist1->setName('John');
@@ -18,7 +18,7 @@ class ArtistFixtures extends Fixture
         $artist1->setDescription('Talented artist with a passion for creativity.');
         $artist1->setPhotoName('john_doe');
         $artist1->setRoles(['ROLE_ARTIST']);
-        $artist1->setPassword('password'); 
+        $artist1->setPassword('password');
         $manager->persist($artist1);
 
 

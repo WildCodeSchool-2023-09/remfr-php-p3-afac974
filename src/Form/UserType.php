@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class)
@@ -23,8 +23,8 @@ class UserType extends AbstractType
                     'ROLE_ARTIST' => 'ROLE_ARTIST',
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
                 ],
-                'multiple' => true, 
-                'expanded' => true, 
+                'multiple' => true,
+                'expanded' => true,
             ]);
     }
 

@@ -16,7 +16,6 @@ use App\Form\ArtistType;
 use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/admin', name: 'admin_')]
-#[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
@@ -39,12 +38,12 @@ class AdminController extends AbstractController
     public function showUsers(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
-    
-        return $this->render('admin/show_users.html.twig',[
+
+        return $this->render('admin/show_users.html.twig', [
             'users' => $users,
         ]);
     }
-    
+
     #[Route('/editUser/{id}', name: 'edit_user')]
     public function editUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
@@ -53,7 +52,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->flush();
 
             $this->addFlash('success', 'The user has been edited successfully');
@@ -70,7 +68,7 @@ class AdminController extends AbstractController
     #[Route('/deleteUser/{id}', name: 'delete_user')]
     public function deleteUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        
+
         $entityManager->remove($user);
         $entityManager->flush();
 
@@ -81,11 +79,11 @@ class AdminController extends AbstractController
 
     #[Route('/admin/showArtist', name: 'show_artists')]
     public function showArtist(ArtistRepository $artistRepository): Response
-    { 
+    {
 
         $artists = $artistRepository->findAll();
-    
-        return $this->render('admin/show_artists.html.twig',[
+
+        return $this->render('admin/show_artists.html.twig', [
             'artists' => $artists,
         ]);
     }
@@ -99,7 +97,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->flush();
 
             $this->addFlash('success', 'The artist has been edited successfully');
@@ -116,7 +113,7 @@ class AdminController extends AbstractController
     #[Route('/deleteArtist/{id}', name: 'delete_artist')]
     public function deleteArtist(Request $request, Artist $artist, EntityManagerInterface $entityManager): Response
     {
-        
+
         $entityManager->remove($artist);
         $entityManager->flush();
 
@@ -131,4 +128,3 @@ class AdminController extends AbstractController
         return $this->render('admin/show_contact.html.twig');
     }
 }
-
