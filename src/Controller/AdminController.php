@@ -11,7 +11,7 @@ use App\Repository\UserRepository;
 use App\Repository\ArtistRepository;
 use App\Entity\User;
 use App\Entity\Artist;
-use App\Form\UserType;
+use App\Form\AdmiunUserType;
 use App\Form\ArtistType;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -47,7 +47,7 @@ class AdminController extends AbstractController
     #[Route('/editUser/{id}', name: 'edit_user')]
     public function editUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(AdminUserType::class, $user);
 
         $form->handleRequest($request);
 
