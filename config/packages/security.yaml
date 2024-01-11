@@ -1,7 +1,9 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
+        App\Entity\User: 'auto'
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        algorithm: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -9,6 +11,7 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+        # used to reload user from session & other features (e.g. switch_user)
         # used to reload user from session & other features (e.g. switch_user)
         # used to reload user from session & other features (e.g. switch_user)
         # used to reload user from session & other features (e.g. switch_user)
@@ -23,20 +26,25 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+
+                always_use_default_target_path: true
+                username_parameter: 'email'
+                password_parameter: 'password'
+
                 enable_csrf: true
             logout:
-                path: app_logout
+                path: /logout
+            # custom_authenticator: App\Security\LoginAuthentificatorAuthenticator
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/dashboard/edit, roles: ROLE_USER }
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_ARTIST:      [ROLE_USER]

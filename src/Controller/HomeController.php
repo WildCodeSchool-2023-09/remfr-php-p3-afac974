@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/', name: 'home_')]
 
@@ -25,6 +26,13 @@ class HomeController extends AbstractController
     public function showGallery(): Response
     {
         return $this->render('home/gallery.html.twig');
+    }
+
+    public function flashMessageSuccessConnection(SessionInterface $session): Response
+    {
+        $successMessage = $session->get('successConnection');
+        return $this->render('base.html.twig', [
+            'successMessage' => $successMessage,]);
     }
     #[Route('/artists', name: 'artists')]
     public function showArtists(): Response

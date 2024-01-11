@@ -1,3 +1,4 @@
+$color-form: #c9dbe2 ;
 $primary:#4E4A78;
 $bs-btn-color: #fff;
 $font-family-titres: 'Bebas Neue', sans-serif;
@@ -36,4 +37,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 .bouton-general{
     padding: 2rem 0;
+}
+.form-control, .form-select{
+    border-color: $color-form !important;
+}
+.form-control:focus, .form-select:focus{
+    box-shadow: none !important;
+}
+a {
+    text-decoration: none !important;
+}
+
+textarea.form-control {
+    resize: none !important;
 }
