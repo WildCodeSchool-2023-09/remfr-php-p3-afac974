@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArtistRepository;
+use \DateTime;
+use \DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -55,6 +57,9 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;
 
     #[Vich\UploadableField(mapping: 'artist_poster', fileNameProperty: 'poster')]
     #[Assert\File(
@@ -138,7 +143,7 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->poster;
     }
 
-    public function setPoster(string $poster): static
+    public function setPoster(string $poster = null ): static
     {
         $this->poster = $poster;
 
@@ -277,7 +282,9 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPosterFile(File $posterFile = null): Artist
     {
         $this->posterFile = $posterFile;
-
+        if ($posterFile) {
+            $this->updatedAt = new DateTime('now');
+        }
         return $this;
     }
 }

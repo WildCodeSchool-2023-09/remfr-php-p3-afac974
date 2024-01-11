@@ -6,7 +6,7 @@ vich_uploader:
     
     mappings:
         artist_poster:
-            uri_prefix: uploads/images/artistPortfolio
+            uri_prefix: /uploads/images/artistPhoto/
             upload_destination: '%upload_directory_artistPhoto%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
         artwork:
