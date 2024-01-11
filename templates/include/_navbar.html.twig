@@ -17,9 +17,6 @@
 				<img class="diamant-navbar-translate" src="{{ asset('build/images/Frame.svg') }}">
 			</button>
 			<img src="{{ asset('build/images/AFAC.png') }}">
-
-			<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
-
 			{% if app.user %}
 				<a href="{{ path('app_user_show', {'id': app.user.id} )}}">
 					Mon compte
@@ -30,9 +27,9 @@
 
 			{% else %}
 				<a href="{{ path('app_login')}}">
-					Connexion
+					<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
 				</a>
 			{% endif %}
-		</a>
-	</div>
-</nav></div>
+		</div>
+	</nav>
+</div>

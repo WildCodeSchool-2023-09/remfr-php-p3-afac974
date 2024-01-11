@@ -7,6 +7,7 @@ parameters:
     upload_directory_artistPhoto: '%kernel.project_dir%/public/uploads/artistPhoto/'
     upload_directory_artwork: '%kernel.project_dir%/public/uploads/artwork/'
     upload_directory_news: '%kernel.project_dir%/public/uploads/news/'
+    mailer_from: '%env(resole:MAILER_FROM_ADRESS)%'
 services:        
     # default configuration for services in *this* file
     _defaults:
