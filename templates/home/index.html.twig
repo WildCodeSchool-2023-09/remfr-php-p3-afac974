@@ -7,120 +7,119 @@
 
 {% block body %}
 
-
-	<div class="container align-items-center accueil-container">
-		<div class="container">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper, sem vel vehicula placerat, elit 
-																								nunc sollicitudin dolor, at fringilla justo tortor vel massa. Mauris id maximus sapien. Aliquam a ultricies
-																								tellus, sed varius turpis. Aenean cursus mauris viverra lectus dictum tristique. Sed fringilla, sem et 
-																								condimentum auctor, odio arcu volutpat erat, vel aliquet turpis nisi eget nibh. In sollicitudin scelerisque 
-																								felis. Mauris ornare dictum tortor nec malesuada. Vivamus suscipit, ipsum eget tristique elementum, est neque 
-																								posuere sem, eu porttitor sapien ex et tortor. In varius, massa at maximus ultrices, felis risus cursus 
-																								magna, ac placerat libero erat sit amet felis. Integer suscipit leo scelerisque luctus rutrum.</p>
-			<p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras venenatis a 
-																								neque sit amet molestie. Phasellus laoreet, orci sed laoreet volutpat, quam metus pharetra erat, vitae 
-																								lobortis eros sem id arcu. Phasellus efficitur sapien ac tortor accumsan, quis pellentesque tellus aliquam. 
-																								Integer vitae est posuere, euismod risus in, dignissim augue. Aliquam rutrum leo diam, a sodales sem 
-																								mattis in. In auctor luctus sagittis. Nam elit sapien, tincidunt lacinia varius et, eleifend at leo.</p>
-			<p>Etiam varius arcu quam, vitae hendrerit mi bibendum ut. Phasellus ullamcorper ligula dolor, sit amet 
-																								condimentum risus vestibulum ut. In tortor nulla, lobortis id convallis gravida, feugiat at erat. Mauris 
-																								ultrices arcu quis erat mattis, sed lobortis turpis laoreet. Vivamus interdum enim quam, et feugiat est 
-																								interdum sed. Quisque rutrum arcu et sagittis sagittis. Morbi eget lorem nec magna ultricies dictum. Orci 
-																								varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc placerat nec massa 
-																								quis elementum. Donec orci velit, dignissim eu nunc ut, ullamcorper consectetur velit. Proin efficitur in 
-																								orci quis tristique. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos 
-																								himenaeos. Nulla eget ligula eu nisi maximus accumsan. Morbi urna nisl, maximus tincidunt consequat sed, 
-																								porta ac ex. Fusce sagittis eget est eget pharetra. Vestibulum aliquam nisl nec euismod auctor.</p>
-			<p>Morbi elementum laoreet interdum. Nullam bibendum est eu placerat rutrum. Mauris quam lacus, efficitur
-																								ultrices sagittis at, ultrices quis lorem. Cras ac felis feugiat lorem imperdiet sollicitudin quis ac 
-																								dolor. In vel nisl eget eros viverra egestas. Quisque auctor nulla est, id bibendum eros mattis quis. 
-																								Morbi semper dolor ultrices ex consequat cursus. Aliquam tempus elit tincidunt elit blandit iaculis.</p>
-		</div>
-		<div class="row border-general">
-			<div class="col">
-				<div id="carouselExampleCaptions" class="carousel slide">
-					<div class="carousel-indicators">
-						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-					</div>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>First slide label</h5>
-								<p>Some representative placeholder content for the first slide.</p>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>Second slide label</h5>
-								<p>Some representative placeholder content for the second slide.</p>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>Third slide label</h5>
-								<p>Some representative placeholder content for the third slide.</p>
-							</div>
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-			</div>
-			<div class="col">
-				<div id="carouselExampleCaptions2" class="carousel slide">
-					<div class="carousel-indicators">
-						<button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-						<button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 2"></button>
-						<button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 3"></button>
-					</div>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>First slide label</h5>
-								<p>Some representative placeholder content for the first slide.</p>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>Second slide label</h5>
-								<p>Some representative placeholder content for the second slide.</p>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>Third slide label</h5>
-								<p>Some representative placeholder content for the third slide.</p>
-							</div>
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-			</div>
-		</div>
-		<div class="d-grid col-6 mx-auto bouton-general">
-			<button class="btn btn-primary" type="button">Notre galerie</button>
-		</div>
-	</div>
-
+<div class="container align-items-center accueil-container">
+    <div class="container">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris semper, sem vel vehicula placerat, elit 
+        nunc sollicitudin dolor, at fringilla justo tortor vel massa. Mauris id maximus sapien. Aliquam a ultricies
+        tellus, sed varius turpis. Aenean cursus mauris viverra lectus dictum tristique. Sed fringilla, sem et 
+        condimentum auctor, odio arcu volutpat erat, vel aliquet turpis nisi eget nibh. In sollicitudin scelerisque 
+        felis. Mauris ornare dictum tortor nec malesuada. Vivamus suscipit, ipsum eget tristique elementum, est neque 
+        posuere sem, eu porttitor sapien ex et tortor. In varius, massa at maximus ultrices, felis risus cursus 
+        magna, ac placerat libero erat sit amet felis. Integer suscipit leo scelerisque luctus rutrum.</p>
+        <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras venenatis a 
+        neque sit amet molestie. Phasellus laoreet, orci sed laoreet volutpat, quam metus pharetra erat, vitae 
+        lobortis eros sem id arcu. Phasellus efficitur sapien ac tortor accumsan, quis pellentesque tellus aliquam. 
+        Integer vitae est posuere, euismod risus in, dignissim augue. Aliquam rutrum leo diam, a sodales sem 
+        mattis in. In auctor luctus sagittis. Nam elit sapien, tincidunt lacinia varius et, eleifend at leo.</p>
+        <p>Etiam varius arcu quam, vitae hendrerit mi bibendum ut. Phasellus ullamcorper ligula dolor, sit amet 
+        condimentum risus vestibulum ut. In tortor nulla, lobortis id convallis gravida, feugiat at erat. Mauris 
+        ultrices arcu quis erat mattis, sed lobortis turpis laoreet. Vivamus interdum enim quam, et feugiat est 
+        interdum sed. Quisque rutrum arcu et sagittis sagittis. Morbi eget lorem nec magna ultricies dictum. Orci 
+        varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc placerat nec massa 
+        quis elementum. Donec orci velit, dignissim eu nunc ut, ullamcorper consectetur velit. Proin efficitur in 
+        orci quis tristique. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos 
+        himenaeos. Nulla eget ligula eu nisi maximus accumsan. Morbi urna nisl, maximus tincidunt consequat sed, 
+        porta ac ex. Fusce sagittis eget est eget pharetra. Vestibulum aliquam nisl nec euismod auctor.</p>
+        <p>Morbi elementum laoreet interdum. Nullam bibendum est eu placerat rutrum. Mauris quam lacus, efficitur
+         ultrices sagittis at, ultrices quis lorem. Cras ac felis feugiat lorem imperdiet sollicitudin quis ac 
+         dolor. In vel nisl eget eros viverra egestas. Quisque auctor nulla est, id bibendum eros mattis quis. 
+         Morbi semper dolor ultrices ex consequat cursus. Aliquam tempus elit tincidunt elit blandit iaculis.</p>
+    </div>
+    <div class="row border-general">
+        <div class="col">
+            <div id="carouselExampleCaptions1" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>First slide label</h5>
+                    <p>Some representative placeholder content for the first slide.</p>
+                </div>
+                </div>
+                <div class="carousel-item">
+                <img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Second slide label</h5>
+                    <p>Some representative placeholder content for the second slide.</p>
+                </div>
+                </div>
+                <div class="carousel-item">
+                <img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the third slide.</p>
+                </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+         <div class="col">
+            <div id="carouselExampleCaptions2" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>First slide label</h5>
+                    <p>Some representative placeholder content for the first slide.</p>
+                </div>
+                </div>
+                <div class="carousel-item">
+                <img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Second slide label</h5>
+                    <p>Some representative placeholder content for the second slide.</p>
+                </div>
+                </div>
+                <div class="carousel-item">
+                <img src="{{ asset('build/images/darksanta.png') }}" class="d-block w-100" alt="darksanta">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the third slide.</p>
+                </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+    </div>
+    <div class="d-grid col-6 mx-auto bouton-general">
+        <button class="btn btn-primary" type="button">Notre galerie</button>
+    </div>
+</div>
+    
 {% endblock %}
