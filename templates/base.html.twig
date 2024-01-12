@@ -21,9 +21,9 @@
 		{% include 'include/_navbar.html.twig' %}
 
 		{% block body %}
-			{% if successMessage is defined %}
+			{% if FlashConnection is defined %}
 				<div class="alert alert-success">
-					{{ successMessage }}
+					{{ FlashConnection }}
 				</div>
 			{% endif %}
 
