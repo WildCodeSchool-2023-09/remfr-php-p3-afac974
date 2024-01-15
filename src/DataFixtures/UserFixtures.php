@@ -68,6 +68,19 @@ class UserFixtures extends Fixture
         $admin->setLastName('admin');
         $manager->persist($admin);
 
+
+        $contributor4 = new User();
+        $contributor4->setEmail('artiste@monsite.com');
+        $contributor4->setRoles(['ROLE_ARTIST', 'ROLE_USER']);
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $contributor4,
+            'artist79'
+        );
+        $contributor4->setPassword($hashedPassword);
+        $contributor4->setName('pablo');
+        $contributor4->setLastName('salvador');
+        $manager->persist($contributor4);
+
         $manager->flush();
     }
 }

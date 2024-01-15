@@ -50,11 +50,14 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
+    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Expo::class, orphanRemoval: true)]
+    private Collection $expos;
 
     public function __construct()
     {
         $this->news = new ArrayCollection();
         $this->artworks = new ArrayCollection();
+        $this->expos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -245,6 +248,36 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): static
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Expo>
+     */
+    public function getExpos(): Collection
+    {
+        return $this->expos;
+    }
+
+    public function addExpo(Expo $expo): static
+    {
+        if (!$this->expos->contains($expo)) {
+            $this->expos->add($expo);
+            $expo->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpo(Expo $expo): static
+    {
+        if ($this->expos->removeElement($expo)) {
+// set the owning side to null (unless already changed)
+            if ($expo->getArtist() === $this) {
+                $expo->setArtist(null);
+            }
+        }
 
         return $this;
     }

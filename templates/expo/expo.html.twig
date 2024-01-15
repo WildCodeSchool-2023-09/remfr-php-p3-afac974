@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expositions{% endblock %}
+
+{% block body %}   
+    {% if app.user %}
+    <div class="container mt-5 border-general p-5">
+    {{ form_start(form) }}
+        
+        <div class="form-control">
+    {{ form_label(form.name, "Nom de l'expo") }}
+            {{form_widget (form.name)}}
+        </div>
+         <div class="form-control">
+            {{ form_label(form.location, "Lieu de l'expo") }}
+            {{form_widget (form.location)}}
+        </div>
+         <div class="form-control">
+            {{ form_label(form.dateEvent, "Date de l'expo") }}
+            {{form_widget (form.dateEvent)}}
+        </div>
+        <button class="btn btn-primary mt-5" type="submit">Ajouter une expo</button>
+    {{ form_end(form) }}
+       {# <form action="" method="POST">
+        <div>
+        <label  class="container" for="name">Nom de l'expo: </label>
+        <input type="text" class="form-control " id="name" name="_name">
+        </div>
+        <div>
+        <label class="container" for="location">Lieu de l'expo: </label>
+        <input type="text" class="form-control" id="location" name="_location">
+        </div>
+        <div>
+        <label class="container" for="dateEvent">Date: </label>
+        <input type="date" class="form-control" id="dateEvent" name="_dateEvent">
+        </div>
+        <div>
+        <button class="btn btn-primary mt-5" type="submit">Ajouter une expo</button>
+        </div> #}
+    </div>
+    {% endif %}    
+   {% endblock %}
