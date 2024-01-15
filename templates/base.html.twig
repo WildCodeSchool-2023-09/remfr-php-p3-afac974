@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="icon" type="image/png" href="{{ asset('build/images/logo-wild-code-school.svg') }}"/>
-        <title>
-            {% block title %}AFAC 974{% endblock %}
-        </title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="icon" type="image/png" href="{{ asset('build/images/logo-wild-code-school.svg') }}"/>
+		<title>
+			{% block title %}AFAC 974
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body class="d-flex flex-column">
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body class="d-flex flex-column">
 
-        {% include 'include/_navbar.html.twig' %}
-        {% block body %}{% endblock %}
-        {% include 'include/_footer.html.twig' %}
-    </body>
+		{% include 'include/_navbar.html.twig' %}
+
+		{% block body %}
+			{% if FlashConnection is defined %}
+				<div class="alert alert-success">
+					{{ FlashConnection }}
+				</div>
+			{% endif %}
+
+		{% endblock %}
+
+		{% include 'include/_footer.html.twig' %}
+	</body>
 </html>
