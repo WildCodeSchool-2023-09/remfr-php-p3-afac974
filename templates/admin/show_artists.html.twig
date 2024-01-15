@@ -14,6 +14,7 @@
                  <th scope="col">Description</th>
                  <th scope="col">Photo</th>
                  <th scope="col">Email</th>
+                 <th scope="col">Opérations</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +34,10 @@
                     <td>{{ artist.email }}</td>
                     <td>
                         <a href="{{ path('admin_edit_artist', {'id': artist.id}) }}" class="btn btn-primary">Edit</a>
-                        <a href="{{ path('admin_delete_artist', {'id': artist.id}) }}" class="btn btn-secondary">Delete</a>
+                        <form method="post" action="{{ path('admin_delete_artist', {'id': artist.id}) }}" onsubmit="return confirm('Are you sure you want to delete this artist?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
+                            <button type="submit" class="btn btn-secondary">Delete</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
