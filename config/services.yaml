@@ -7,7 +7,9 @@ parameters:
     upload_directory_artistPhoto: '%kernel.project_dir%/public/uploads/artistPhoto/'
     upload_directory_artwork: '%kernel.project_dir%/public/uploads/artwork/'
     upload_directory_news: '%kernel.project_dir%/public/uploads/news/'
-services:        
+    mailer_from: '%env(resolve:MAILER_FROM_ADDRESS)%'
+services:  
+    # SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface: '@reset_password.helper'      
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
