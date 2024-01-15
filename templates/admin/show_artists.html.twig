@@ -28,7 +28,7 @@
                         {% if artist.poster != 'default_poster_value.svg' %}
                             <img  class="img-fluid" src="{{ vich_uploader_asset(artist)}}" alt="{{ artist.name }} Poster">
                         {% else %}
-                            <img  class="img-fluid" src="{{ upload_directory_artistPhoto ~ artist.poster }}" alt="{{ artist.name }} Poster">
+                            <img  class="img-fluid" src="{{ asset("build/images/artistPortfolio/default_poster_value.svg") }}" alt="{{ artist.name }} Poster">
                         {% endif %}
                     </td>
                     <td>{{ artist.email }}</td>

@@ -92,7 +92,7 @@ class AdminController extends AbstractController
     public function showArtist(ArtistRepository $artistRepository): Response
     {
 
-        $artists = $artistRepository->findBy(['roles' => 'ROLE_ARTIST']);
+        $artists = $artistRepository->findAll();
 
         return $this->render('admin/show_artists.html.twig', [
             'artists' => $artists,
