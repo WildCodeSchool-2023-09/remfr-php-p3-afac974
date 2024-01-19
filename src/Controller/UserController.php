@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\ChangePasswordFormType;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\NewUserType;
 use Symfony\Component\Mime\Address;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Email;
@@ -38,7 +39,7 @@ class UserController extends AbstractController
         User $user
     ): Response {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(NewUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,10 +50,14 @@ class UserController extends AbstractController
                 $password
             );
             $user->setPassword($hashedPassword);
+            $this->addFlash(
+                'NewAccount',
+                'Votre compte à bien été créé ! Vous pouvez dorénavant vous connecter'
+            );
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/new.html.twig', [
@@ -70,40 +75,50 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+
     public function edit(
         Request $request,
         User $user,
         EntityManagerInterface $entityManager,
-        MailerInterface $mailer,
-        UserPasswordHasherInterface $passwordHasher
+        UserPasswordHasherInterface $passwordHasher,
+        MailerInterface $mailer
     ): Response {
-        $form = $this->createForm(ChangePasswordFormType::class);
-        // Utilisez le formulaire ChangePasswordFormType
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles(['ROLE_USER']);
+            $newEmail = $form->get('email')->getData();
+            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $newEmail]);
 
-            $currentPassword = $form->get('plainPassword')->getData();
-            // Utilisez 'plainPassword' pour le champ de mot de passe
-            $newPassword = $form->get('plainPassword')->getData();
-            // Utilisez 'plainPassword' pour le champ de mot de passe
-
-            // Rechargez l'utilisateur depuis la base de données
-            $dbUser = $entityManager->getRepository(User::class)->find($user->getId());
-
-            if ($passwordHasher->isPasswordValid($dbUser, $currentPassword)) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
-                $user->setPassword($hashedPassword);
-                $entityManager->flush();
+            if ($existingUser && $existingUser->getId() !== $user->getId()) {
+                $this->addFlash('error', 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.');
             } else {
-                $this->addFlash('passwordError', 'L\'ancien mot de passe ne correspond pas.');
+                // Changer l'adresse e-mail de l'utilisateur
+                $user->setEmail($newEmail);
             }
+
+            $password = $form->get('password')->getData();
+            if (isset($password)) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $password);
+                $user->setPassword($hashedPassword);
+            }
+
+            $entityManager->flush();
+
+            $email = (new Email())
+            ->from($this->getParameter('mailer_from'))
+            ->to($user->getEmail())
+            ->subject('Vos informations personnelles ont bien été mis à jours !')
+            ->html($this->renderView('user/emailEdit.html.twig'));
+
+            $mailer->send($email);
+
+            return $this->redirectToRoute('app_user_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
