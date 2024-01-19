@@ -1,9 +1,19 @@
 $color-form: #c9dbe2 ;
 $primary:#4E4A78;
-$bs-btn-color: #ffffff;
+$bs-btn-color: #fff;
+$font-family-titres: 'Bebas Neue', sans-serif;
+$font-family-textes: 'Pill Gothic 600mg', sans-serif;
+$font-family-base: $font-family-textes; 
+
 
 body{
     min-height: 100vh;
+    font-family: $font-family-base;
+
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-family-titres;
+   
 }
 .border-general {
     position: relative;
