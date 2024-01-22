@@ -62,7 +62,7 @@ class Artwork
 
     #[Vich\UploadableField(mapping: 'artwork', fileNameProperty: 'picture')]
     #[Assert\File(
-        maxSize: '1M',
+        maxSize: '2M',
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
     )]
     private ?File $pictureFile = null;
