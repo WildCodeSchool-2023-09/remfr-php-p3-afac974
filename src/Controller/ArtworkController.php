@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ArtworkType;
 use App\Entity\Artwork;
+use App\Repository\ArtworkRepository;
 
 #[Route('/artwork', name:'artwork_')]
 class ArtworkController extends AbstractController
@@ -36,9 +37,9 @@ class ArtworkController extends AbstractController
     }
 
     //Return the page for a specific artwork
-    #[Route('/show', name:'show')]
-    public function show(): Response
+    #[Route('/show/{id}', name:'show')]
+    public function show(Artwork $artwork): Response
     {
-        return $this->render('artwork/artwork.html.twig');
+        return $this->render('artwork/artwork.html.twig', ['artwork' => $artwork]);
     }
 }

@@ -67,6 +67,9 @@ class Artwork
     )]
     private ?File $pictureFile = null;
 
+    #[ORM\Column]
+    private ?int $year = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -236,5 +239,17 @@ class Artwork
     public function getPictureFile(): ?File
     {
         return $this->pictureFile;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year): static
+    {
+        $this->year = $year;
+
+        return $this;
     }
 }
