@@ -19,6 +19,8 @@ class ArtistFixtures extends Fixture
         $artist1->setDescription('Talented artist with a passion for creativity.');
         $artist1->setRoles(['ROLE_ARTIST']);
         $artist1->setPassword('password');
+
+        $this->addReference('artist_doe', $artist1);
         $manager->persist($artist1);
 
 

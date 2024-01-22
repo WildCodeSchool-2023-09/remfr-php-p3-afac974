@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use DateTime;
+use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: ArtworkRepository::class)]
 #[Vich\Uploadable]
@@ -57,13 +59,16 @@ class Artwork
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $picture = null;
+    #[ORM\Column(length: 255)]
+    private ?string $picture = 'default_poster_value.svg';
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;
 
     #[Vich\UploadableField(mapping: 'artwork', fileNameProperty: 'picture')]
     #[Assert\File(
         maxSize: '1M',
-        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+        mimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
     )]
     private ?File $pictureFile = null;
 
@@ -230,16 +235,20 @@ class Artwork
         return $this;
     }
 
-    public function setPictureFile(File $image = null): Artwork
-    {
-        $this->pictureFile = $image;
-        return $this;
-    }
-
     public function getPictureFile(): ?File
     {
         return $this->pictureFile;
     }
+
+    public function setPictureFile(File $pictureFile = null): Artwork
+    {
+        $this->pictureFile = $pictureFile;
+        if ($pictureFile) {
+            $this->updatedAt = new DateTime('now');
+        }
+        return $this;
+    }
+
 
     public function getYear(): ?int
     {

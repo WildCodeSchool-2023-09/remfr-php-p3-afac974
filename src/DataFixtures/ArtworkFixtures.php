@@ -3,10 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Artwork;
 
-class ArtworkFixtures extends Fixture
+class ArtworkFixtures extends Fixture implements DependentFixtureInterface
 {
     public const ARTWORK = [
         ['is_signed' => false, 'is_unique' => true, 'reference' => 'AB56741', 'title' => 'L\'ours',
@@ -75,11 +76,19 @@ class ArtworkFixtures extends Fixture
             $artwork->setYear($artworkName['year']);
             $artwork->setHeight($artworkName['height']);
             $artwork->setWidth($artworkName['width']);
-            //$artwork->setArtist($artworkName['artist']);
+            $artwork->setArtist($this->getReference('artist_doe'));
             $artwork->setPicture($artworkName['picture']);
 
             $manager->persist($artwork);
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        // Tu retournes ici toutes les classes de fixtures dont ProgramFixtures dépend
+        return [
+          ArtistFixtures::class,
+        ];
     }
 }

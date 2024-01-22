@@ -9,10 +9,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use App\Repository\UserRepository;
 use App\Repository\ArtistRepository;
+use App\Repository\ArtworkRepository;
 use App\Entity\User;
 use App\Entity\Artist;
+use App\Entity\Artwork;
 use App\Form\AdminUserType;
 use App\Form\ArtistType;
+use App\Form\ArtworkType;
 use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/admin', name: 'admin_')]
@@ -130,5 +133,52 @@ class AdminController extends AbstractController
     public function showContact(): Response
     {
         return $this->render('admin/show_contact.html.twig');
+    }
+
+    #[Route('/showArtworks', name: 'show_artworks')]
+    public function showArtworks(ArtworkRepository $artworkRepository): Response
+    {
+        $artworks = $artworkRepository->findAll();
+
+        return $this->render('admin/show_artworks.html.twig', [
+            'artworks' => $artworks,
+        ]);
+    }
+
+    #[Route('/editArtwork/{id}', name: 'edit_artwork')]
+    public function editArtwork(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ArtworkType::class, $artwork);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pictureFile = $form->get('pictureFile')->getData();
+            if ($pictureFile) {
+                $artwork->setPictureFile($pictureFile);
+            }
+            $entityManager->flush();
+
+            $this->addFlash('success', 'The artwork has been edited successfully');
+
+            return $this->redirectToRoute('admin_show_artworks');
+        }
+
+        return $this->render('admin/edit_artwork.html.twig', [
+            'form' => $form->createView(),
+            'artwork' => $artwork,
+        ]);
+    }
+
+    #[Route('/deleteArtwork/{id}', name: 'delete_artwork')]
+    public function deleteArtwork(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
+    {
+
+        $entityManager->remove($artwork);
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'This artwork has been deleted successfully');
+
+        return $this->redirectToRoute('admin_show_artworks', [], Response::HTTP_SEE_OTHER);
     }
 }
