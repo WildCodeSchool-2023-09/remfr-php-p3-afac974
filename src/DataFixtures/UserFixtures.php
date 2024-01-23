@@ -22,7 +22,7 @@ class UserFixtures extends Fixture
         $contributor1->setRoles(['ROLE_USER']);
         $hashedPassword = $this->passwordHasher->hashPassword(
             $contributor1,
-            'lauraTyran'
+            'lauraTyran1*'
         );
         $contributor1->setPassword($hashedPassword);
         $contributor1->setName('laura');
@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
         $contributor2->setRoles(['ROLE_USER']);
         $hashedPassword = $this->passwordHasher->hashPassword(
             $contributor2,
-            'antoninBg'
+            'antoninBg1*'
         );
         $contributor2->setPassword($hashedPassword);
         $contributor2->setName('antonin');
@@ -48,7 +48,7 @@ class UserFixtures extends Fixture
         $contributor3->setRoles(['ROLE_USER']);
         $hashedPassword = $this->passwordHasher->hashPassword(
             $contributor3,
-            'yannickCafe'
+            'yannickCafe1*'
         );
         $contributor3->setPassword($hashedPassword);
         $contributor3->setName('yannick');
@@ -61,7 +61,7 @@ class UserFixtures extends Fixture
         $admin->setRoles(['ROLE_ADMIN']);
         $hashedPassword = $this->passwordHasher->hashPassword(
             $admin,
-            'adminpassword'
+            'Adminpassword1*'
         );
         $admin->setPassword($hashedPassword);
         $admin->setName('admin');

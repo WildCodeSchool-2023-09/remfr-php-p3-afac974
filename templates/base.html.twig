@@ -21,11 +21,11 @@
 		{% include 'include/_navbar.html.twig' %}
 
 		{% block body %}
-			{% if FlashConnection is defined %}
-				<div class="alert alert-success">
-					{{ FlashConnection }}
+			{% for message in app.flashes('NewAccount') %}
+				<div class="flash-notice">
+					{{ message }}
 				</div>
-			{% endif %}
+			{% endfor %}
 
 		{% endblock %}
 
