@@ -10,42 +10,42 @@ use App\Entity\Artwork;
 class ArtworkFixtures extends Fixture implements DependentFixtureInterface
 {
     public const ARTWORK = [
-        ['is_signed' => false, 'is_unique' => true, 'reference' => 'AB56741', 'title' => 'L\'ours',
+        ['is_signed' => false, 'is_unique' => true, 'title' => 'L\'ours',
         'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
          nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita
          et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
          sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 1999,
          'height' => 110, 'width' => 65, 'artist' => 'Théo Payet', 'picture' => 'bear.png'],
 
-        ['is_signed' => true, 'is_unique' => true, 'reference' => 'AB56742', 'title' => 'L\'homme',
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'L\'homme',
         'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
         nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
         et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
         sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2002,
         'height' => 110, 'width' => 65, 'artist' => 'Théo Payet', 'picture' => 'portrait.png'],
 
-        ['is_signed' => true, 'is_unique' => true, 'reference' => 'AB56743', 'title' => 'L\'oiseau imaginé',
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'L\'oiseau imaginé',
         'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
         nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
         et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
         sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2022,
         'height' => 65, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'bird.png'],
 
-        ['is_signed' => false, 'is_unique' => false, 'reference' => 'AB56744', 'title' => 'Forêt brumeuse',
+        ['is_signed' => false, 'is_unique' => false, 'title' => 'Forêt brumeuse',
         'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
         nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
         et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
         sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2018,
         'height' => 45, 'width' => 45, 'artist' => 'Maya Riviere', 'picture' => 'forest.png'],
 
-        ['is_signed' => true, 'is_unique' => true, 'reference' => 'AB56745', 'title' => 'Les lunettes d\'Andy',
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Les lunettes d\'Andy',
         'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
         nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
         et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
         sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2005,
         'height' => 110, 'width' => 65, 'artist' => 'Raphaël Damour', 'picture' => 'glasses.png'],
 
-        ['is_signed' => true, 'is_unique' => true, 'reference' => 'AB56746', 'title' => 'Paysage Onirique',
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Paysage Onirique',
         'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
         nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
         et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
@@ -68,7 +68,6 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
             );
 
             $artwork = new Artwork();
-            $artwork->setReference($artworkName['reference']);
             $artwork->setIsSigned($artworkName['is_signed']);
             $artwork->setIsUnique($artworkName['is_unique']);
             $artwork->setTitle($artworkName['title']);

@@ -50,7 +50,7 @@
     </div>
 
 </div>
-
+{% if app.user %}
 <div class="container pt-5">
     <div class="row">
         <div class="col">
@@ -59,10 +59,17 @@
         <div class="col">
             <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
         </div>
-
     </div>
-
 </div>
+{% else %}
+<div class="container pt-5">
+    <div class="row">
+        <div class="col">
+            <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
+        </div>
+   </div>
+</div>
+{% endif %}
 
 <div class="container divider mt-5">&nbsp;</div>
 
