@@ -29,9 +29,6 @@ class Artwork
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $reference = null;
-
     #[ORM\Column]
     #[Assert\Positive(
         message: 'La valeur doit être positive'
@@ -105,18 +102,6 @@ class Artwork
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(string $reference): static
-    {
-        $this->reference = $reference;
 
         return $this;
     }
