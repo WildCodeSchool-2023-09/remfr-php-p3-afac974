@@ -93,14 +93,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return $this->password;
+        return $this->password ?? '';
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): self
     {
-        $this->password = $password;
+        $this->password = $password ?? '';
 
         return $this;
     }
@@ -111,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        //$this->currentPassword = null;
     }
 
     public function getName(): ?string
