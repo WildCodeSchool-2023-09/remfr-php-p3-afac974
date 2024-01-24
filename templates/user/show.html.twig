@@ -21,11 +21,19 @@
 				<th>Lastname</th>
 				<td>{{ user.lastname }}</td>
 			</tr>
+			<tr>
+				<th>Pseudonyme</th>
+				<td>{{ user.pseudonym }}</td>
+			</tr>
 		</tbody>
 	</table>
-
-	<a class="btn btn-lg btn-primary" href="{{ path('home_index') }}">Retour à la page d'accueil</a>
-	<a class="btn btn-lg btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mes informations personnelles</a>
-
+	<form>
+		<a class="btn btn-lg btn-primary" href="{{ path('home_index') }}">Retour à la page d'accueil</a>
+	</form>
+	<br>
+	<form>
+		<a class="btn btn-lg btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mes informations personnelles</a>
+	</form>
+	<br>
 	{{ include('user/_delete_form.html.twig') }}
 {% endblock %}

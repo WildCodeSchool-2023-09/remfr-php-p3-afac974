@@ -35,7 +35,8 @@ class NewUserType extends AbstractType
             ],
         ])
         ->add('name', TextType::class, ['label' => 'Prénom'])
-        ->add('lastname', TextType::class, ['label' => 'Nom de famille']);
+        ->add('lastname', TextType::class, ['label' => 'Nom de famille'])
+        ->add('pseudonym', TextType::class, ['label' => 'Pseudonyme']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
