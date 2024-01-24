@@ -21,12 +21,13 @@ class Type
     #[ORM\OneToMany(mappedBy: 'type', targetEntity: Technic::class)]
     private Collection $technics;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Artwork $artwork = null;
+    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Artwork::class)]
+    private Collection $artworks;
 
     public function __construct()
     {
         $this->technics = new ArrayCollection();
+        $this->artworks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,14 +77,32 @@ class Type
         return $this;
     }
 
-    public function getArtwork(): ?Artwork
+    /**
+     * @return Collection<int, Artwork>
+     */
+    public function getArtworks(): Collection
     {
-        return $this->artwork;
+        return $this->artworks;
     }
 
-    public function setArtwork(?Artwork $artwork): static
+    public function addArtwork(Artwork $artwork): static
     {
-        $this->artwork = $artwork;
+        if (!$this->artworks->contains($artwork)) {
+            $this->artworks->add($artwork);
+            $artwork->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtwork(Artwork $artwork): static
+    {
+        if ($this->artworks->removeElement($artwork)) {
+            // set the owning side to null (unless already changed)
+            if ($artwork->getType() === $this) {
+                $artwork->setType(null);
+            }
+        }
 
         return $this;
     }

@@ -50,9 +50,6 @@ class Artwork
     #[ORM\ManyToOne(inversedBy: 'artworks')]
     private ?Artist $artist = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Type $type = null;
-
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
     private Collection $comments;
 
@@ -73,6 +70,9 @@ class Artwork
     private ?int $year = null;
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'artworks')]
     private Collection $favoritedBy;
+
+    #[ORM\ManyToOne(inversedBy: 'artworks')]
+    private ?Type $type = null;
 
     public function __construct()
     {
@@ -169,18 +169,6 @@ class Artwork
         return $this;
     }
 
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(?Type $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Comment>
      */
@@ -270,6 +258,18 @@ class Artwork
     public function removeFavoritedBy(User $favoritedBy): static
     {
         $this->favoritedBy->removeElement($favoritedBy);
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
