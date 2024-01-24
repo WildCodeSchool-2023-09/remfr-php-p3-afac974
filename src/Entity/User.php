@@ -49,15 +49,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\ManyToMany(targetEntity: Artwork::class, inversedBy: 'favoritedBy')]
+    private Collection $favorites;
+
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $avatar = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?int $hostedDomain = null;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,7 +197,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Get the value of hostedDomain
+     * @return Collection<int, Artwork>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Artwork $artwork): static
+    {
+        if (!$this->favorites->contains($artwork)) {
+            $this->favorites->add($artwork);
+        }
+        return $this;
+    }
+
+    public function removeFavorite(Artwork $artwork): static
+    {
+        $this->favorites->removeElement($artwork);
+
+        return $this;
+    }
+
+     /** Get the value of hostedDomain
      * @return int
      */
     public function getHostedDomain(): int
