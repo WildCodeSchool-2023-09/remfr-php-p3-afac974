@@ -30,8 +30,11 @@ class HomeController extends AbstractController
         return $this->render('home/aboutUs.html.twig');
     }
     #[Route('/gallery', name: 'gallery')]
-    public function showGallery(ArtworkRepository $artworkRepository, PaginatorInterface $paginator, Request $request): Response
-    {
+    public function showGallery(
+        ArtworkRepository $artworkRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
         // Barre de recherche
 
         $form = $this->createFormBuilder(null, [
@@ -41,15 +44,14 @@ class HomeController extends AbstractController
                 'attr' => ['class' => 'pl-2']
             ])
             ->getForm();
-        
+
         $form->handleRequest($request);
-        
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->get('search')->getData();
             $query = $artworkRepository->findLikeTitle($search);
-        }
-        else {
+        } else {
             $query = $artworkRepository->queryFindAllArtwork();
         }
         // pagination de la gallerie d'art

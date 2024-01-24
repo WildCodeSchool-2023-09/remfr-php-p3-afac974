@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Artwork;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<Artwork>
@@ -21,16 +22,16 @@ class ArtworkRepository extends ServiceEntityRepository
         parent::__construct($registry, Artwork::class);
     }
 
-    public function queryFindAllArtwork()
+    public function queryFindAllArtwork(): Query
     {
         return $this->createQueryBuilder(alias:'art')->getQuery();
     }
 
-    public function findLikeTitle (string $search)
+    public function findLikeTitle(string $search): array
     {
         return $this->createQueryBuilder(alias:'art')
         ->andWhere('art.title LIKE :search')
-        ->setParameter(key:'search', value: '%'. $search . '%')
+        ->setParameter(key:'search', value: '%' . $search . '%')
         ->getQuery()
         ->getResult();
     }
