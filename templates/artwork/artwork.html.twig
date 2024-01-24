@@ -22,7 +22,7 @@
                 <div class="col">
                     <h3 class="mt-5">Artiste</h3>
 
-                    <p class="pe-3">Chaïma Assani</p>    
+                    <p class="pe-3">{{artwork.artist.name}} {{artwork.artist.lastname}}</p>    
                 </div>
                 <div class="col">
                     <h3 class="mt-5">Année</h3>
@@ -50,17 +50,33 @@
     </div>
 
 </div>
-
+{% if app.user %}
 <div class="container pt-5">
     <div class="row">
         <div class="col">
-            <p><img class="favorite" src="{{ asset('build/images/favorite.svg') }}"> Ajouter aux favoris</p>
+        {% if artwork in app.user.favorites %}
+            <a href="{{ path('artwork_add_favorite', {'id' : artwork.id})}}"><p><img class="favorite" src="{{ asset('build/images/favorite.svg') }}"> Retirer des favoris</p></a>
+        {% else %}
+            <a href="{{ path('artwork_add_favorite', {'id' : artwork.id})}}"><p><img class="favorite" src="{{ asset('build/images/not_favorite.svg') }}"> Ajouter aux favoris</p></a>
+        {% endif %}
         </div>
         <div class="col">
             <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
         </div>
     </div>
+</div>
+{% else %}
+<div class="container pt-5">
+    <div class="row">
+        <div class="col">
+            <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
+        </div>
+   </div>
+</div>
+{% endif %}
+
      <div class="container divider mt-5 mb-5">&nbsp;</div>
+     
 {% if comments is not empty %}
     <h2>Commentaires</h2>
     <ul>

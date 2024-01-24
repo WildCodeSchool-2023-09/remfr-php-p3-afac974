@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - Mes Favoris {% endblock %}
+
+{% block body %}
+<div class="mt-5"></div>
+<h1 class="p-3 d-flex justify-content-center mb-5">Mes favoris</h1>
+    <div class="mb-4 container border-general">
+        <div class="row">
+            {% for favorite in app.user.favorites %}
+            <div class="col-4">
+                <div class="m-3 card">
+                    <img src="/uploads/artwork/{{ favorite.picture }}" alt="{{favorite.title}}">
+                    <h2 class="pt-2 text-center"> {{favorite.title}}</h2>
+                    
+                    <p class="mx-auto">
+                        <a href="{{ path('artwork_show', {id:favorite.id})}}"><img class="know-more" src="{{ asset('build/images/plus.svg') }}"> En savoir plus</a>
+                    </p>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
