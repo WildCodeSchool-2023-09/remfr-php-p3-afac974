@@ -73,3 +73,4 @@ final class Version20240124011208 extends AbstractMigration
         $this->addSql('DROP TABLE messenger_messages');
     }
 }
+
