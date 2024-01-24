@@ -101,19 +101,10 @@ class UserController extends AbstractController
             if (isset($password)) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);
+                $entityManager->flush();
+                $this->addFlash('success', 'Vos informations personnelles ont bien été mis à jour');
+            } else {
             }
-
-            $entityManager->flush();
-
-            $email = (new Email())
-            ->from($this->getParameter('mailer_from'))
-            ->to($user->getEmail())
-            ->subject('Vos informations personnelles ont bien été mis à jours !')
-            ->html($this->renderView('user/emailEdit.html.twig'));
-
-            $mailer->send($email);
-
-            return $this->redirectToRoute('app_user_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/edit.html.twig', [

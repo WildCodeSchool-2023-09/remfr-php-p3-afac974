@@ -24,7 +24,7 @@
 			{% if app.user %}
 			<div class="dropdown">
 				<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Mon Compte
+					{{ app.user.name}} {{ app.user.lastname}}
 				</button>
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id} )}}">Mes informations</a></li>
