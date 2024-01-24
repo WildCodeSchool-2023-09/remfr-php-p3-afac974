@@ -53,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $avatar = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private int $hostedDomain;
+    private ?int $hostedDomain = null;
 
     public function __construct()
     {
