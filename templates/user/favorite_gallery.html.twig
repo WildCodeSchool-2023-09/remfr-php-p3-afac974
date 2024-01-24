@@ -3,7 +3,8 @@
 {% block title %} {{ parent() }} - Mes Favoris {% endblock %}
 
 {% block body %}
-<h1 class="p-3 d-flex justify-content-center">Mes favoris</h1>
+<div class="mt-5"></div>
+<h1 class="p-3 d-flex justify-content-center mb-5">Mes favoris</h1>
     <div class="mb-4 container border-general">
         <div class="row">
             {% for favorite in app.user.favorites %}
