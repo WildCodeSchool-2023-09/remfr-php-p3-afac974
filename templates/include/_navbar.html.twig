@@ -28,7 +28,7 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id} )}}">Mes informations</a></li>
-					<li><a class="dropdown-item" href="#">Mes favoris</a></li>
+					<li><a class="dropdown-item" href="{{ path('artwork_show_favorites')}}">Mes favoris</a></li>
 					<li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
 				</ul>
 				</div>

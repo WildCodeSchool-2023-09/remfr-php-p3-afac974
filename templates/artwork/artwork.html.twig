@@ -54,7 +54,11 @@
 <div class="container pt-5">
     <div class="row">
         <div class="col">
-            <p><img class="favorite" src="{{ asset('build/images/favorite.svg') }}"> Ajouter aux favoris</p>
+        {% if artwork in app.user.favorites %}
+            <a href="{{ path('artwork_add_favorite', {'id' : artwork.id})}}"><p><img class="favorite" src="{{ asset('build/images/favorite.svg') }}"> Retirer des favoris</p></a>
+        {% else %}
+            <a href="{{ path('artwork_add_favorite', {'id' : artwork.id})}}"><p><img class="favorite" src="{{ asset('build/images/not_favorite.svg') }}"> Ajouter aux favoris</p></a>
+        {% endif %}
         </div>
         <div class="col">
             <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>

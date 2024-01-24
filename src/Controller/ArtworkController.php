@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Artist;
+use App\Entity\Artwork;
+use App\Form\ArtworkType;
+use App\Repository\ArtworkRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\ArtworkType;
-use App\Entity\Artwork;
-use App\Entity\Artist;
-use App\Repository\ArtworkRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/artwork', name:'artwork_')]
 class ArtworkController extends AbstractController
@@ -88,5 +89,27 @@ class ArtworkController extends AbstractController
     public function show(Artwork $artwork): Response
     {
         return $this->render('artwork/artwork.html.twig', ['artwork' => $artwork]);
+    }
+
+    #[Route('/addFavorite/{id}', name:'add_favorite')]
+    public function newFavorite(Artwork $artwork, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $user = $security->getUser();
+
+        if ($user->getFavorites()->contains($artwork)) {
+            $user->removeFavorite($artwork);
+        } else {
+            $user->addFavorite($artwork);
+        }
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('artwork_show_favorites');
+    }
+
+    #[Route('/showFavorites', name:'show_favorites')]
+    public function showFavorites(): Response
+    {
+        return $this->render('user/favorite_gallery.html.twig');
     }
 }

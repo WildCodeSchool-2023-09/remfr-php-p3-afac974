@@ -71,10 +71,13 @@ class Artwork
 
     #[ORM\Column]
     private ?int $year = null;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'artworks')]
+    private Collection $favoritedBy;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->favoritedBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -243,6 +246,30 @@ class Artwork
     public function setYear(int $year): static
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoritedBy(): Collection
+    {
+        return $this->favoritedBy;
+    }
+
+    public function addFavoritedBy(User $favoritedBy): static
+    {
+        if (!$this->favoritedBy->contains($favoritedBy)) {
+            $this->favoritedBy->add($favoritedBy);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritedBy(User $favoritedBy): static
+    {
+        $this->favoritedBy->removeElement($favoritedBy);
 
         return $this;
     }

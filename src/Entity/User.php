@@ -43,9 +43,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Comment::class)]
     private Collection $comment;
 
+    #[ORM\ManyToMany(targetEntity: Artwork::class, inversedBy: 'favoritedBy')]
+    private Collection $favorites;
+
     public function __construct()
     {
         $this->comment = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +180,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Artwork>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Artwork $artwork): static
+    {
+        if (!$this->favorites->contains($artwork)) {
+            $this->favorites->add($artwork);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Artwork $artwork): static
+    {
+        $this->favorites->removeElement($artwork);
 
         return $this;
     }
