@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de l'oeuvre{% endblock %}
+
+{% block body %}
+    <h1 class="mx-auto pt-4">Modification de l'oeuvre "{{ artwork.getTitle() }}" par {{ artwork.artist.name}} {{ artwork.artist.lastname}}</h1>
+    
+    <div class="container mx-auto border-general">
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.artist) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.year) }}
+        {{ form_row(form.height) }}
+        {{ form_row(form.width) }}
+        {{ form_row(form.pictureFile) }}
+        {{ form_row(form.isSigned) }}
+        {{ form_row(form.isUnique) }}
+        
+
+        <button type="submit" class="btn btn-primary bouton-general"> Sauvegarder ses changements</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_show_artworks') }}" class="btn btn-secondary mt-2">Retour</a>
+     </div>
+{% endblock %}

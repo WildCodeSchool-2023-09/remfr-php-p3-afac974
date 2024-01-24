@@ -22,25 +22,21 @@
 				<img src="{{ asset('build/images/AFAC.png') }}">
 			</a>
 			{% if app.user %}
-				<div class="monCompte">
-					<a href="{{ path('app_user_show', {'id': app.user.id} )}}">
-						Mon compte
-					</a>
-					<p>
-						{{ app.user.name}}
-						{{ app.user.lastname}}
-					</p>
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					{{ app.user.name}} {{ app.user.lastname}}
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id} )}}">Mes informations</a></li>
+					<li><a class="dropdown-item" href="{{ path('artwork_show_favorites')}}">Mes favoris</a></li>
+					<li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
+				</ul>
 				</div>
-				<div>
-					<a href="{{ path('app_logout')}}">
-						Déconnection
-					</a>
-
-				{% else %}
-					<a href="{{ path('app_login')}}">
-						<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
-					</a>
-				</div>
+			
+			{% else %}
+				<a href="{{ path('app_login')}}">
+					<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
+				</a>
 			{% endif %}
 		</div>
 	</nav>

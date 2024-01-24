@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use DateTime;
+use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: ArtworkRepository::class)]
 #[Vich\Uploadable]
@@ -26,9 +28,6 @@ class Artwork
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $reference = null;
 
     #[ORM\Column]
     #[Assert\Positive(
@@ -57,22 +56,28 @@ class Artwork
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $picture = null;
+    #[ORM\Column(length: 255)]
+    private ?string $picture = 'default_poster_value.svg';
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;
 
     #[Vich\UploadableField(mapping: 'artwork', fileNameProperty: 'picture')]
     #[Assert\File(
-        maxSize: '1M',
+        maxSize: '2M',
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
     )]
     private ?File $pictureFile = null;
 
     #[ORM\Column]
     private ?int $year = null;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'artworks')]
+    private Collection $favoritedBy;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->favoritedBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,18 +105,6 @@ class Artwork
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(string $reference): static
-    {
-        $this->reference = $reference;
 
         return $this;
     }
@@ -230,16 +223,20 @@ class Artwork
         return $this;
     }
 
-    public function setPictureFile(File $image = null): Artwork
-    {
-        $this->pictureFile = $image;
-        return $this;
-    }
-
     public function getPictureFile(): ?File
     {
         return $this->pictureFile;
     }
+
+    public function setPictureFile(File $pictureFile = null): Artwork
+    {
+        $this->pictureFile = $pictureFile;
+        if ($pictureFile) {
+            $this->updatedAt = new DateTime('now');
+        }
+        return $this;
+    }
+
 
     public function getYear(): ?int
     {
@@ -249,6 +246,30 @@ class Artwork
     public function setYear(int $year): static
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoritedBy(): Collection
+    {
+        return $this->favoritedBy;
+    }
+
+    public function addFavoritedBy(User $favoritedBy): static
+    {
+        if (!$this->favoritedBy->contains($favoritedBy)) {
+            $this->favoritedBy->add($favoritedBy);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritedBy(User $favoritedBy): static
+    {
+        $this->favoritedBy->removeElement($favoritedBy);
 
         return $this;
     }
