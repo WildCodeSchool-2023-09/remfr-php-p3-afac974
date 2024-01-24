@@ -22,17 +22,25 @@
 				<img src="{{ asset('build/images/AFAC.png') }}">
 			</a>
 			{% if app.user %}
-				<a href="{{ path('app_user_show', {'id': app.user.id} )}}">
-					Mon compte
-				</a>
-				<a href="{{ path('app_logout')}}">
-					Déconnection
-				</a>
+				<div class="monCompte">
+					<a href="{{ path('app_user_show', {'id': app.user.id} )}}">
+						Mon compte
+					</a>
+					<p>
+						{{ app.user.name}}
+						{{ app.user.lastname}}
+					</p>
+				</div>
+				<div>
+					<a href="{{ path('app_logout')}}">
+						Déconnection
+					</a>
 
-			{% else %}
-				<a href="{{ path('app_login')}}">
-					<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
-				</a>
+				{% else %}
+					<a href="{{ path('app_login')}}">
+						<img class="nav-link" src="{{ asset('build/images/user.svg') }}">
+					</a>
+				</div>
 			{% endif %}
 		</div>
 	</nav>
