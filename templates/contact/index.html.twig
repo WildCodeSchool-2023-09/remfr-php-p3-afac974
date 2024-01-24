@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - AFAC 974{% endblock %}
+
+{% block body %}
+<h1 class="mx-auto pt-4">Contact de l'AFAC 974</h1>
+     <h3 class="mx-auto text-center pt-4"> Veuillez remplir ce formulaire pour nous faire part de votre expérience à l'AFAC 974 ou nous faire une demande spécifique.</h3>
+    <div class="container mb-4 mx-auto border-general">
+    {{ form_start(form) }}
+      
+        {{ form_row(form.name, {'label': 'Prénom'|trans}) }}
+        {{ form_row(form.lastname, {'label': 'Nom'|trans}) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.demand, {'label': 'Contexte de votre demande'|trans}) }}
+        {{ form_row(form.content, {'label': 'Votre demande'|trans}) }}
+
+        <button type="submit" class="btn btn-primary bouton-general"> Soumettre ce formulaire</button>
+    {{ form_end(form) }}
+
+     </div>
+{% endblock %}

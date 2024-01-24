@@ -75,6 +75,43 @@
 </div>
 {% endif %}
 
-<div class="container divider mt-5">&nbsp;</div>
-
+     <div class="container divider mt-5 mb-5">&nbsp;</div>
+     
+{% if comments is not empty %}
+    <h2>Commentaires</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                {{ comment.rate }} / 5 
+                <p> {{ comment.content }} </p>
+                <p>Par {{ comment.author.email }} le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {# Afficher le bouton de suppression pour les administrateurs pour tous les commentaires #}
+                    <a href="{{ path('comment_delete', {'id': comment.id}) }}">Supprimer</a>
+                {% elseif is_granted('ROLE_USER') and comment.author == app.user %}
+                    {# Afficher le bouton de suppression pour ceux qui en sont uniquement les auteurs #}
+                    <a href="{{ path('comment_delete', {'id': comment.id}) }}">Supprimer</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Cette oeuvre n'a reçu aucun commentaire encore. Soyez le premier !</p>
+    {% endif %}
+    {% if app.user %}
+    {{ form_start(form) }}
+    <div class="border-general mb-5">
+        <div class="mb-3">
+            {{ form_row(form.rate) }}
+        </div>
+        <div class="mb-3">
+           {{ form_row(form.content,{'label': 'Votre commentaire'|trans})  }}
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter votre commentaire</button>
+    </div>
+    {{ form_end(form) }}
+{% else %}
+    <p>Connectez-vous pour ajouter un commentaire.</p>
+{% endif %}
+</div>
 {% endblock %}
