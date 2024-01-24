@@ -30,8 +30,11 @@ class HomeController extends AbstractController
         return $this->render('home/aboutUs.html.twig');
     }
     #[Route('/gallery', name: 'gallery')]
-    public function showGallery(ArtworkRepository $artworkRepository, PaginatorInterface $paginator, Request $request): Response
-    {
+    public function showGallery(
+        ArtworkRepository $artworkRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
         // Barre de recherche
 
         $form = $this->createFormBuilder(null, [
