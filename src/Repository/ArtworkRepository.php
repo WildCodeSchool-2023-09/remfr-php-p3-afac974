@@ -21,6 +21,19 @@ class ArtworkRepository extends ServiceEntityRepository
         parent::__construct($registry, Artwork::class);
     }
 
+    public function queryFindAllArtwork()
+    {
+        return $this->createQueryBuilder(alias:'art')->getQuery();
+    }
+
+    public function findLikeTitle (string $search)
+    {
+        return $this->createQueryBuilder(alias:'art')
+        ->andWhere('art.title LIKE :search')
+        ->setParameter(key:'search', value: '%'. $search . '%')
+        ->getQuery()
+        ->getResult();
+    }
 //    /**
 //     * @return Artwork[] Returns an array of Artwork objects
 //     */

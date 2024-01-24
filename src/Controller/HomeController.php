@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Type;
+use App\Repository\ArtworkRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use App\Repository\ArtworkRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/', name: 'home_')]
 
@@ -25,11 +30,39 @@ class HomeController extends AbstractController
         return $this->render('home/aboutUs.html.twig');
     }
     #[Route('/gallery', name: 'gallery')]
-    public function showGallery(ArtworkRepository $artworkRepository): Response
+    public function showGallery(ArtworkRepository $artworkRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $artworks = $artworkRepository->findAll();
+        // Barre de recherche
 
-        return $this->render('home/gallery.html.twig', ['artworks' => $artworks]);
+        $form = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('search', SearchType::class, [
+                'attr' => ['class' => 'pl-2']
+            ])
+            ->getForm();
+        
+        $form->handleRequest($request);
+        
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->get('search')->getData();
+            $query = $artworkRepository->findLikeTitle($search);
+        }
+        else {
+            $query = $artworkRepository->queryFindAllArtwork();
+        }
+        // pagination de la gallerie d'art
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+
+        return $this->render('home/gallery.html.twig', [
+            'artworks' => $pagination,
+            'form' => $form,
+        ]);
     }
 
     public function flashMessageSuccessConnection(SessionInterface $session): Response

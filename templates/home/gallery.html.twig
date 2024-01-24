@@ -4,6 +4,9 @@
 
 {% block body %}
 <h1 class="p-3 d-flex justify-content-center">Notre galerie</h1>
+    <div class= 'd-flex justify-content-center px-2'>
+    {{ form(form, {'attr': {class:'padding-left: 1rem'}} ) }}
+    </div>
     <div class="mb-4 container border-general">
         <div class="row">
             {% for artwork in artworks %}
@@ -21,4 +24,8 @@
             {% endfor %}
         </div>
     </div>
+    <div class= 'd-flex justify-content-center'>
+    {{ knp_pagination_render(artworks) }}
+    </div>
+
 {% endblock %}
