@@ -20,7 +20,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 class Artist extends User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -177,5 +176,4 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
     {
         return (string) $this->email;
     }
-
 }
