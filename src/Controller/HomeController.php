@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -47,6 +48,10 @@ class HomeController extends AbstractController
                 'class' => Type::class,
                 'choice_label' => 'name',
                 'attr' => ['class' => 'pl-2'],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
             ])
             ->getForm();
 

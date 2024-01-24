@@ -25,19 +25,19 @@ class ArtworkRepository extends ServiceEntityRepository
 
     public function queryFindAllArtwork(): Query
     {
-        return $this->createQueryBuilder(alias:'art')->getQuery();
+        return $this->createQueryBuilder(alias:'a')->orderBy('a.id', 'ASC')->getQuery();
     }
 
     public function findLikeTitle(string $search, ?Type $type): Query
     {
-        $query = $this->createQueryBuilder('art')
-            ->join('art.type', 't')
-            ->andWhere('art.title LIKE :search')
+        $query = $this->createQueryBuilder('a')
+            ->join('a.type', 'at')
+            ->andWhere('a.title LIKE :search')
             ->setParameter('search', '%' . $search . '%');
 
         if ($type) {
             $query
-                ->andWhere('art.type = :type')
+                ->andWhere('a.type = :type')
                 ->setParameter('type', $type);
         }
 
