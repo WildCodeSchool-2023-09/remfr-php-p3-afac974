@@ -4,28 +4,32 @@
 {% endblock %}
 
 {% block body %}
-	<h1>User</h1>
-
+	<h1 class="text-center mt-5 mb-5">Mes informations</h1>
+<div class="container border-general">
 	<table class="table">
 		<tbody>
 
-			<tr>
+			<tr class="mb-3 mt-3">
 				<th>Email</th>
 				<td>{{ user.email }}</td>
 			</tr>
-			<tr>
+			<tr class="mb-3">
 				<th>Name</th>
 				<td>{{ user.name }}</td>
 			</tr>
-			<tr>
+			<trclass="mb-3">
 				<th>Lastname</th>
 				<td>{{ user.lastname }}</td>
 			</tr>
 		</tbody>
 	</table>
 
-	<a class="btn btn-lg btn-primary" href="{{ path('home_index') }}">Retour à la page d'accueil</a>
-	<a class="btn btn-lg btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mes informations personnelles</a>
+	<div class="mt-4 d-flex justify-content-center">
+	<a class="btn btn-lg btn-primary me-3" href="{{ path('home_index') }}">Retour à la page d'accueil</a>
+	<a class="btn btn-lg btn-primary me-3" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mes informations personnelles</a>
+	
 
 	{{ include('user/_delete_form.html.twig') }}
+	</div>
+	</div>
 {% endblock %}

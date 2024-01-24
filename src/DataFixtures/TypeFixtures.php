@@ -4,14 +4,15 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use App\Entity\Type;
 
 class TypeFixtures extends Fixture
 {
     public const TYPE = [
-        ['name' => 'peinture'],
-        ['name' => 'sculpture'],
-        ['name' => 'photographie']
+        ['name' => 'Peinture'],
+        ['name' => 'Sculpture'],
+        ['name' => 'Photographie']
     ];
 
     public function load(ObjectManager $manager): void
@@ -20,7 +21,7 @@ class TypeFixtures extends Fixture
             $type = new TYPE();
             $type->setName($typeName['name']);
 
-
+            $this->addReference('type_' . $typeName['name'], $type);
             $manager->persist($type);
         }
         $manager->flush();

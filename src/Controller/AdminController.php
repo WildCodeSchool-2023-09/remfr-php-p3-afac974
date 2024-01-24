@@ -30,15 +30,7 @@ class AdminController extends AbstractController
     {
         $user = $security->getUser();
 
-        if ($user !== null) {
-            $usernameAdmin = $user->getUsername();
-        } else {
-            $usernameAdmin = 'Utilisateur non connecté';
-        }
-
-        return $this->render('admin/index.html.twig', [
-            'usernameAdmin' => $usernameAdmin,
-        ]);
+        return $this->render('admin/index.html.twig', ['user' => $user]);
     }
 
     #[Route('/showUsers', name: 'show_users')]

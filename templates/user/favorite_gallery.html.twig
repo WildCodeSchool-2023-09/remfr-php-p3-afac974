@@ -5,6 +5,8 @@
 {% block body %}
 <div class="mt-5"></div>
 <h1 class="p-3 d-flex justify-content-center mb-5">Mes favoris</h1>
+
+{% if app.user.favorites is not empty %}
     <div class="mb-4 container border-general">
         <div class="row">
             {% for favorite in app.user.favorites %}
@@ -22,4 +24,8 @@
             {% endfor %}
         </div>
     </div>
+{% else %}
+<p class="text-center"> Tu n'as aucun favoris, va vite parcourir la galerie! </p>
+{% endif %}
+
 {% endblock %}
