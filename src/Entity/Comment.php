@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -14,21 +16,36 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?int $rate = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?User $user = null;
-
-    #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Artwork $artwork = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comment')]
-    private ?User $userId = null;
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?User $author = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getRate(): ?int
+    {
+        return $this->rate;
+    }
+
+    public function setRate(int $rate): static
+    {
+        $this->rate = $rate;
+
+        return $this;
     }
 
     public function getContent(): ?string
@@ -39,18 +56,6 @@ class Comment
     public function setContent(string $content): static
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
 
         return $this;
     }
@@ -67,15 +72,25 @@ class Comment
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getAuthor(): ?User
     {
-        return $this->userId;
+        return $this->author;
     }
 
-    public function setUserId(?User $userId): static
+    public function setAuthor(?User $author): static
     {
-        $this->userId = $userId;
+        $this->author = $author;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 }
