@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Comment;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,12 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Artist $artistId = null;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Comment::class)]
-    private Collection $comment;
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
+    private Collection $comments;
 
     public function __construct()
     {
-        $this->comment = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,16 +154,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Comment>
      */
-    public function getComment(): Collection
+    public function getComments(): Collection
     {
-        return $this->comment;
+        return $this->comments;
     }
 
     public function addComment(Comment $comment): static
     {
-        if (!$this->comment->contains($comment)) {
-            $this->comment->add($comment);
-            $comment->setUserId($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setAuthor($this);
         }
 
         return $this;
@@ -170,10 +171,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeComment(Comment $comment): static
     {
-        if ($this->comment->removeElement($comment)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getUserId() === $this) {
-                $comment->setUserId(null);
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
             }
         }
 
