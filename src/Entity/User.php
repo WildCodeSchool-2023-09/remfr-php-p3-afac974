@@ -55,8 +55,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $avatar = null;
 
-    #[ORM\Column(type: 'int', length: 255)]
-    private ?int $hostedDomain;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $hostedDomain;
 
     public function __construct()
     {
@@ -220,20 +220,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
      /** Get the value of hostedDomain
-     * @return int
+     * @return string
      */
-    public function getHostedDomain(): int
+    public function getHostedDomain(): string
     {
         return $this->hostedDomain;
     }
 
     /**
      * Set the value of hostedDomain
-     * @param int $hostedDomain
+     * @param string $hostedDomain
      * @return $this
      *
      */
-    public function setHostedDomain(int $hostedDomain): static
+    public function setHostedDomain(string $hostedDomain): static
     {
         $this->hostedDomain = $hostedDomain;
 

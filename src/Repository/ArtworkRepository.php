@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Type;
 use App\Entity\Artwork;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Artwork>
@@ -27,13 +28,20 @@ class ArtworkRepository extends ServiceEntityRepository
         return $this->createQueryBuilder(alias:'art')->getQuery();
     }
 
-    public function findLikeTitle(string $search): array
+    public function findLikeTitle(string $search, ?Type $type): Query
     {
-        return $this->createQueryBuilder(alias:'art')
-        ->andWhere('art.title LIKE :search')
-        ->setParameter(key:'search', value: '%' . $search . '%')
-        ->getQuery()
-        ->getResult();
+        $query = $this->createQueryBuilder('art')
+            ->join('art.type', 't')
+            ->andWhere('art.title LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+
+        if ($type) {
+            $query
+                ->andWhere('art.type = :type')
+                ->setParameter('type', $type);
+        }
+
+        return $query->getQuery();
     }
 //    /**
 //     * @return Artwork[] Returns an array of Artwork objects

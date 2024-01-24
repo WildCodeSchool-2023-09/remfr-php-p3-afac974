@@ -4,8 +4,12 @@
 
 {% block body %}
 <h1 class="p-3 d-flex justify-content-center">Notre galerie</h1>
-    <div class= 'd-flex justify-content-center px-2'>
-    {{ form(form, {'attr': {class:'padding-left: 1rem'}} ) }}
+    <div class= 'd-flex justify-content-center'>
+    {{ form(form, {'attr': {'class': 'mx-auto'}}) }}
+    </div>
+
+    
+{{ form_end(form) }}
     </div>
     <div class="mb-4 container border-general">
         <div class="row">
