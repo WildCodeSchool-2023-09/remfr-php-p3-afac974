@@ -96,8 +96,8 @@ class UserController extends AbstractController
                 $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
                 $user->setPassword($hashedPassword);
                 $entityManager->flush();
+                $this->addFlash('success', 'Vos informations personnelles ont bien été mis à jour');
             } else {
-                $this->addFlash('passwordError', 'L\'ancien mot de passe ne correspond pas.');
             }
         }
 
