@@ -27,6 +27,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit')]
+    #[IsGranted("ROLE_USER")]
     public function editComment(Comment $comment, Request $request, EntityManagerInterface $entityManager): Response
     {
 
