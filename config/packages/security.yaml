@@ -1,4 +1,5 @@
 security:
+    enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         App\Entity\User: 'auto'
@@ -6,6 +7,8 @@ security:
         algorithm: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
+        oauth:
+            id: knpu.oauth2.user_provider
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
@@ -26,14 +29,19 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-
                 always_use_default_target_path: true
                 username_parameter: 'email'
                 password_parameter: 'password'
-
                 enable_csrf: true
+
+            custom_authenticators:
+                - App\Security\MyFacebookAuthenticator
+            entry_point: "form_login"
+
             logout:
                 path: /logout
+            login_throttling:
+                max_attempts: 3
             # custom_authenticator: App\Security\LoginAuthentificatorAuthenticator
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -44,7 +52,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/dashboard/edit, roles: ROLE_USER }
+        # - { path: ^/user, roles: ROLE_USER }
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_ARTIST:      [ROLE_USER]

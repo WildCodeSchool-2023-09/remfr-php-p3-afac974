@@ -29,5 +29,13 @@
 		<button class="btn btn-lg btn-primary" type="submit">
 			Connexion
 		</button>
+
+		<a class="btn btn-lg btn-primary" href="{{ path('app_user_new')}}">
+			Inscription
+		</a>
+		<a class="btn btn-lg btn-primary" href="{{ path('app_forgot_password_request')}}">
+			Mot de passe oublié
+		</a>
 	</form>
+
 {% endblock %}

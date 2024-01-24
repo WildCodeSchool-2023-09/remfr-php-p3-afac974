@@ -1,11 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}New User
+{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
+	<h1>Créer votre compte</h1>
 
-    {{ include('user/_form.html.twig') }}
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0&appId=897364282059711" nonce="Qet7h1QQ"></script>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+	<div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="" data-auto-logout-link="false" data-use-continue-as="true"></div>
+
+	{#}<script>
+							var finished_rendering = function () {
+					console.log("finished rendering plugins");
+					var spinner = document.getElementById("spinner");
+					spinner.removeAttribute("style");
+					spinner.removeChild(spinner.childNodes[0]);
+					}
+					FB.Event.subscribe('xfbml.render', finished_rendering);
+						</script>
+						<div id="spinner" style="
+								        background: #4267b2;
+								        border-radius: 5px;
+								        color: white;
+								        height: 40px;
+								        text-align: center;
+								        width: 250px;">
+							Loading
+							<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-use-continue-as="true"></div>
+						</div>
+					{#}
+
+	{{ include('user/_form.html.twig') }}
+	<form>
+		<a class="btn btn-lg btn-primary" href="{{ path('app_user_index') }}">Retour à la page de connexion</a>
+	</form>
 {% endblock %}
