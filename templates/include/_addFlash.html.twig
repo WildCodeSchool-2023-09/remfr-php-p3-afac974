@@ -1,7 +1,7 @@
 {# read and display all flash messages #}
 {% for label, messages in app.flashes %}
 	{% for message in messages %}
-		<div class="alert alert{{ label }}" uk-alert>
+		<div class="alert alert-{{ label }}" uk-alert>
 			<a class="uk-alert-close" uk-close></a>
 			<p>{{ message }}</p>
 		</div>
