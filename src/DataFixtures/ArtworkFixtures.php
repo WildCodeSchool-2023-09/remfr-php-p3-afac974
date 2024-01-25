@@ -51,6 +51,69 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
         et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
         sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2017,
         'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'cherry-blossom.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Plage de Martinique', 'type' => 'type_Peinture',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2000,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'beach.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'La Femme solaire', 'type' => 'type_Peinture',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2023,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'black_woman.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Eglise au matin', 'type' => 'type_Photographie',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2010,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'church.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Habitant du récif', 'type' => 'type_Photographie',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2017,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'fish.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Geisha', 'type' => 'type_Peinture',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2009,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'geisha.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Orange Anime', 'type' => 'type_Peinture',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2014,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'japan.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Nature morte', 'type' => 'type_Peinture',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 1998,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'orange.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Le Python', 'type' => 'type_Photographie',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2021,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'volcano.png'],
+
+        ['is_signed' => true, 'is_unique' => true, 'title' => 'Aquarelle marbrée', 'type' => 'type_Peinture',
+        'description' => 'Lorem ipsum dolor sit amet. Et dicta placeat aut deserunt vero At enim ullam ab repellat 
+        nihil et enim possimus est voluptatem officia vel delectus excepturi. Id sunt doloremque aut alias expedita 
+        et expedita consequatur. Id voluptatibus temporibus id saepe nobis et nobis deserunt. Aut quas eveniet ut 
+        sapiente fugiat eum doloremque dolorem rem pariatur iste qui omnis earum.', 'year' => 2024,
+        'height' => 110, 'width' => 65, 'artist' => 'Hanaé Grondin', 'picture' => 'watercolor.png'],
     ];
 
     public function load(ObjectManager $manager): void
