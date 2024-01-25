@@ -5,31 +5,36 @@
 
 {% block body %}
 	<h1 class="text-center mt-5 mb-5">Mes informations</h1>
-<div class="container border-general">
-	<table class="table">
-		<tbody>
+	<div class="container border-general">
+		<table class="table">
+			<tbody>
 
-			<tr class="mb-3 mt-3">
-				<th>Email</th>
-				<td>{{ user.email }}</td>
-			</tr>
-			<tr class="mb-3">
-				<th>Name</th>
-				<td>{{ user.name }}</td>
-			</tr>
-			<trclass="mb-3">
-				<th>Lastname</th>
-				<td>{{ user.lastname }}</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<div class="mt-4 d-flex justify-content-center">
-	<a class="btn btn-lg btn-primary me-3" href="{{ path('home_index') }}">Retour à la page d'accueil</a>
-	<a class="btn btn-lg btn-primary me-3" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mes informations personnelles</a>
-	
-
-	{{ include('user/_delete_form.html.twig') }}
+				<tr class="mb-3 mt-3">
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+				<tr class="mb-3">
+					<th>Name</th>
+					<td>{{ user.name }}</td>
+				</tr>
+				<trclass="mb-3">
+					<th>Lastname</th>
+					<td>{{ user.lastname }}</td>
+				</tr>
+				<tr>
+					<th>Pseudonyme</th>
+					<td>{{ user.pseudonym }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<form>
+			<a class="btn btn-lg btn-primary" href="{{ path('home_index') }}">Retour à la page d'accueil</a>
+		</form>
+		<br>
+		<form>
+			<a class="btn btn-lg btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier mes informations personnelles</a>
+		</form>
+		<br>
+		{{ include('user/_delete_form.html.twig') }}
 	</div>
-	</div>
-{% endblock %}
+</div>{% endblock %}

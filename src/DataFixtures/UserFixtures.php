@@ -26,6 +26,7 @@ class UserFixtures extends Fixture
         );
         $contributor1->setPassword($hashedPassword);
         $contributor1->setName('laura');
+        $contributor1->setPseudonym('laura');
         $contributor1->setLastName('wolf');
         $manager->persist($contributor1);
 
@@ -39,6 +40,7 @@ class UserFixtures extends Fixture
         );
         $contributor2->setPassword($hashedPassword);
         $contributor2->setName('antonin');
+        $contributor2->setPseudonym('anto');
         $contributor2->setLastName('brodel');
         $manager->persist($contributor2);
 
@@ -52,6 +54,7 @@ class UserFixtures extends Fixture
         );
         $contributor3->setPassword($hashedPassword);
         $contributor3->setName('yannick');
+        $contributor3->setPseudonym('yannick');
         $contributor3->setLastName('ledoux');
         $manager->persist($contributor3);
 
@@ -65,9 +68,9 @@ class UserFixtures extends Fixture
         );
         $admin->setPassword($hashedPassword);
         $admin->setName('admin');
+        $admin->setPseudonym('admin');
         $admin->setLastName('admin');
         $manager->persist($admin);
-
         $manager->flush();
     }
 }
