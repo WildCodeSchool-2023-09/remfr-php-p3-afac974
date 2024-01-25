@@ -40,7 +40,8 @@ class UserType extends AbstractType
             ],
         ])
         ->add('name', TextType::class)
-        ->add('lastname', TextType::class);
+        ->add('lastname', TextType::class)
+        ->add('pseudonym', TextType::class, ['label' => 'Pseudonyme']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

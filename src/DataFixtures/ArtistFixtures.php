@@ -13,6 +13,7 @@ class ArtistFixtures extends Fixture
     {
         $artist1 = new Artist();
         $artist1->setName('John');
+        $artist1->setPseudonym('John');
         $artist1->setLastname('Doe');
         $artist1->setEmail('john.doe@example.com');
         $artist1->setPoster('default_poster_value.svg');
