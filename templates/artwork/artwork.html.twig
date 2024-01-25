@@ -85,15 +85,16 @@
     <ul>
         {% for comment in comments %}
             <li>
-                {{ comment.rate }} / 5 
+                {{ comment.rate }} / 10 
                 <p> {{ comment.content }} </p>
-                <p>Par {{ comment.author.email }} le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                <p>Par {{ comment.author.name }} le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
                 {% if is_granted('ROLE_ADMIN') %}
                     {# Afficher le bouton de suppression pour les administrateurs pour tous les commentaires #}
                     <a href="{{ path('comment_delete', {'id': comment.id}) }}">Supprimer</a>
                 {% elseif is_granted('ROLE_USER') and comment.author == app.user %}
                     {# Afficher le bouton de suppression pour ceux qui en sont uniquement les auteurs #}
-                    <a href="{{ path('comment_delete', {'id': comment.id}) }}">Supprimer</a>
+                <button type="button" class="btn btn-primary" onclick="window.location='{{ path('comment_delete', {'id': comment.id}) }}'">Supprimer</button>
+                <button type="button" class="btn btn-primary" onclick="window.location='{{ path('comment_edit', {'id': comment.id}) }}'">Modifier</button>
                 {% endif %}
             </li>
         {% endfor %}
