@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Type;
+use App\Service\CarousselManager;
 use App\Repository\ArtworkRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ArtworkRepository $artworkRepository): Response
-    {
-        $artworks = $artworkRepository->findAll();
+    public function index(
+        ArtworkRepository $artworkRepository,
+        CarousselManager $carousselManager
+    ): Response {
+        //$artworks = $artworkRepository->findAll();
+        $artworks = $carousselManager->getRandomArtwork($artworkRepository);
         return $this->render('home/index.html.twig', ['artworks' => $artworks]);
     }
 
