@@ -1,20 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent() }} - Nos artistes {% endblock %}
+{% block title %} {{ parent() }} - Nos Artistes {% endblock %}
 
 {% block body %}
-<h1 class="p-3 d-flex justify-content-center">Nos artistes</h1>
-    <div class="col-sm-6 container border-general mb-4">
-        <div class="row justify-content-center">
-                {% for i in 0..7 %}
-                <div class="artist-card m-3" style="width: 18rem;">
-                    <img src="{{ asset('build/images/darksanta.png') }}" class="card-img-top" alt="...">
-                    <div class="artist-card-body">
-                        <p class="text-center">Nom de l'artiste</p>
-                    </div>
+<h1 class="p-3 d-flex justify-content-center mt-5 mb-5">Nos Artistes</h1>
+    
+    {#<div class= 'd-flex justify-content-center'>
+    {{ form(form, {'attr': {'class': 'mx-auto'}}) }}
+    </div>
+
+    
+{{ form_end(form) }} #}
+    </div>
+    <div class="mb-4 container border-general">
+        <div class="row">
+            {% for artist in artists %}
+            <div class="col-4">
+                <div class="m-3 card">
+                    <img src="/uploads/artistPhoto/{{ artist.poster }}" alt="{{artist.name}} {{artist.lastname}}">
+                    <h2 class="pt-2 text-center">{{artist.name}} {{artist.lastname}}</h2>
+                    
+                    <p class="mx-auto">
+                        {# compléter lien dès que les pages artistes son dispos#}
+                        <a href="#"><img class="know-more" src="{{ asset('build/images/plus.svg') }}"> En savoir plus</a>
+                    </p>
+                    
                 </div>
-                {% endfor %}
+            </div>
+            {% endfor %}
         </div>
     </div>
+    {#
+    <div class= 'd-flex justify-content-center'>
+    {{ knp_pagination_render(artists) }}
+    </div> #}
+
 {% endblock %}
 
