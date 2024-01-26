@@ -23,11 +23,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(
         ArtworkRepository $artworkRepository,
+        ArtistRepository $artistRepository,
         CarousselManager $carousselManager
     ): Response {
         //$artworks = $artworkRepository->findAll();
         $artworks = $carousselManager->getRandomArtwork($artworkRepository);
-        return $this->render('home/index.html.twig', ['artworks' => $artworks]);
+        $artists = $carousselManager->getRandomArtist($artistRepository);
+        return $this->render('home/index.html.twig', ['artworks' => $artworks, 'artists' => $artists]);
     }
 
     #[Route('/aboutUs', name: 'about_us')]
