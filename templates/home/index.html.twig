@@ -89,24 +89,24 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="2500">
-                <img src="{{ asset('uploads/artwork/' ~ artworks[0].picture) }}" class="d-block w-100" alt="{{artworks[0].title}}">
+                <img src="{{ asset('uploads/artistPhoto/' ~ artists[0].poster) }}" class="d-block w-100" alt="{{artworks[0].title}}">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>{{artworks[0].title}}</h5>
-                    <p>{{artworks[0].description}}</p>
+                    <h5>{{artists[0].name}} {{artists[0].lastname}}</h5>
+                    <p>{{artists[0].description}}</p>
                 </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="3500">
-                <img src="{{ asset('uploads/artwork/' ~ artworks[1].picture) }}" class="d-block w-100" alt="{{artworks[1].title}}">
+                <img src="{{ asset('uploads/artistPhoto/' ~ artists[1].poster) }}" class="d-block w-100" alt="{{artworks[1].title}}">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>{{artworks[1].title}}</h5>
-                    <p>{{artworks[1].description}}</p>
+                    <h5>{{artists[1].name}} {{artists[1].lastname}}</h5>
+                    <p>{{artists[1].description}}</p>
                 </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="2500">
-                <img src="{{ asset('uploads/artwork/' ~ artworks[2].picture) }}" class="d-block w-100" alt="{{artworks[2].title}}">
+                <img src="{{ asset('uploads/artistPhoto/' ~ artists[2].poster) }}" class="d-block w-100" alt="{{artworks[2].title}}">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>{{artworks[2].title}}</h5>
-                    <p>{{artworks[2].description}}</p>
+                    <h5>{{artists[2].name}} {{artists[2].lastname}}</h5>
+                    <p>{{artists[2].description}}</p>
                 </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
     </div>
     <a href="{{ path('home_gallery') }}">
     <div class="d-grid col-4 mx-auto bouton-general mt-5 mb-3">
-        <button class="btn btn-primary" type="button">Notre galerie</button>
+        <button class="btn btn-primary btn-font-plus" type="button">Notre galerie</button>
     </div>
     </a>
 </div>

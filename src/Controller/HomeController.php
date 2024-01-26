@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Type;
 use App\Service\CarousselManager;
 use App\Repository\ArtworkRepository;
+use App\Repository\ArtistRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +23,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(
         ArtworkRepository $artworkRepository,
+        ArtistRepository $artistRepository,
         CarousselManager $carousselManager
     ): Response {
         //$artworks = $artworkRepository->findAll();
         $artworks = $carousselManager->getRandomArtwork($artworkRepository);
-        return $this->render('home/index.html.twig', ['artworks' => $artworks]);
+        $artists = $carousselManager->getRandomArtist($artistRepository);
+        return $this->render('home/index.html.twig', ['artworks' => $artworks, 'artists' => $artists]);
     }
 
     #[Route('/aboutUs', name: 'about_us')]
@@ -87,16 +90,21 @@ class HomeController extends AbstractController
         return $this->render('base.html.twig', [
             'successMessage' => $successMessage,]);
     }
+
     #[Route('/artists', name: 'artists')]
-    public function showArtists(): Response
+    public function showArtists(ArtistRepository $artistRepository,): Response
     {
-        return $this->render('home/artists.html.twig');
+        $artists = $artistRepository->findAll();
+
+        return $this->render('home/artists.html.twig', ['artists' => $artists]);
     }
+
     #[Route('/biography', name: 'biography')]
     public function showBiography(): Response
     {
         return $this->render('home/biography.html.twig');
     }
+
     #[Route('/mentions', name: 'mentions')]
     public function showMentions(): Response
     {
