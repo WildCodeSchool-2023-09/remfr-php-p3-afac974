@@ -42,8 +42,7 @@ class HomeController extends AbstractController
         ArtworkRepository $artworkRepository,
         PaginatorInterface $paginator,
         Request $request
-        ): Response 
-    {
+    ): Response {
         // Barre de recherche
 
         $form = $this->createFormBuilder(null, [
@@ -97,8 +96,7 @@ class HomeController extends AbstractController
         ArtistRepository $artistRepository,
         PaginatorInterface $paginator,
         Request $request
-        ): Response
-    {
+    ): Response {
 
         // Barre de recherche
 
@@ -122,7 +120,7 @@ class HomeController extends AbstractController
         } else {
             $query = $artistRepository->queryFindAllArtist();
         }
-       
+
         // pagination de la galerie d'artiste
         $pagination = $paginator->paginate(
             $query,

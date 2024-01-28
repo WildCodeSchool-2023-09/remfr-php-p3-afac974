@@ -42,13 +42,13 @@ class AdminController extends AbstractController
     public function showUsers(
         UserRepository $userRepository,
         PaginatorInterface $paginator,
-        Request $request): Response
-    {
+        Request $request
+    ): Response {
         // Barre de recherche
 
          $form = $this->createFormBuilder(null, [
             'method' => 'get',
-        ])
+         ])
             ->add('search', SearchType::class, [
                 'label' => 'Nom',
             ])
@@ -69,10 +69,10 @@ class AdminController extends AbstractController
 
          // pagination de la gallerie d'art
          $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1), /*page number*/
-            5/*limit per page*/
-        );
+             $query,
+             $request->query->getInt('page', 1), /*page number*/
+             5/*limit per page*/
+         );
 
         return $this->render('admin/show_users.html.twig', [
             'users' => $pagination,
@@ -122,11 +122,11 @@ class AdminController extends AbstractController
 
     #[Route('/showArtist', name: 'show_artists')]
     public function showArtist(
-        Artist $artist, 
+        Artist $artist,
         ArtistRepository $artistRepository,
         PaginatorInterface $paginator,
-        Request $request): Response
-    {
+        Request $request
+    ): Response {
 
         // Barre de recherche
 
@@ -153,10 +153,10 @@ class AdminController extends AbstractController
 
          // pagination de la galerie d'artistes version admin
          $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1), /*page number*/
-            5/*limit per page*/
-        );
+             $query,
+             $request->query->getInt('page', 1), /*page number*/
+             5/*limit per page*/
+         );
 
         return $this->render('admin/show_artists.html.twig', [
             'artists' => $pagination,
@@ -191,12 +191,15 @@ class AdminController extends AbstractController
     }
 
     #[Route('/deleteArtist/{id}', name: 'delete_artist')]
-    public function deleteArtist(Request $request, $id , Artist $artist, EntityManagerInterface $entityManager): Response
-    {
+    public function deleteArtist(
+        Request $request,
+        int $id,
+        Artist $artist,
+        EntityManagerInterface $entityManager
+    ): Response {
         $submittedToken = $request->request->get('_token');
 
         if ($this->isCsrfTokenValid('delete' . $artist->getId(), $submittedToken)) {
-
             $artist = $entityManager->find(Artist::class, $id);
             // Supprimez les œuvres d'art associées à l'artiste
             foreach ($artist->getArtworks() as $artwork) {
@@ -217,8 +220,8 @@ class AdminController extends AbstractController
     public function showContact(
         ContactRepository $contactRepository,
         PaginatorInterface $paginator,
-        Request $request): Response
-    {
+        Request $request
+    ): Response {
         $query = $contactRepository->findAll();
         // Barre de recherche
         $form = $this->createFormBuilder(null, [
@@ -280,8 +283,7 @@ class AdminController extends AbstractController
         ArtworkRepository $artworkRepository,
         PaginatorInterface $paginator,
         Request $request
-        ): Response
-    {
+    ): Response {
         $form = $this->createFormBuilder(null, [
             'method' => 'get',
         ])
@@ -352,7 +354,6 @@ class AdminController extends AbstractController
         $submittedToken = $request->request->get('_token');
 
         if ($this->isCsrfTokenValid('delete' . $artwork->getId(), $submittedToken)) {
-
             // Obtenir l'artiste lié à l'œuvre d'art
             $artist = $artwork->getArtist();
             $artist->getArtworks();

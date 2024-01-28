@@ -81,8 +81,8 @@ class ArtistFixtures extends Fixture
 
             $this->addReference('artist_' . $artistName['name'] . '_' . $artistName['lastname'], $artist);
             $manager->persist($artist);
-            }
-            
+        }
+
         $manager->flush();
     }
 }
