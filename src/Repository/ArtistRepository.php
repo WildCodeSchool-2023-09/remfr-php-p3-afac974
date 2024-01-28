@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Artist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -23,6 +24,19 @@ class ArtistRepository extends ServiceEntityRepository implements PasswordUpgrad
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Artist::class);
+    }
+
+    public function queryFindAllArtist(): Query
+    {
+        return $this->createQueryBuilder(alias:'a')->orderBy('a.id', 'ASC')->getQuery();
+    }
+
+    public function findLikeName(string $search): Query
+    {
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.name LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+        return $query->getQuery();
     }
 
     /**

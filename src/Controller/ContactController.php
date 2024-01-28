@@ -23,7 +23,7 @@ class ContactController extends AbstractController
             $entityManager->persist($contact);
             $entityManager->flush();
 
-            $this->addFlash('success', 'The user has been edited successfully');
+            $this->addFlash('success', 'Your demand has been edited successfully');
 
             return $this->redirectToRoute('home_index');
         }

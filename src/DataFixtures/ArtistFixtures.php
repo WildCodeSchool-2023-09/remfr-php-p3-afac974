@@ -3,9 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\ArtworkFixtures;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use App\Entity\Artist;
+use App\Entity\Artwork;
 
 class ArtistFixtures extends Fixture
 {
@@ -79,9 +81,8 @@ class ArtistFixtures extends Fixture
 
             $this->addReference('artist_' . $artistName['name'] . '_' . $artistName['lastname'], $artist);
             $manager->persist($artist);
-
-
-            $manager->flush();
-        }
+            }
+            
+        $manager->flush();
     }
 }

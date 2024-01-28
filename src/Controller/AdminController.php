@@ -2,25 +2,30 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use App\Entity\Type;
+use App\Entity\User;
+use App\Entity\Artist;
+use App\Entity\Artwork;
+use App\Entity\Contact;
+use App\Form\ArtistType;
+use App\Form\ArtworkType;
+use App\Form\AdminUserType;
 use App\Repository\UserRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\ArtworkRepository;
 use App\Repository\ContactRepository;
-use App\Entity\User;
-use App\Entity\Contact;
-use App\Entity\Artist;
-use App\Entity\Artwork;
-use App\Form\AdminUserType;
-use App\Form\ArtistType;
-use App\Form\ArtworkType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin', name: 'admin_')]
 class AdminController extends AbstractController
@@ -34,12 +39,44 @@ class AdminController extends AbstractController
     }
 
     #[Route('/showUsers', name: 'show_users')]
-    public function showUsers(UserRepository $userRepository): Response
+    public function showUsers(
+        UserRepository $userRepository,
+        PaginatorInterface $paginator,
+        Request $request): Response
     {
-        $users = $userRepository->findAll();
+        // Barre de recherche
+
+         $form = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('search', SearchType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->get('search')->getData();
+            $query = $userRepository->findLikeName($search);
+        } else {
+            $query = $userRepository->queryFindAllUser();
+        }
+
+         // pagination de la gallerie d'art
+         $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5/*limit per page*/
+        );
 
         return $this->render('admin/show_users.html.twig', [
-            'users' => $users,
+            'users' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -84,13 +121,46 @@ class AdminController extends AbstractController
     }
 
     #[Route('/showArtist', name: 'show_artists')]
-    public function showArtist(ArtistRepository $artistRepository): Response
+    public function showArtist(
+        Artist $artist, 
+        ArtistRepository $artistRepository,
+        PaginatorInterface $paginator,
+        Request $request): Response
     {
 
-        $artists = $artistRepository->findAll();
+        // Barre de recherche
+
+        $form = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('search', SearchType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->get('search')->getData();
+            $query = $artistRepository->findLikeName($search);
+        } else {
+            $query = $artistRepository->queryFindAllArtist();
+        }
+
+         // pagination de la galerie d'artistes version admin
+         $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5/*limit per page*/
+        );
 
         return $this->render('admin/show_artists.html.twig', [
-            'artists' => $artists,
+            'artists' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -121,10 +191,19 @@ class AdminController extends AbstractController
     }
 
     #[Route('/deleteArtist/{id}', name: 'delete_artist')]
-    public function deleteArtist(Request $request, Artist $artist, EntityManagerInterface $entityManager): Response
+    public function deleteArtist(Request $request, $id , Artist $artist, EntityManagerInterface $entityManager): Response
     {
         $submittedToken = $request->request->get('_token');
+
         if ($this->isCsrfTokenValid('delete' . $artist->getId(), $submittedToken)) {
+
+            $artist = $entityManager->find(Artist::class, $id);
+            // Supprimez les œuvres d'art associées à l'artiste
+            foreach ($artist->getArtworks() as $artwork) {
+                $artist->removeArtwork($artwork);
+                $entityManager->remove($artwork);
+            }
+
             $entityManager->remove($artist);
             $entityManager->flush();
 
@@ -135,12 +214,50 @@ class AdminController extends AbstractController
     }
 
     #[Route('/showContact', name: 'show_contacts')]
-    public function showContact(ContactRepository $contactRepository): Response
+    public function showContact(
+        ContactRepository $contactRepository,
+        PaginatorInterface $paginator,
+        Request $request): Response
     {
-        $contacts = $contactRepository->findAll();
+        $query = $contactRepository->findAll();
+        // Barre de recherche
+        $form = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('demandType', ChoiceType::class, [
+                'label' => 'Type',
+                'choices' => [
+                    'Retour sur l\'exposition' => 'retour_exposition',
+                    'Demande de rôle artiste' => 'demande_role_artiste',
+                    'Axe d\'amélioration' => 'axe_amelioration',
+                    'Problème rencontré' => 'probleme_rencontre',
+                ],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $demandType = $form->get('demandType')->getData();
+            $query = $contactRepository->findByDemandType($demandType);
+        } else {
+            $query = $contactRepository->queryFindAllContact();
+        }
+
+        // pagination des demandes de contact
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5/*limit per page*/
+        );
 
         return $this->render('admin/show_contacts.html.twig', [
-            'contacts' => $contacts,
+            'contacts' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -159,12 +276,48 @@ class AdminController extends AbstractController
     }
 
     #[Route('/showArtworks', name: 'show_artworks')]
-    public function showArtworks(ArtworkRepository $artworkRepository): Response
+    public function showArtworks(
+        ArtworkRepository $artworkRepository,
+        PaginatorInterface $paginator,
+        Request $request
+        ): Response
     {
-        $artworks = $artworkRepository->findAll();
+        $form = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('search', SearchType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('type', EntityType::class, [
+                'class' => Type::class,
+                'choice_label' => 'name',
+                'attr' => ['class' => 'pl-2'],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->get('search')->getData();
+            $type = $form->get('type')->getData();
+            $query = $artworkRepository->findLikeTitle($search, $type);
+        } else {
+            $query = $artworkRepository->queryFindAllArtwork();
+        }
+        // pagination de la gallerie d'art
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            5/*limit per page*/
+        );
 
         return $this->render('admin/show_artworks.html.twig', [
-            'artworks' => $artworks,
+            'artworks' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -196,11 +349,31 @@ class AdminController extends AbstractController
     #[Route('/deleteArtwork/{id}', name: 'delete_artwork')]
     public function deleteArtwork(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
     {
+        $submittedToken = $request->request->get('_token');
 
-        $entityManager->remove($artwork);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete' . $artwork->getId(), $submittedToken)) {
 
-        $this->addFlash('danger', 'This artwork has been deleted successfully');
+            // Obtenir l'artiste lié à l'œuvre d'art
+            $artist = $artwork->getArtist();
+            $artist->getArtworks();
+
+            // Utilisez la méthode removeArtwork de l'artiste pour gérer la suppression ( seul moyen trouvé)
+            if ($artist) {
+                $artist->removeArtwork($artwork);
+            }
+
+            if ($artwork->getType()) {
+                $artwork->removeType($artwork->getType());
+            }
+            $entityManager->remove($artwork);
+            try {
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                // Affichez l'erreur pour obtenir plus d'informations
+                die($e->getMessage());
+            }
+            $this->addFlash('danger', 'This artwork has been deleted successfully');
+        }
 
         return $this->redirectToRoute('admin_show_artworks', [], Response::HTTP_SEE_OTHER);
     }

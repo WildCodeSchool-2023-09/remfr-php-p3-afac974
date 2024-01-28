@@ -48,6 +48,7 @@ class Artwork
     private ?bool $isSigned = null;
 
     #[ORM\ManyToOne(inversedBy: 'artworks')]
+    #[ORM\JoinColumn( name:"artist_id", referencedColumnName: "id", onDelete: "SET NULL")]
     private ?Artist $artist = null;
 
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
@@ -168,7 +169,13 @@ class Artwork
 
         return $this;
     }
-
+    public function removeArtist(): void
+    {
+        if ($this->artist !== null) {
+            $this->artist->removeArtwork($this);
+            $this->artist = null;
+        }
+    }
     /**
      * @return Collection<int, Comment>
      */
@@ -273,4 +280,15 @@ class Artwork
 
         return $this;
     }
+    
+    public function removeType(Type $type): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->type === $type) {
+            $this->type = null;
+        }
+
+        return $this;
+    }
 }
+

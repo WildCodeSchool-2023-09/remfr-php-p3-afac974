@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Artwork;
+use App\Entity\Artist;
 
 class ArtworkFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -138,8 +139,13 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
             $artwork->setYear($artworkName['year']);
             $artwork->setHeight($artworkName['height']);
             $artwork->setWidth($artworkName['width']);
+
+            $artist = $this->getReference($artworkName['artist']);
+            $artwork->setArtist($artist);
+            $artist->addArtwork($artwork);
             $artwork->setType($this->getReference($artworkName['type']));
-            $artwork->setArtist($this->getReference($artworkName['artist']));
+            //$artwork->setArtist($this->getReference($artworkName['artist']));
+            //$this->addReference($artworkReference, $artwork);
             $artwork->setPicture($artworkName['picture']);
 
             $manager->persist($artwork);

@@ -29,7 +29,7 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: News::class)]
     private Collection $news;
 
-    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Artwork::class)]
+    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Artwork::class, cascade:['persist', 'remove'], orphanRemoval: true )]
     private Collection $artworks;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -107,29 +107,33 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
      */
     public function getArtworks(): Collection
     {
-        return $this->artworks;
+        return $this->artworks ?? new ArrayCollection();
     }
 
     public function addArtwork(Artwork $artwork): static
     {
-        if (!$this->artworks->contains($artwork)) {
-            $this->artworks->add($artwork);
-            $artwork->setArtist($this);
+        {
+            if (!$this->artworks->contains($artwork)) {
+                $this->artworks[] = $artwork;
+                $artwork->setArtist($this);
+            }
+    
+            return $this;
         }
-
-        return $this;
     }
 
-    public function removeArtwork(Artwork $artwork): static
+    public function removeArtwork(Artwork $artwork): self
     {
-        if ($this->artworks->removeElement($artwork)) {
-            // set the owning side to null (unless already changed)
-            if ($artwork->getArtist() === $this) {
-                $artwork->setArtist(null);
-            }
+       
+    if ($this->artworks && $this->artworks->contains($artwork)) {
+        $this->artworks->removeElement($artwork);
+        // set the owning side to null (unless already changed)
+        if ($artwork->getArtist() === $this) {
+            $artwork->setArtist(null);
         }
+    }
 
-        return $this;
+    return $this;
     }
 
     /**

@@ -42,7 +42,8 @@ class HomeController extends AbstractController
         ArtworkRepository $artworkRepository,
         PaginatorInterface $paginator,
         Request $request
-    ): Response {
+        ): Response 
+    {
         // Barre de recherche
 
         $form = $this->createFormBuilder(null, [
@@ -92,11 +93,47 @@ class HomeController extends AbstractController
     }
 
     #[Route('/artists', name: 'artists')]
-    public function showArtists(ArtistRepository $artistRepository,): Response
+    public function showArtists(
+        ArtistRepository $artistRepository,
+        PaginatorInterface $paginator,
+        Request $request
+        ): Response
     {
-        $artists = $artistRepository->findAll();
 
-        return $this->render('home/artists.html.twig', ['artists' => $artists]);
+        // Barre de recherche
+
+        $form = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('search', SearchType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->get('search')->getData();
+            $query = $artistRepository->findLikeName($search);
+        } else {
+            $query = $artistRepository->queryFindAllArtist();
+        }
+       
+        // pagination de la galerie d'artiste
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            4 /*limit per page*/
+        );
+
+        return $this->render('home/artists.html.twig', [
+            'artists' => $pagination,
+            'form' => $form
+            ]);
     }
 
     #[Route('/biography', name: 'biography')]
