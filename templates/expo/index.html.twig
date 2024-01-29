@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1 class="p-3 d-flex justify-content-center">Mes expos</h1>
+
+<ul>
+{% for expo in expos %}
+    <div class="container mt-5 mb-5 border-general p-5 col-6">
+        <li>{{ expo.name }}</li>
+        <li>{{ expo.location }}</li>
+        <li>{{ expo.dateEvent|date("m/d/Y")}}</li>
+       <a href='{{ path('expo_edit', {id : expo.id}) }}'><button class="btn btn-primary mt-3" type="submit" >Editer l'expo</button></a>
+    </div>
+{% endfor %}
+</ul>
+{% endblock %}

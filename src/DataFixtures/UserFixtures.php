@@ -71,7 +71,7 @@ class UserFixtures extends Fixture
 
         $contributor4 = new User();
         $contributor4->setEmail('artiste@monsite.com');
-        $contributor4->setRoles(['ROLE_ARTIST', 'ROLE_USER']);
+        $contributor4->setRoles(['ROLE_ARTIST']);
         $hashedPassword = $this->passwordHasher->hashPassword(
             $contributor4,
             'artist79'

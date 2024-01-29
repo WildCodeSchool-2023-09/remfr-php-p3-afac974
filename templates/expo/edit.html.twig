@@ -5,8 +5,8 @@
 {% block body %}   
     {% if app.user %}
     <div class="container mt-5 mb-5 border-general p-5">
-    {{ include( 'expo/_form.html.twig', {'button': 'Ajouter une expo'}) }}
-
+     {{ include( 'expo/_form.html.twig', {'button': 'Mettre à jour'}) }}
+     {{ include('expo/delete.html.twig', {'button': 'Supprimer'}) }}
     </div>
     {% endif %}    
-{% endblock %}
+   {% endblock %}

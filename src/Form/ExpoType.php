@@ -21,11 +21,11 @@ class ExpoType extends AbstractType
                 ]
             ])
             ->add('location')
-            ->add('dateEvent');
-        // ->add('artist', EntityType::class, [
-        //  'class' => Artist::class,
-        //   'choice_label' => 'name'
-        //  ]);
+            ->add('dateEvent')
+            ->add('artist', EntityType::class, [
+                'class' => Artist::class,
+                'choice_label' => 'name'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

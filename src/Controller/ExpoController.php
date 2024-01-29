@@ -6,6 +6,7 @@ use App\Entity\Artist;
 use App\Entity\Expo;
 use App\Form\ExpoType;
 use App\Repository\ArtistRepository;
+use App\Repository\ExpoRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -17,56 +18,61 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/expo', name: 'expo_')]
 class ExpoController extends AbstractController
 {
-    // #[Route('/', name: 'index')]
-    // public function index(Security $security): Response
-    // {
-    //     /** @var user App\Entity\User */
-    //     $user = $security->getUser();
-    //     return $this->render('expo/expo.html.twig');
-    // }
+    #[Route('/', name: 'index')]
+    public function index(
+        ExpoRepository $expoRepository,
+        ArtistRepository $artistRepository,
+        Security $security
+    ): Response {
+        $expos = $expoRepository->findAll();
+        $user = $security->getUser();
+        $artist = $artistRepository->findOneBy(['user' => $user]);
+
+        return $this->render('expo/index.html.twig', [
+            'expos' => $expos,
+            'artist' => $artist
+        ]);
+    }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
-        Security $security,
-        ArtistRepository $artistRepository
     ): Response {
-        $user = $security->getUser();
-        $artist = $artistRepository->findOneBy(['user' => $user]);
+        // $user = $security->getUser();
+        // $artist = $artistRepository->findOneBy(['user' => $user]);
         $expo = new Expo();
         $form = $this->createForm(ExpoType::class, $expo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $expo->setArtist($artist);
+            //$expo->setArtist($artist);
             $entityManager->persist($expo);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home_index');
+            return $this->redirectToRoute('expo_index');
         }
 
         return $this->render('expo/expo.html.twig', ['expo' => $expo, 'form' => $form,]);
     }
 
-    #[Route('/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Expo $expo, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ExpoType::class, $expo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $expo->setName('name');
-            $expo->setLocation('location');
-            // $expo->setDateEvent('dateEvent');
             $entityManager->flush();
+            return $this->redirectToRoute('expo_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->redirectToRoute('expo_index', [], Response::HTTP_SEE_OTHER);
+        return $this->render('expo/edit.html.twig', [
+            'expo' => $expo,
+            'form' => $form
+        ]);
     }
 
-
-
-    #[Route('/delete', name: 'delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Expo $expo, EntityManagerInterface $entityManager): Response
     {
         if ($this->iscsrfTokenValid('delete' . $expo->getId(), $request->request->get('_token'))) {
