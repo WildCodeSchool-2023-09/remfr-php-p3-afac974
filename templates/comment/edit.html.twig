@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer votre commentaire{% endblock %}
+
+{% block body %}
+    <h1 class="p-3 d-flex justify-content-center">Modifier votre commentaire</h1>
+    <div class="container">
+    {{ form_start(form) }}
+    <div class="border-general mb-5">
+        <div class="mb-3">
+            {{ form_row(form.rate) }}
+        </div>
+        <div class="mb-3">
+           {{ form_row(form.content,{'label': 'Votre nouveau commentaire'|trans})  }}
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier votre commentaire</button>
+    </div>
+    {{ form_end(form) }}
+
+     <button type="button" class="btn btn-primary" onclick="window.location='{{ path('artwork_show', {'id': artwork.id}) }}'">Retour vers l'oeuvre</button>
+    </div>
+
+   
+{% endblock %}

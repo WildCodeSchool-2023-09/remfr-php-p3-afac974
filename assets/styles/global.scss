@@ -9,7 +9,7 @@ $font-family-base: $font-family-textes;
 body{
     min-height: 100vh;
     font-family: $font-family-base;
-
+    margin: 0;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: $font-family-titres;
@@ -50,4 +50,8 @@ a {
 
 textarea.form-control {
     resize: none !important;
+}
+
+.btn-font-plus{
+    font-size: 2rem !important;
 }

@@ -91,7 +91,7 @@ class UserController extends AbstractController
             $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $newEmail]);
 
             if ($existingUser && $existingUser->getId() !== $user->getId()) {
-                $this->addFlash('error', 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.');
+                $this->addFlash('warning', 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.');
             } else {
                 // Changer l'adresse e-mail de l'utilisateur
                 $user->setEmail($newEmail);
@@ -101,19 +101,10 @@ class UserController extends AbstractController
             if (isset($password)) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);
+                $entityManager->flush();
+                $this->addFlash('success', 'Vos informations personnelles ont bien été mis à jour.');
+            } else {
             }
-
-            $entityManager->flush();
-
-            $email = (new Email())
-            ->from($this->getParameter('mailer_from'))
-            ->to($user->getEmail())
-            ->subject('Vos informations personnelles ont bien été mis à jours !')
-            ->html($this->renderView('user/emailEdit.html.twig'));
-
-            $mailer->send($email);
-
-            return $this->redirectToRoute('app_user_show', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -131,6 +122,7 @@ class UserController extends AbstractController
     ): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
+            $this->addFlash('success', 'Votre compte à bien été supprimé.');
             $entityManager->flush();
 
             $email = (new Email())

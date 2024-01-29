@@ -2,16 +2,23 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Comment;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ApiResource()]
+#[ORM\InheritanceType(value: 'SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'user_type', type: 'string')]
+#[ORM\DiscriminatorMap(['user' => User::class, 'artist' => Artist::class])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,10 +27,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    protected ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    protected array $roles = [];
 
     /**
      * @var string The hashed password
@@ -31,21 +38,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    private ?string $facebookId = null;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $pseudonym = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Artist $artistId = null;
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
+    private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Comment::class)]
-    private Collection $comment;
+    #[ORM\ManyToMany(targetEntity: Artwork::class, inversedBy: 'favoritedBy')]
+    private Collection $favorites;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $avatar = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $hostedDomain = null;
 
     public function __construct()
     {
-        $this->comment = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,7 +119,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(?string $password): self
     {
-        $this->password = $password ?? '';
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getFacebookId(): ?string
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookId(?string $facebookId): self
+    {
+        $this->facebookId = $facebookId;
 
         return $this;
     }
@@ -126,6 +157,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPseudonym(): ?string
+    {
+        return $this->pseudonym;
+    }
+
+    public function setPseudonym(string $pseudonym): static
+    {
+        $this->pseudonym = $pseudonym;
+
+        return $this;
+    }
+
     public function getLastname(): ?string
     {
         return $this->lastname;
@@ -138,31 +181,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getArtistId(): ?Artist
-    {
-        return $this->artistId;
-    }
-
-    public function setArtistId(?Artist $artistId): static
-    {
-        $this->artistId = $artistId;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Comment>
      */
-    public function getComment(): Collection
+    public function getComments(): Collection
     {
-        return $this->comment;
+        return $this->comments;
     }
 
     public function addComment(Comment $comment): static
     {
-        if (!$this->comment->contains($comment)) {
-            $this->comment->add($comment);
-            $comment->setUserId($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setAuthor($this);
         }
 
         return $this;
@@ -170,12 +201,76 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeComment(Comment $comment): static
     {
-        if ($this->comment->removeElement($comment)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getUserId() === $this) {
-                $comment->setUserId(null);
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Artwork>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Artwork $artwork): static
+    {
+        if (!$this->favorites->contains($artwork)) {
+            $this->favorites->add($artwork);
+        }
+        return $this;
+    }
+
+    public function removeFavorite(Artwork $artwork): static
+    {
+        $this->favorites->removeElement($artwork);
+
+        return $this;
+    }
+
+     /** Get the value of hostedDomain
+     * @return string
+     */
+    public function getHostedDomain(): string
+    {
+        return $this->hostedDomain;
+    }
+
+    /**
+     * Set the value of hostedDomain
+     * @param string $hostedDomain
+     * @return $this
+     *
+     */
+    public function setHostedDomain(string $hostedDomain): static
+    {
+        $this->hostedDomain = $hostedDomain;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of avatar
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set the value of avatar
+     *
+     * @return static
+     */
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

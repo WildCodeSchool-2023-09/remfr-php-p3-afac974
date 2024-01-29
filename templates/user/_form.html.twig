@@ -1,6 +1,20 @@
 {{ form_start(form) }}
-
-<button class="btn btn-lg btn-primary">
+ 		<div class="mb-3">
+            {{ form_row(form.email) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.password) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.name) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.lastname) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.pseudonym) }}
+        </div>
+	<button type="submit" class="btn btn-lg btn-primary mb-2">
 	{{ button_label|default('Créer mon compte') }}
-</button>
+	</button>
 {{ form_end(form) }}

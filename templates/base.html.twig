@@ -19,15 +19,8 @@
 	<body class="d-flex flex-column">
 
 		{% include 'include/_navbar.html.twig' %}
-
-		{% block body %}
-			{% for message in app.flashes('NewAccount') %}
-				<div class="flash-notice">
-					{{ message }}
-				</div>
-			{% endfor %}
-
-		{% endblock %}
+		{% include 'include/_addFlash.html.twig'%}
+		{% block body %}{% endblock %}
 
 		{% include 'include/_footer.html.twig' %}
 	</body>

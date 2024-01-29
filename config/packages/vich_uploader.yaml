@@ -10,7 +10,7 @@ vich_uploader:
             upload_destination: '%upload_directory_artistPhoto%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
         artwork:
-            uri_prefix: uploads/images/artwork
+            uri_prefix: uploads/images/artwork/
             upload_destination: '%upload_directory_artwork%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
         news:

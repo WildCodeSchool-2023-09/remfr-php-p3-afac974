@@ -18,33 +18,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
 #[Vich\Uploadable]
-class Artist implements UserInterface, PasswordAuthenticatedUserInterface
+class Artist extends User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
-
-    #[ORM\Column]
-    private array $roles = [];
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $poster = 'default_poster_value.svg';
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: News::class)]
     private Collection $news;
@@ -52,11 +32,6 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Artwork::class)]
     private Collection $artworks;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Expo::class, orphanRemoval: true)]
     private Collection $expos;
 
@@ -75,58 +50,7 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
         $this->news = new ArrayCollection();
         $this->artworks = new ArrayCollection();
         $this->expos = new ArrayCollection();
-    }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
-    }
-
-
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     public function getDescription(): ?string
@@ -152,39 +76,6 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, News>
      */
@@ -245,30 +136,6 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Expo>
      */
@@ -318,5 +185,28 @@ class Artist implements UserInterface, PasswordAuthenticatedUserInterface
             $this->updatedAt = new DateTime('now');
         }
         return $this;
+    }
+    public function getRoles(): array
+    {
+        $roles = parent::getRoles();
+
+        // Add the specific role for artists
+        $roles[] = 'ROLE_ARTIST';
+
+        return array_unique($roles);
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password ?? '';
+    }
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        //$this->currentPassword = null;
+    }
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
     }
 }
