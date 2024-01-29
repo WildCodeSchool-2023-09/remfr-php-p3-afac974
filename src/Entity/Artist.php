@@ -50,7 +50,6 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
         $this->news = new ArrayCollection();
         $this->artworks = new ArrayCollection();
         $this->expos = new ArrayCollection();
-
     }
 
     public function getDescription(): ?string
