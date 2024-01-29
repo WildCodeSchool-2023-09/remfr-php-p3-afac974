@@ -201,12 +201,6 @@ class AdminController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete' . $artist->getId(), $submittedToken)) {
             $artist = $entityManager->find(Artist::class, $id);
-            // Supprimez les œuvres d'art associées à l'artiste
-            foreach ($artist->getArtworks() as $artwork) {
-                $artist->removeArtwork($artwork);
-                $entityManager->remove($artwork);
-            }
-
             $entityManager->remove($artist);
             $entityManager->flush();
 
@@ -348,13 +342,16 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/deleteArtwork/{id}', name: 'delete_artwork')]
-    public function deleteArtwork(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
-    {
+    #[Route('/deleteArtwork/{id}', name: 'delete_artwork', methods: ['POST'])]
+    public function deleteArtwork(
+        Request $request,
+        Artwork $artwork,
+        EntityManagerInterface $entityManager
+    ): Response {
         $submittedToken = $request->request->get('_token');
 
         if ($this->isCsrfTokenValid('delete' . $artwork->getId(), $submittedToken)) {
-            // Obtenir l'artiste lié à l'œuvre d'art
+            //Obtenir l'artiste lié à l'œuvre d'art
             $artist = $artwork->getArtist();
             $artist->getArtworks();
 
@@ -366,13 +363,10 @@ class AdminController extends AbstractController
             if ($artwork->getType()) {
                 $artwork->removeType($artwork->getType());
             }
+
             $entityManager->remove($artwork);
-            try {
-                $entityManager->flush();
-            } catch (\Exception $e) {
-                // Affichez l'erreur pour obtenir plus d'informations
-                die($e->getMessage());
-            }
+            $entityManager->flush();
+
             $this->addFlash('danger', 'This artwork has been deleted successfully');
         }
 

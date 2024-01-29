@@ -54,9 +54,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/user, roles: ROLE_USER }
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_ARTIST:      [ROLE_USER]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ARTIST:      ROLE_USER
+        ROLE_ADMIN:       ROLE_ARTIST
 
 when@test:
     security:

@@ -48,7 +48,11 @@ class Artwork
     private ?bool $isSigned = null;
 
     #[ORM\ManyToOne(inversedBy: 'artworks')]
-    #[ORM\JoinColumn(name:"artist_id", referencedColumnName: "id", onDelete: "SET NULL")]
+    #[ORM\JoinColumn(
+        name:"artist_id",
+        referencedColumnName: "id",
+        onDelete: "SET NULL"
+    )]
     private ?Artist $artist = null;
 
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
@@ -69,7 +73,7 @@ class Artwork
 
     #[ORM\Column]
     private ?int $year = null;
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'artworks')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favorites')]
     private Collection $favoritedBy;
 
     #[ORM\ManyToOne(inversedBy: 'artworks')]

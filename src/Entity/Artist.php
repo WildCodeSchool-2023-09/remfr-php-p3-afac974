@@ -51,7 +51,7 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
     {
         $this->news = new ArrayCollection();
         $this->artworks = new ArrayCollection();
-        $this->roles[] = 'ROLE_ARTIST';
+        $this->roles[] = ['ROLE_USER','ROLE_ARTIST'];
     }
 
     public function getDescription(): ?string
@@ -112,7 +112,7 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
      */
     public function getArtworks(): Collection
     {
-        return $this->artworks ?? new ArrayCollection();
+        return $this->artworks ;
     }
 
     public function addArtwork(Artwork $artwork): static
@@ -166,10 +166,14 @@ class Artist extends User implements UserInterface, PasswordAuthenticatedUserInt
     {
         $roles = parent::getRoles();
 
-        // Add the specific role for artists
-        $roles[] = 'ROLE_ARTIST';
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        if (!in_array('ROLE_ARTIST', $roles)) {
+            $roles[] = 'ROLE_ARTIST';
+        }
 
-        return array_unique($roles);
+        return $roles;
     }
 
     public function getPassword(): ?string
