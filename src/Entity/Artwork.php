@@ -49,17 +49,17 @@ class Artwork
 
     #[ORM\ManyToOne(inversedBy: 'artworks')]
     #[ORM\JoinColumn(
-        name:"artist_id",
+        name:"user_id",
         referencedColumnName: "id",
         onDelete: "SET NULL"
     )]
-    private ?Artist $artist = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
     private Collection $comments;
 
     #[ORM\Column(length: 255)]
-    private ?string $picture = 'default_poster_value.svg';
+    private ?string $picture = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DatetimeInterface $updatedAt = null;
@@ -162,22 +162,22 @@ class Artwork
         return $this;
     }
 
-    public function getArtist(): ?Artist
+    public function getUser(): ?User
     {
-        return $this->artist;
+        return $this->user;
     }
 
-    public function setArtist(?Artist $artist): static
+    public function setUser(?User $user): static
     {
-        $this->artist = $artist;
+        $this->user = $user;
 
         return $this;
     }
-    public function removeArtist(): void
+    public function removeUser(): void
     {
-        if ($this->artist !== null) {
-            $this->artist->removeArtwork($this);
-            $this->artist = null;
+        if ($this->user !== null) {
+            $this->user->removeArtwork($this);
+            $this->user = null;
         }
     }
     /**

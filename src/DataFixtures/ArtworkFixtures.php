@@ -6,7 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Artwork;
-use App\Entity\Artist;
+use App\Entity\User;
 
 class ArtworkFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -141,11 +141,9 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
             $artwork->setWidth($artworkName['width']);
 
             $artist = $this->getReference($artworkName['artist']);
-            $artwork->setArtist($artist);
+            $artwork->setUser($artist);
             $artist->addArtwork($artwork);
             $artwork->setType($this->getReference($artworkName['type']));
-            //$artwork->setArtist($this->getReference($artworkName['artist']));
-            //$this->addReference($artworkReference, $artwork);
             $artwork->setPicture($artworkName['picture']);
 
             $manager->persist($artwork);
@@ -157,7 +155,7 @@ class ArtworkFixtures extends Fixture implements DependentFixtureInterface
     {
         // Tu retournes ici toutes les classes de fixtures dont ProgramFixtures dépend
         return [
-          ArtistFixtures::class,
+          UserFixtures::class,
           TypeFixtures::class,
         ];
     }
