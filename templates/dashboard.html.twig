@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="icon"  href="{{ asset('build/images/favicon.ico') }}"/>
 		<title>
-			{% block title %}AFAC 974
+			{% block title %} Dashboard - AFAC 974
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
@@ -16,12 +16,10 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body class="d-flex flex-column">
+	<body class="d-flex flex-column bg-special">
 
-		{% include 'include/_navbar.html.twig' %}
+		{% include 'include/_navbar_dashboard.html.twig' %}
 		{% include 'include/_addFlash.html.twig'%}
 		{% block body %}{% endblock %}
-
-		{% include 'include/_footer.html.twig' %}
 	</body>
 </html>

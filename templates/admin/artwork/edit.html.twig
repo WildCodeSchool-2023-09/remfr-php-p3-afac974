@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="mx-auto pt-4">Modification de l'oeuvre "{{ artwork.getTitle() }}" par {{ artwork.artist.name}} {{ artwork.artist.lastname}}</h1>
     
-    <div class="container mx-auto border-general">
+    <div class="container mx-auto border-general mb-5">
     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
         {{ form_row(form.title) }}
         {{ form_row(form.artist) }}
@@ -22,6 +22,6 @@
         <button type="submit" class="btn btn-primary bouton-general"> Sauvegarder ses changements</button>
     {{ form_end(form) }}
 
-    <a href="{{ path('admin_show_artworks') }}" class="btn btn-secondary mt-2">Retour</a>
+    <a href="{{ path('admin_artwork_index') }}" class="btn btn-secondary mt-2">Retour</a>
      </div>
 {% endblock %}

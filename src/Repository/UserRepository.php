@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -23,6 +24,38 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function queryFindAllArtist(): Query
+    {
+        return $this->createQueryBuilder('u')
+                    ->andWhere('u.roles LIKE :role')
+                    ->setParameter('role', '%ROLE_ARTIST%')
+                    ->orderBy('u.id', 'ASC')
+                    ->getQuery();
+    }
+
+    public function findLikeNameArtist(string $search): Query
+    {
+        $query = $this->createQueryBuilder('u')
+                    ->andWhere('u.name LIKE :search OR u.lastname LIKE :search')
+                    ->andWhere('u.roles LIKE :role')
+                    ->setParameter('search', '%' . $search . '%')
+                    ->setParameter('role', '%ROLE_ARTIST%');
+        return $query->getQuery();
+    }
+
+    public function queryFindAllUser(): Query
+    {
+        return $this->createQueryBuilder(alias:'u')->orderBy('u.id', 'ASC')->getQuery();
+    }
+
+    public function findLikeName(string $search): Query
+    {
+        $query = $this->createQueryBuilder('u')
+            ->andWhere('u.name LIKE :search  OR u.lastname LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+        return $query->getQuery();
     }
 
     /**

@@ -24,9 +24,6 @@ class News
     private ?string $photoNews = null;
 
     #[ORM\ManyToOne(inversedBy: 'news')]
-    private ?Artist $artist = null;
-
-    #[ORM\ManyToOne(inversedBy: 'news')]
     private ?Newsletter $newsletter = null;
 
     public function getId(): ?int
@@ -66,18 +63,6 @@ class News
     public function setPhotoNews(string $photoNews): static
     {
         $this->photoNews = $photoNews;
-
-        return $this;
-    }
-
-    public function getArtist(): ?Artist
-    {
-        return $this->artist;
-    }
-
-    public function setArtist(?Artist $artist): static
-    {
-        $this->artist = $artist;
 
         return $this;
     }
