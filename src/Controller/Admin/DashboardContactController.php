@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/admin/dashboard/contact', name: 'admin_contact_')]
 class DashboardContactController extends AbstractController
 {
-    #[Route('/index', name: 'contact')]
+    #[Route('/index', name: 'index')]
     public function showContact(
         ContactRepository $contactRepository,
         PaginatorInterface $paginator,

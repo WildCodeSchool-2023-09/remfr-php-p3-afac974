@@ -28,24 +28,23 @@ class ArtworkType extends AbstractType
             ->add('width', IntegerType::class)
             ->add('isUnique', ChoiceType::class, [
                 'choices'  => [
-                    'Maybe' => null,
                     'Yes' => true,
                     'No' => false,
                 ],
             ])
             ->add('isSigned', ChoiceType::class, [
                 'choices'  => [
-                    'Maybe' => null,
                     'Yes' => true,
                     'No' => false,
                 ],
             ])
+            ->add('picture', TextType::class)
             ->add('pictureFile', VichFileType::class, [
-                'required'      => false,
+                'required'      => true,
                 'allow_delete'  => true,
                 'download_uri' => true,
             ])
-            ->add('artist', EntityType::class, [
+            ->add('user', EntityType::class, [
                 'class' => User::class,
                 'query_builder' => function (UserRepository $userRepository) {
                     return $userRepository->queryFindAllArtist();
