@@ -14,11 +14,11 @@
           <a class="nav-link active" href="{{ path('admin_artwork_index')}}">Oeuvres</a>
         </li>
 			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle me-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				<button class="btn btn-secondary btn-secondary-dashboard dropdown-toggle me-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					{{ app.user.name}}
 				</button>
 				<ul class="dropdown-menu dropdown-menu-lg-end">
-					<li><a class="dropdown-item" href="{{ path('app_my_profile')}}">Mes informations</a></li>
+					<li><a class="dropdown-item" href="{{ path('app_user_show', {'id': app.user.id} )}}">Mes informations</a></li>
 					{% if is_granted('ROLE_ADMIN') %}
 					<li><a class="dropdown-item" href="{{ path('admin_dashboard')}}">Dashboard</a></li>
 					{% endif %}

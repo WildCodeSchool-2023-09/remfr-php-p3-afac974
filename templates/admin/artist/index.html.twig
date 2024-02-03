@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard.html.twig' %}
 
 {% block title %}Gestion des utilisateurs{% endblock %}
 
@@ -10,7 +10,7 @@
     {{ form_end(form) }} 
     {% if artists|length > 0 %}
 
-    <table class="table px-4 table-striped table-hover">
+    <table class="table px-4 container table-striped table-hover">
         <thead>
             <tr>
                  <th scope="col">#</th>

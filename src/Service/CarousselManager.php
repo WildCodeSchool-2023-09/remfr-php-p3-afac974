@@ -26,7 +26,7 @@ class CarousselManager
 
     public function getRandomArtist(UserRepository $userRepository): array
     {
-        $allArtists = $userRepository->queryFindAllArtist()->getResult();
+        $allArtists = $userRepository->queryFindAllArtist()->getQuery()->getResult();
 
         $randomKeysArtist = array_rand($allArtists, 3);
 
