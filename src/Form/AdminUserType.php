@@ -16,15 +16,22 @@ class AdminUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('lastname', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Prénom',
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom',
+            ])
             ->add('email', TextType::class)
-            ->add('pseudonym', TextType::class)
+            ->add('pseudonym', TextType::class, [
+                'label' => 'Pseudonyme',
+            ])
             ->add('description', TextareaType::class)
             ->add('posterFile', VichFileType::class, [
                 'required'      => false,
                 'allow_delete'  => true,
                 'download_uri' => true,
+                'label' => 'photo de profil',
                 ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [

@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1 class="p-3 d-flex justify-content-center mt-5 ">Nos expositions</h1>
-    
+    {% if expos|length > 0 %}
     <div class="mb-4 container border-general">
         <div class="row">
             {% for expo in expos %}
@@ -22,6 +22,11 @@
             {% endfor %}
         </div>
     </div>
+     {% else %}
+    <div class="d-flex mt-4 justify-content-center">
+        <p>Vous n'avez référencé aucune exposition.</p>
+    </div>
+       {% endif %}
 <div class= 'd-flex justify-content-center'>
     {{ knp_pagination_render(expos) }}
 </div>

@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Expo;
+use App\Entity\News;
 use App\Entity\User;
 use App\Form\ExpoType;
 use App\Repository\ExpoRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ class ExpoController extends AbstractController
         $pagination = $paginator->paginate(
             $expoRepository->findAll(),
             $request->query->getInt('page', 1), /*page number*/
-            3 /*limit per page*/
+            4 /*limit per page*/
         );
 
         return $this->render('expo/index.html.twig', [
@@ -48,6 +49,16 @@ class ExpoController extends AbstractController
             $entityManager->persist($expo);
             $entityManager->flush();
 
+             // Créez une nouvelle entité News
+             $news = new News();
+             $news->setTitle($expo->getTitle());
+             $news->setDescription($expo->getDescription());
+             // Ajoutez d'autres champs si nécessaire
+
+             // Persistez la nouvelle entité News
+             $entityManager->persist($news);
+             $entityManager->flush();
+
             return $this->redirectToRoute('expo_index');
         }
 
@@ -65,6 +76,18 @@ class ExpoController extends AbstractController
         ]);
     }
 
+    #[Route('/showMyExpos', name: 'showMyExpos')]
+    public function showMyExpos(EntityManagerInterface $entityManager, Security $security): Response
+    {
+        // Récupérer l'utilisateur actuellement connecté et ses expositions
+        $user = $security->getUser();
+        $expos = $user->getExpos();
+
+        return $this->render('expo/showMyExpos.html.twig', [
+            'expos' => $expos, // Passer les expositions à la vue
+        ]);
+    }
+
     #[Route('/edit/{id}', name: 'edit')]
     public function edit(Request $request, Expo $expo, EntityManagerInterface $entityManager): Response
     {
@@ -75,9 +98,9 @@ class ExpoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'The artwork has been edited successfully');
+            $this->addFlash('success', 'This expo has been edited successfully');
 
-            return $this->redirectToRoute('admin_artwork_index');
+            return $this->redirectToRoute('expo_showMyExpos');
         }
 
         return $this->render('expo/edit.html.twig', [

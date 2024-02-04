@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier vos informations personnelles
-{% endblock %}
+{% block title %} Modifier vos informations personnelles {% endblock %}
 
 {% block body %}
-	<h1>Mon compte</h1>
+	<h1 class="text-center pt-5" >Mon compte</h1>
+	<div class="container">
+	<div class=" border-general mt-2 mb-5">
 
 	{{ include('user/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
 	{{ include('user/_delete_form.html.twig') }}
+	</div>
+	</div>
 {% endblock %}

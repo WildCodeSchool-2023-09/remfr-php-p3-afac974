@@ -14,7 +14,9 @@
 				<a href="{{ path('app_contact')}}">
 					<li>Contact</li>
 				</a>
+				<a href="{{ path('news_index')}}">
 				<li>Newsletter</li>
+				</a>
 			</ul>
 		</div>
 	</div>
@@ -41,6 +43,7 @@
 					{% elseif is_granted('ROLE_ARTIST') %}
 					<li><a class="dropdown-item" href="{{ path('artwork_new')}}">Ajouter une oeuvre</a></li>
 					<li><a class="dropdown-item" href="{{ path('expo_new')}}">Ajouter une expo</a></li>
+					<li><a class="dropdown-item" href="{{ path('expo_showMyExpos')}}">modifier une expo</a></li>
 					{% endif %}
 					<li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
 				</ul>

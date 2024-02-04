@@ -33,7 +33,7 @@ class ExpoType extends AbstractType
                 ])
             ->add('pictureFile', VichFileType::class, [
                 'label' => 'Image de l\'exposition',
-                'required'      => true,
+                'required'      => false,
                 'allow_delete'  => true,
                 'download_uri' => true,
             ])
