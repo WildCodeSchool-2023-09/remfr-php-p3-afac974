@@ -23,6 +23,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[ApiResource()]
 #[Vich\Uploadable]
+/**
+ * @SuppressWarnings(PHPMD)
+ */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -68,6 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->comments = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->artworks = new ArrayCollection();
+        $this->expos = new ArrayCollection();
     }
 
     /**
@@ -98,6 +102,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $hostedDomain = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Expo::class)]
+    private Collection $expos;
 
     public function getId(): ?int
     {
@@ -383,6 +390,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(string $avatar): static
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Expo>
+     */
+    public function getExpos(): Collection
+    {
+        return $this->expos;
+    }
+
+    public function addExpo(Expo $expo): static
+    {
+        if (!$this->expos->contains($expo)) {
+            $this->expos->add($expo);
+            $expo->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpo(Expo $expo): static
+    {
+        if ($this->expos->removeElement($expo)) {
+            // set the owning side to null (unless already changed)
+            if ($expo->getUser() === $this) {
+                $expo->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -13,6 +13,10 @@ vich_uploader:
             uri_prefix: uploads/images/artwork/
             upload_destination: '%upload_directory_artwork%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+        expo:
+            uri_prefix: uploads/images/expo/
+            upload_destination: '%upload_directory_expo%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
         news:
             uri_prefix: uploads/images/news
             upload_destination: '%upload_directory_news%'

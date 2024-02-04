@@ -21,11 +21,6 @@
             <property name="maxfields" value="20" />
         </properties>
     </rule>
-    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
-        <properties>
-            <property name="maximum" value="60" />
-        </properties>
-    </rule>
     <rule ref="rulesets/codesize.xml/TooManyPublicMethods" >
         <properties>
             <property name="ignorepattern" value="(^(set|get|add|remove))i" />

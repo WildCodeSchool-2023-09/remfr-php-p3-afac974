@@ -7,6 +7,7 @@ parameters:
     upload_directory_artistPhoto: '%kernel.project_dir%/public/uploads/images/artistPhoto/'
     upload_directory_artwork: '%kernel.project_dir%/public/uploads/artwork/'
     upload_directory_news: '%kernel.project_dir%/public/uploads/news/'
+    upload_directory_expo: '%kernel.project_dir%/public/uploads/expo/'
     mailer_from: '%env(resolve:MAILER_FROM_ADDRESS)%'
 services:  
     # SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface: '@reset_password.helper'      
