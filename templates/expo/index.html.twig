@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} - Nos expositions {% endblock %}
+
+{% block body %}
+<h1 class="p-3 d-flex justify-content-center mt-5 ">Nos expositions</h1>
+    {% if expos|length > 0 %}
+    <div class="mb-4 container border-general">
+        <div class="row">
+            {% for expo in expos %}
+            <div class="col-6">
+                <div class="m-3 card">
+                    <img src="/uploads/expo/{{ expo.picture }}" alt="{{expo.title}}">
+                    <h2 class="pt-2 text-center"> Par {{expo.user.name}} {{expo.user.lastname}}</h2>
+                    
+                    <p class="mx-auto">
+                        <a href="{{path('expo_show', {'id' : expo.id})}}"><img class="know-more px-1" src="{{ asset('build/images/plus.svg') }}"> En savoir plus</a>
+                    </p>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+     {% else %}
+    <div class="d-flex mt-4 justify-content-center">
+        <p>Vous n'avez référencé aucune exposition.</p>
+    </div>
+       {% endif %}
+<div class= 'd-flex justify-content-center'>
+    {{ knp_pagination_render(expos) }}
+</div>
+{% endblock %}

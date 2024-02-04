@@ -22,27 +22,40 @@ class ArtworkType extends AbstractType
     {
         $builder
             ->add('description', TextareaType::class)
-            ->add('title', TextType::class)
-            ->add('year', IntegerType::class)
-            ->add('height', IntegerType::class)
-            ->add('width', IntegerType::class)
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+            ])
+            ->add('year', IntegerType::class, [
+                'label' => 'Année',
+            ])
+            ->add('height', IntegerType::class, [
+                'label' => 'Hauteur',
+            ])
+            ->add('width', IntegerType::class, [
+                'label' => 'Largeur',
+            ])
             ->add('isUnique', ChoiceType::class, [
                 'choices'  => [
-                    'Yes' => true,
-                    'No' => false,
+                    'Oui' => true,
+                    'Non' => false,
                 ],
+                'label' => 'Pièce unique',
             ])
             ->add('isSigned', ChoiceType::class, [
                 'choices'  => [
-                    'Yes' => true,
-                    'No' => false,
+                    'Oui' => true,
+                    'Non' => false,
                 ],
+                'label' => 'Signé',
             ])
-            ->add('picture', TextType::class)
+            ->add('picture', TextType::class, [
+                'label' => 'Nom de l\'image de l\'oeuvre',
+            ])
             ->add('pictureFile', VichFileType::class, [
                 'required'      => true,
                 'allow_delete'  => true,
                 'download_uri' => true,
+                'label' => 'Image de l\'oeuvre',
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
@@ -52,6 +65,7 @@ class ArtworkType extends AbstractType
                 'choice_label' => function (User $user) {
                     return $user->getName() . ' ' . $user->getLastname();
                 },
+                'label' => 'Artiste',
             ])
             ->add('type', EntityType::class, [
                 'class' => Type::class,

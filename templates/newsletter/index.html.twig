@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletter - AFAC 974{% endblock %}
+
+{% block body %}
+<h1 class="mx-auto pt-4">Notre Newsletter</h1>
+
+    {% if news|length > 0 %}
+
+    <table class="table px-4 container table-striped table-hover">
+        <thead>
+            <tr>
+                 <th scope="col-5">Titre</th>
+                 <th scope="col-5">Description</th>
+                 <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for new in news %}
+                <tr>
+                    <td>{{ new.title }}</td>
+                    <td>{{ new.description }}</td>
+                    <td>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+     </div>
+    {% else %}
+    <div class="d-flex mb-4 justify-content-center">
+        <p>Aucune news dans notre newsletter actuellement.</p>
+    </div>
+    {% endif %}  
+     <div class= 'd-flex justify-content-center'>
+    {{ knp_pagination_render(news) }}
+    </div>
+
+{% endblock %}
