@@ -48,6 +48,10 @@ class ArtworkType extends AbstractType
                 ],
                 'label' => 'Signé',
             ])
+            ->add('picture', TextType::class, [
+                'label' => 'Nom de l\'image',
+                'required' => false,
+            ])
             ->add('pictureFile', VichFileType::class, [
                 'required'      => true,
                 'allow_delete'  => false,
