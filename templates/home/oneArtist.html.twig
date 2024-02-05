@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{artist.name}} {{artist.lastname}}{% endblock %}
+
+{% block body %}
+
+{# Partie concernant l'oeuvre #}
+<h1 class="text-center mt-5">{{artist.name}} {{artist.lastname}}</h1>
+
+<div class="container border-general mb-5 mt-2 px-4">
+
+    <div class="row justify-content-center gap-4">
+
+        <img class="col-6" src="/uploads/artistPhoto/{{ artist.poster }}" alt="{{ artist.poster }}">
+        
+        <div class="card-body col-5">
+
+            <h2 class="card-title mb-5">A propos de cet artiste</h2>
+
+            <div class="row">
+                <div class="col">
+                    <h3 class="mt-5">Artiste</h3>
+
+                    <p class="pe-3">{{artist.name}} {{artist.lastname}}</p>    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h3 class="mt-5">Description</h3>
+
+                    <p class="pe-3">{{artist.description}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <h2 class="mt-5">Œuvres:</h2>
+                  {% if artworks|length > 0 %}
+                    {% for artwork in artworks %}
+                    <div class="col-4">
+                        <h3>{{ artwork.title }}</h3>
+                        <img class="img-fluid" src="/uploads/artwork/{{ artwork.picture }}" alt="{{artwork.title}}">
+                    </div>
+                     {% endfor %}
+                {% else %}
+                    <p>Cet artiste n'a pas encore d'œuvres d'art.</p>
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

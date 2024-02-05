@@ -20,6 +20,9 @@ class News
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $expoId ;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,26 @@ class News
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of expoId
+     */
+    public function getExpoId(): int
+    {
+        return $this->expoId;
+    }
+
+    /**
+     * Set the value of expoId
+     *
+     * @return  self
+     */
+    public function setExpoId(int $expoId): self
+    {
+        $this->expoId = $expoId;
 
         return $this;
     }

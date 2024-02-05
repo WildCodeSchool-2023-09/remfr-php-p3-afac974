@@ -144,4 +144,23 @@ class HomeController extends AbstractController
     {
         return $this->render('home/mentions.html.twig');
     }
+
+    #[Route('/artist/{name}', name: 'OneArtist')]
+    public function showOneArtist(UserRepository $userRepository, string $name): Response
+    {
+        $artist = $userRepository->findLikeNameArtist($name)->getResult();
+
+        if (count($artist) > 0) {
+            $artist = $artist[0]; // Prend le premier artiste correspondant
+            $artworks = $artist->getArtworks(); // Récupère les œuvres d'art de l'artiste
+        } else {
+            $artist = null; // Aucun artiste trouvé
+            $artworks = []; // Pas d'œuvres d'art car aucun artiste n'a été trouvé
+        }
+
+        return $this->render('home/oneArtist.html.twig', [
+            'artist' => $artist,
+            'artworks' => $artworks,
+        ]);
+    }
 }

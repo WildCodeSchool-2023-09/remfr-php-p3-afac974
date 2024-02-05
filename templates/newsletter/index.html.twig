@@ -21,6 +21,7 @@
                     <td>{{ new.title }}</td>
                     <td>{{ new.description }}</td>
                     <td>
+                     <a href="{{path('news_show', {'id': new.id})}}"><img class="know-more px-1" src="{{ asset('build/images/plus.svg') }}"> En savoir plus</a>
                     </td>
                 </tr>
             {% endfor %}
