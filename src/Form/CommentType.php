@@ -24,8 +24,11 @@ class CommentType extends AbstractType
                     'min' => 1,
                     'max' => 10,
                 ],
+                'help' => 'Notez cette oeuvre de 1 à 10',
             ])
-            ->add('content', TextareaType::class)
+            ->add('content', TextareaType::class, [
+                'help' => 'Laissez un commentaire sur cette oeuvre',
+            ])
         ;
     }
 

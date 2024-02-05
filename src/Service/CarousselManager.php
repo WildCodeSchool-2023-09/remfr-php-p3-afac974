@@ -3,8 +3,8 @@
 namespace App\Service;
 
 use App\Entity\Artwork;
-use App\Entity\Artist;
-use App\Repository\ArtistRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Repository\ArtworkRepository;
 
 class CarousselManager
@@ -24,9 +24,9 @@ class CarousselManager
         return $randomArtworks;
     }
 
-    public function getRandomArtist(ArtistRepository $artistRepository): array
+    public function getRandomArtist(UserRepository $userRepository): array
     {
-        $allArtists = $artistRepository->findAll();
+        $allArtists = $userRepository->queryFindAllArtist()->getQuery()->getResult();
 
         $randomKeysArtist = array_rand($allArtists, 3);
 

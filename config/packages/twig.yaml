@@ -1,6 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-
+    debug: '%kernel.debug%'
     form_themes: ['form/custom_theme.html.twig']
 
 when@test:

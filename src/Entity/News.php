@@ -20,14 +20,8 @@ class News
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $photoNews = null;
-
-    #[ORM\ManyToOne(inversedBy: 'news')]
-    private ?Artist $artist = null;
-
-    #[ORM\ManyToOne(inversedBy: 'news')]
-    private ?Newsletter $newsletter = null;
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $expoId ;
 
     public function getId(): ?int
     {
@@ -58,38 +52,22 @@ class News
         return $this;
     }
 
-    public function getPhotoNews(): ?string
+    /**
+     * Get the value of expoId
+     */
+    public function getExpoId(): ?int
     {
-        return $this->photoNews;
+        return $this->expoId;
     }
 
-    public function setPhotoNews(string $photoNews): static
+    /**
+     * Set the value of expoId
+     *
+     * @return  self
+     */
+    public function setExpoId(int $expoId): self
     {
-        $this->photoNews = $photoNews;
-
-        return $this;
-    }
-
-    public function getArtist(): ?Artist
-    {
-        return $this->artist;
-    }
-
-    public function setArtist(?Artist $artist): static
-    {
-        $this->artist = $artist;
-
-        return $this;
-    }
-
-    public function getNewsletter(): ?Newsletter
-    {
-        return $this->newsletter;
-    }
-
-    public function setNewsletter(?Newsletter $newsletter): static
-    {
-        $this->newsletter = $newsletter;
+        $this->expoId = $expoId;
 
         return $this;
     }

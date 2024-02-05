@@ -1,20 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard.html.twig' %}
 
 {% block title %}Modification de notre utilisateur{% endblock %}
 
 {% block body %}
     <h1 class="mx-auto pt-4">Modification du profil utilisateur</h1>
-     <p>Utilisateur: {{ user.getName() }}  {{ user.getLastName() }}</p>
-    <div class="container mx-auto border-general">
-    {{ form_start(form) }}
+    <div class="container mb-5 mt-5 mx-auto border-general">
+    {{ form_start(form,  {'attr': {'enctype': 'multipart/form-data'}}) }}
         {{ form_row(form.name) }}
         {{ form_row(form.lastname) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.posterFile) }}
         {{ form_row(form.email) }}
         {{ form_row(form.roles) }}
 
         <button type="submit" class="btn btn-primary bouton-general"> Sauvegarder ses changements</button>
     {{ form_end(form) }}
 
-    <a href="{{ path('admin_show_users') }}" class="btn btn-secondary mt-2">Retour</a>
+    <a href="{{ path('admin_user_index') }}" class="btn btn-secondary mt-2">Retour</a>
      </div>
 {% endblock %}

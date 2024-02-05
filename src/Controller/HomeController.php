@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Type;
 use App\Service\CarousselManager;
 use App\Repository\ArtworkRepository;
-use App\Repository\ArtistRepository;
+use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,12 +23,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(
         ArtworkRepository $artworkRepository,
-        ArtistRepository $artistRepository,
+        UserRepository $userRepository,
         CarousselManager $carousselManager
     ): Response {
-        //$artworks = $artworkRepository->findAll();
         $artworks = $carousselManager->getRandomArtwork($artworkRepository);
-        $artists = $carousselManager->getRandomArtist($artistRepository);
+        $artists = $carousselManager->getRandomArtist($userRepository);
         return $this->render('home/index.html.twig', ['artworks' => $artworks, 'artists' => $artists]);
     }
 
@@ -48,13 +47,13 @@ class HomeController extends AbstractController
         $form = $this->createFormBuilder(null, [
             'method' => 'get',
         ])
-            ->add('search', SearchType::class, [
-                'label' => 'Nom',
-            ])
             ->add('type', EntityType::class, [
                 'class' => Type::class,
                 'choice_label' => 'name',
                 'attr' => ['class' => 'pl-2'],
+            ])
+            ->add('search', SearchType::class, [
+                'label' => 'Nom',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
@@ -92,11 +91,46 @@ class HomeController extends AbstractController
     }
 
     #[Route('/artists', name: 'artists')]
-    public function showArtists(ArtistRepository $artistRepository,): Response
-    {
-        $artists = $artistRepository->findAll();
+    public function showArtists(
+        UserRepository $userRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
 
-        return $this->render('home/artists.html.twig', ['artists' => $artists]);
+        // Barre de recherche
+
+        $formHome = $this->createFormBuilder(null, [
+            'method' => 'get',
+        ])
+            ->add('search', SearchType::class, [
+                'label' => 'Nom',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Rechercher',
+                'attr' => ['class' => 'btn btn-primary'], // Vous pouvez personnaliser les classes CSS ici
+            ])
+            ->getForm();
+
+        $formHome->handleRequest($request);
+
+        if ($formHome->isSubmitted() && $formHome->isValid()) {
+            $search = $formHome->get('search')->getData();
+            $query = $userRepository->findLikeNameArtist($search);
+        } else {
+            $query = $userRepository->queryFindAllArtist();
+        }
+
+        // pagination de la galerie d'artiste
+        $paginationHome = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), /*page number*/
+            4 /*limit per page*/
+        );
+
+        return $this->render('home/artists.html.twig', [
+            'artists' => $paginationHome,
+            'form' => $formHome
+            ]);
     }
 
     #[Route('/biography', name: 'biography')]
@@ -109,5 +143,24 @@ class HomeController extends AbstractController
     public function showMentions(): Response
     {
         return $this->render('home/mentions.html.twig');
+    }
+
+    #[Route('/artist/{name}', name: 'OneArtist')]
+    public function showOneArtist(UserRepository $userRepository, string $name): Response
+    {
+        $artist = $userRepository->findLikeNameArtist($name)->getResult();
+
+        if (count($artist) > 0) {
+            $artist = $artist[0]; // Prend le premier artiste correspondant
+            $artworks = $artist->getArtworks(); // Récupère les œuvres d'art de l'artiste
+        } else {
+            $artist = null; // Aucun artiste trouvé
+            $artworks = []; // Pas d'œuvres d'art car aucun artiste n'a été trouvé
+        }
+
+        return $this->render('home/oneArtist.html.twig', [
+            'artist' => $artist,
+            'artworks' => $artworks,
+        ]);
     }
 }

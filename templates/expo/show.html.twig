@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{expo.title}}{% endblock %}
+
+{% block body %}
+
+{# Partie concernant l'exposition #}
+<h1 class="text-center mt-5">{{expo.title}}</h1>
+
+<div class="container border-general mt-5 mb-5 px-4">
+
+    <div class="row justify-content-center gap-4">
+
+        <img class="col-6" src="/uploads/expo/{{ expo.picture }}" alt="{{ expo.title }}">
+        
+        <div class="card-body col-5">
+
+            <h2 class="card-title mb-1">A propos de cette exposition</h2>
+
+            <div class="row">
+                <div class="col">
+                    <h3 class="mt-5">Location</h3>
+
+                    <p class="pe-3">{{expo.location}}</p>
+                </div>
+                <div class="col">
+                    <h3 class="mt-5">Date de cette exposition</h3>
+
+                    <p class="pe-3">{{ expo.dateEvent|date('Y-m-d') }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h3 class="mt-5">Description</h3>
+
+                    <p class="pe-3">{{expo.description}}</p>    
+                </div>
+                <div class="col">
+                    <h3 class="mt-5">Artiste</h3>
+
+                    <p class="pe-3">{{expo.user.name}} {{expo.user.lastname}}</p> 
+                    <a href="{{ path('home_OneArtist', {'name' : expo.user.name})}}"><img class="favorite" src="{{ asset('build/images/brush.svg') }}">Plus d'infos sur l'artiste</a>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
