@@ -37,7 +37,7 @@ class DashboardExpoController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete')]
-    public function deleteUser(Request $request, Expo $expo, EntityManagerInterface $entityManager): Response
+    public function deleteExpo(Request $request, Expo $expo, EntityManagerInterface $entityManager): Response
     {
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $expo->getId(), $submittedToken)) {

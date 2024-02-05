@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Entity\Newsletter;
+use App\Entity\Expo;
+use App\Entity\User;
+use App\Repository\ExpoRepository;
 use App\Repository\NewsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -32,6 +35,26 @@ class NewsController extends AbstractController
 
         return $this->render('newsletter/index.html.twig', [
             'news' => $pagination,
+        ]);
+    }
+
+    #[Route('/show/{id}', name: 'show')]
+    public function show(
+        News $news,
+        NewsRepository $newsRepository,
+        ExpoRepository $expoRepository,
+        Request $request
+    ): Response {
+        $news = $newsRepository->findOneBy(['id' => $news->getId()]);
+
+        $expo = null;
+        if ($news->getExpoId()) {
+            $expo = $expoRepository->findOneBy(['id' => $news->getExpoId()]);
+        }
+
+        return $this->render('newsletter/show.html.twig', [
+            'news' => $news,
+            'expo' => $expo,
         ]);
     }
 }

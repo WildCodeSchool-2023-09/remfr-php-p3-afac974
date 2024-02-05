@@ -53,6 +53,7 @@ class ExpoController extends AbstractController
              $news = new News();
              $news->setTitle($expo->getTitle());
              $news->setDescription($expo->getDescription());
+             $news->setExpoId($expo->getId());
              // Ajoutez d'autres champs si nécessaire
 
              // Persistez la nouvelle entité News
