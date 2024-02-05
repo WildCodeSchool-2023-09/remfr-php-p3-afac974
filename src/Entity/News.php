@@ -55,7 +55,7 @@ class News
     /**
      * Get the value of expoId
      */
-    public function getExpoId(): int
+    public function getExpoId(): ?int
     {
         return $this->expoId;
     }

@@ -103,7 +103,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $hostedDomain = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Expo::class)]
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: Expo::class,
+        cascade:['persist', 'remove'],
+        orphanRemoval: true
+    )]
     private Collection $expos;
 
     public function getId(): ?int

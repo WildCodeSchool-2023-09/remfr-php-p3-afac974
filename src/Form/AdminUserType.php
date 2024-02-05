@@ -29,8 +29,8 @@ class AdminUserType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('posterFile', VichFileType::class, [
                 'required'      => false,
-                'allow_delete'  => true,
-                'download_uri' => true,
+                'allow_delete'  => false,
+                'download_uri' => false,
                 'label' => 'photo de profil',
                 ])
             ->add('roles', ChoiceType::class, [

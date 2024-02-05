@@ -29,7 +29,7 @@
                     <td>{{ artwork.id }}</td>
                     <td>{{ artwork.title }}</td>
                     <td>{{ artwork.description }}</td>
-                    <td>{{ artwork.artist.name }} {{artwork.artist.lastname}}</td>
+                    <td>{{ artwork.user.name }} {{artwork.user.lastname}}</td>
                     <td>
                         {% if artwork.picture != 'default_poster_value.svg' %}
                             <img  class="img-fluid" src="/uploads/artwork/{{ artwork.picture }}" alt="{{ artwork.title }} Picture">
