@@ -7,6 +7,7 @@
 <div class='mt-2 mb-5 d-flex justify-content-center'> 
     <a href="{{ path('admin_news_new')}}" class="btn btn-primary">Ajouter une news</a>
 </div>
+{% if news|length > 0 %}
     <table class="table px-4 container table-striped table-hover">
         <thead>
             <tr>
@@ -37,6 +38,11 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <div class="d-flex justify-content-center">
+        <p>Aucune news n'est référencé pour l'instant.</p>
+    </div>
+    {% endif %}
      <div class= 'd-flex justify-content-center'>
     {{ knp_pagination_render(news) }}
     </div>

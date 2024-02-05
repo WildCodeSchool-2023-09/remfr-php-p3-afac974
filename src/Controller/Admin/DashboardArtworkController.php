@@ -60,7 +60,7 @@ class DashboardArtworkController extends AbstractController
             5/*limit per page*/
         );
 
-        return $this->render('admin/show_artworks.html.twig', [
+        return $this->render('admin/artwork/index.html.twig', [
             'artworks' => $pagination,
             'form' => $form->createView(),
         ]);
@@ -93,8 +93,8 @@ class DashboardArtworkController extends AbstractController
 
     #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
     public function deleteArtwork(
-        Request $request,
         Artwork $artwork,
+        Request $request,
         EntityManagerInterface $entityManager
     ): Response {
         $submittedToken = $request->request->get('_token');
@@ -104,14 +104,15 @@ class DashboardArtworkController extends AbstractController
             $artist = $artwork->getUser();
             $artist->getArtworks();
 
+            if ($artwork->getType()) {
+                $artwork->removeType($artwork->getType());
+            }
+
             // Utilisez la méthode removeArtwork de l'artiste pour gérer la suppression ( seul moyen trouvé)
             if ($artist) {
                 $artist->removeArtwork($artwork);
             }
 
-            if ($artwork->getType()) {
-                $artwork->removeType($artwork->getType());
-            }
 
             $entityManager->remove($artwork);
             $entityManager->flush();

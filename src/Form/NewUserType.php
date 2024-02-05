@@ -42,8 +42,8 @@ class NewUserType extends AbstractType
         ->add('posterFile', VichFileType::class, [
             'label' => 'Photo de profil',
             'required'      => false,
-            'allow_delete'  => true,
-            'download_uri' => true,
+            'allow_delete'  => false,
+            'download_uri' => false,
             ])
         ->add('description', TextareaType::class)
         ;

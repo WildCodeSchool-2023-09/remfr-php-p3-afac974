@@ -122,6 +122,13 @@ class ExpoController extends AbstractController
             $artist = $expo->getUser();
             $artist->getExpos();
 
+            $news = $entityManager->getRepository(News::class)->findOneBy(['expoId' => $expo->getId()]);
+
+            // Si une entité News associée existe, supprimez-la
+            if ($news) {
+                $entityManager->remove($news);
+            }
+
             if ($artist) {
                 $artist->removeExpo($expo);
             }

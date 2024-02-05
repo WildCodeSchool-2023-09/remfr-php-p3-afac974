@@ -60,7 +60,7 @@
         {% endif %}
         </div>
         <div class="col">
-            <p><img class="favorite" src="{{ asset('build/images/brush.svg') }}"> Plus d'infos sur l'artiste</p>
+            <a href="{{ path('home_OneArtist', {'name' : artwork.user.name})}}"><img class="favorite" src="{{ asset('build/images/brush.svg') }}">Plus d'infos sur l'artiste</a>   
         </div>
     </div>
 </div>
@@ -87,7 +87,7 @@
             <li>
                 {{ comment.rate }} / 10 
                 <p> {{ comment.content }} </p>
-                <p>Par {{ comment.author.name }} le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                <p>Par {{ comment.author.pseudonym }} le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
                 {% if is_granted('ROLE_ADMIN') %}
                     {# Afficher le bouton de suppression pour les administrateurs pour tous les commentaires #}
                     <a href="{{ path('comment_delete', {'id': comment.id}) }}">Supprimer</a>
