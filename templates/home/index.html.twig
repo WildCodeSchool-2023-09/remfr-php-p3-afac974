@@ -53,6 +53,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{artworks[0].title}}</h5>
                     <p>{{artworks[0].description}}</p>
+                    <a class="a-caroussel" href="{{ path('artwork_show', {id:artworks[0].id})}}">Découvrir cette oeuvre</a>
                 </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="3000">
@@ -60,6 +61,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{artworks[1].title}}</h5>
                     <p>{{artworks[1].description}}</p>
+                    <a class="a-caroussel" href="{{ path('artwork_show', {id:artworks[1].id})}}">Découvrir cette oeuvre</a>
                 </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="4000">
@@ -67,6 +69,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{artworks[2].title}}</h5>
                     <p>{{artworks[2].description}}.</p>
+                    <a class="a-caroussel" href="{{ path('artwork_show', {id:artworks[2].id})}}">Découvrir cette oeuvre</a>
                 </div>
                 </div>
             </div>
@@ -93,6 +96,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{artists[0].name}} {{artists[0].lastname}}</h5>
                     <p>{{artists[0].description}}</p>
+                    <a class="a-caroussel" href="{{ path('home_OneArtist', {'name' : artists[0].name})}}">Plus d'infos sur l'artiste</a>   
                 </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="3500">
@@ -100,6 +104,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{artists[1].name}} {{artists[1].lastname}}</h5>
                     <p>{{artists[1].description}}</p>
+                    <a class="a-caroussel" href="{{ path('home_OneArtist', {'name' : artists[1].name})}}">Plus d'infos sur l'artiste</a>   
                 </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="2500">
@@ -107,6 +112,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{artists[2].name}} {{artists[2].lastname}}</h5>
                     <p>{{artists[2].description}}</p>
+                    <a class="a-caroussel" href="{{ path('home_OneArtist', {'name' : artists[2].name})}}">Plus d'infos sur l'artiste</a>   
                 </div>
                 </div>
             </div>
