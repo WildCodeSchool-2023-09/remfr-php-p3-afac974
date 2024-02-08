@@ -23,14 +23,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[Route('/user')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
@@ -75,41 +67,26 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-
     public function edit(
         Request $request,
         User $user,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher,
-        MailerInterface $mailer
     ): Response {
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newEmail = $form->get('email')->getData();
-            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $newEmail]);
+            $entityManager->flush();
 
-            if ($existingUser && $existingUser->getId() !== $user->getId()) {
-                $this->addFlash('error', 'Cette adresse e-mail est déjà utilisée par un autre utilisateur.');
-            } else {
-                // Changer l'adresse e-mail de l'utilisateur
-                $user->setEmail($newEmail);
-            }
+            $this->addFlash('success', 'The user has been edited successfully');
 
-            $password = $form->get('password')->getData();
-            if (isset($password)) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $password);
-                $user->setPassword($hashedPassword);
-                $entityManager->flush();
-                $this->addFlash('success', 'Vos informations personnelles ont bien été mis à jour');
-            } else {
-            }
+            return $this->redirectToRoute('home_index');
         }
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -122,6 +99,7 @@ class UserController extends AbstractController
     ): Response {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
+            $this->addFlash('success', 'Votre compte à bien été supprimé.');
             $entityManager->flush();
 
             $email = (new Email())

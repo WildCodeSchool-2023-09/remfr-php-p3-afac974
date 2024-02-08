@@ -41,50 +41,68 @@ class ArtworkController extends AbstractController
         return $this->render('artwork/new.html.twig', ['form' => $form]);
     }
 
-    #[Route('/showArtworks/{id}', name: 'show_artworks')]
-    public function showArtworks(Artist $artist): Response
+    #[Route('/showMyArtworks', name: 'showMyArtworks')]
+    public function showArtworks(EntityManagerInterface $entityManager, Security $security): Response
     {
-        return $this->render('artwork/show_artworks_artist.html.twig', [
-            'artist' => $artist,
+        $user = $security->getUser();
+        $artworks = $user->getArtworks();
+
+        return $this->render('artwork/showMyArtworks.html.twig', [
+            'artworks' => $artworks, // Passer les expositions à la vue
         ]);
     }
 
-    #[Route('/editArtwork/{id}', name: 'edit_artwork')]
-    public function editArtwork(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
+
+    #[Route('/edit/{id}', name: 'edit')]
+    public function edit(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ArtworkType::class, $artwork);
-        $artist = $artwork->getArtist();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $pictureFile = $form->get('pictureFile')->getData();
-            if ($pictureFile) {
-                $artwork->setPictureFile($pictureFile);
-            }
             $entityManager->flush();
 
-            $this->addFlash('success', 'The artwork has been edited successfully');
+            $this->addFlash('success', 'This artwork has been edited successfully');
 
-            return $this->redirectToRoute('artwork_show_artworks', ['id' => $artist->getId()]);
+            return $this->redirectToRoute('artwork_showMyArtworks');
         }
 
-        return $this->render('artwork/edit_artwork_artist.html.twig', [
+        return $this->render('artwork/edit.html.twig', [
             'form' => $form->createView(),
             'artwork' => $artwork,
-            'artist' => $artist,
         ]);
     }
 
-    #[Route('/deleteArtwork/{id}', name: 'delete_artwork')]
-    public function deleteArtwork(Request $request, Artwork $artwork, EntityManagerInterface $entityManager): Response
-    {
-        $artist = $artwork->getArtist();
-        $entityManager->remove($artwork);
-        $entityManager->flush();
+    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
+    public function deleteArtwork(
+        Request $request,
+        Artwork $artwork,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $submittedToken = $request->request->get('_token');
 
-        $this->addFlash('danger', 'This artwork has been deleted successfully');
+        if ($this->isCsrfTokenValid('delete' . $artwork->getId(), $submittedToken)) {
+            //Obtenir l'artiste lié à l'œuvre d'art
+            $artist = $artwork->getUser();
+            $artist->getArtworks();
 
-        return $this->redirectToRoute('artwork_show_artworks', ['id' => $artist->getId()], Response::HTTP_SEE_OTHER);
+            // Utilisez la méthode removeArtwork de l'artiste pour gérer la suppression ( seul moyen trouvé)
+            if ($artist) {
+                $artist->removeArtwork($artwork);
+            }
+
+            if ($artwork->getType()) {
+                $artwork->removeType($artwork->getType());
+            }
+
+            $entityManager->remove($artwork);
+            $entityManager->flush();
+
+            $this->addFlash('danger', 'This artwork has been deleted successfully');
+        }
+
+        return $this->redirectToRoute('artwork_showMyArtworks', [], Response::HTTP_SEE_OTHER);
     }
 
     //Return the page for a specific artwork

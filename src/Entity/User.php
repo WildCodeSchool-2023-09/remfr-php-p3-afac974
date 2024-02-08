@@ -9,16 +9,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Comment;
+use Doctrine\DBAL\Types\Types;
+use Symfony\Component\HttpFoundation\File\File;
+use DateTime;
+use DateTimeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[ApiResource()]
-#[ORM\InheritanceType(value: 'SINGLE_TABLE')]
-#[ORM\DiscriminatorColumn(name: 'user_type', type: 'string')]
-#[ORM\DiscriminatorMap(['user' => User::class, 'artist' => Artist::class])]
+#[Vich\Uploadable]
+/**
+ * @SuppressWarnings(PHPMD)
+ */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -32,6 +39,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     protected array $roles = [];
 
+    // test en implémentant la partie artiste
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $poster = null;
+
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: Artwork::class,
+        cascade:['persist', 'remove'],
+        orphanRemoval: true
+    )]
+    private Collection $artworks;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DatetimeInterface $updatedAt = null;
+
+    #[Vich\UploadableField(mapping: 'user_poster', fileNameProperty: 'poster')]
+    #[Assert\File(
+        maxSize: '1M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/svg'],
+        mimeTypesMessage: 'Please upload a valid image file'
+    )]
+    private ?File $posterFile = null;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
+        $this->artworks = new ArrayCollection();
+        $this->expos = new ArrayCollection();
+    }
+
     /**
      * @var string The hashed password
      */
@@ -42,6 +84,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pseudonym = null;
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
@@ -56,17 +101,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $avatar = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?int $hostedDomain = null;
+    private ?string $hostedDomain = null;
 
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
-    }
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: Expo::class,
+        cascade:['persist', 'remove'],
+        orphanRemoval: true
+    )]
+    private Collection $expos;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPoster(): ?string
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(string $poster = null): static
+    {
+        $this->poster = $poster;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -78,6 +149,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->email = $email;
 
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Artwork>
+     */
+    public function getArtworks(): Collection
+    {
+        return $this->artworks ;
+    }
+
+    public function addArtwork(Artwork $artwork): static
+    {
+        {
+        if (!$this->artworks->contains($artwork)) {
+            $this->artworks[] = $artwork;
+            $artwork->setUser($this);
+        }
+
+            return $this;
+        }
+    }
+
+    public function removeArtwork(Artwork $artwork): self
+    {
+
+        if ($this->artworks->contains($artwork)) {
+            $this->artworks->removeElement($artwork);
+            // set the owning side to null (unless already changed)
+            if ($artwork->getUser() === $this) {
+                $artwork->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of posterFile
+     */
+    public function getPosterFile(): ?File
+    {
+        return $this->posterFile;
+    }
+
+    /**
+     * Set the value of posterFile
+     *
+     * @return  self
+     */
+    public function setPosterFile(File $posterFile = null): User
+    {
+        $this->posterFile = $posterFile;
+        if ($posterFile) {
+            $this->updatedAt = new DateTime('now');
+        }
         return $this;
     }
 
@@ -154,6 +281,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPseudonym(): ?string
+    {
+        return $this->pseudonym;
+    }
+
+    public function setPseudonym(string $pseudonym): static
+    {
+        $this->pseudonym = $pseudonym;
+
+        return $this;
+    }
+
     public function getLastname(): ?string
     {
         return $this->lastname;
@@ -220,20 +359,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
      /** Get the value of hostedDomain
-     * @return int
+     * @return string
      */
-    public function getHostedDomain(): int
+    public function getHostedDomain(): string
     {
         return $this->hostedDomain;
     }
 
     /**
      * Set the value of hostedDomain
-     * @param int $hostedDomain
+     * @param string $hostedDomain
      * @return $this
      *
      */
-    public function setHostedDomain(int $hostedDomain): static
+    public function setHostedDomain(string $hostedDomain): static
     {
         $this->hostedDomain = $hostedDomain;
 
@@ -256,6 +395,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(string $avatar): static
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Expo>
+     */
+    public function getExpos(): Collection
+    {
+        return $this->expos;
+    }
+
+    public function addExpo(Expo $expo): static
+    {
+        if (!$this->expos->contains($expo)) {
+            $this->expos->add($expo);
+            $expo->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpo(Expo $expo): static
+    {
+        if ($this->expos->removeElement($expo)) {
+            // set the owning side to null (unless already changed)
+            if ($expo->getUser() === $this) {
+                $expo->setUser(null);
+            }
+        }
 
         return $this;
     }

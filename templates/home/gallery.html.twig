@@ -4,6 +4,13 @@
 
 {% block body %}
 <h1 class="p-3 d-flex justify-content-center">Notre galerie</h1>
+    <div class= 'd-flex justify-content-center'>
+    {{ form(form, {'attr': {'class': 'mx-auto'}}) }}
+    </div>
+
+    
+{{ form_end(form) }}
+ {% if artworks|length > 0 %}
     <div class="mb-4 container border-general">
         <div class="row">
             {% for artwork in artworks %}
@@ -12,8 +19,8 @@
                     <img src="/uploads/artwork/{{ artwork.picture }}" alt="{{artwork.title}}">
                     <h2 class="pt-2 text-center"> {{artwork.title}}</h2>
                     
-                    <p class="mx-auto">
-                        <a href="{{ path('artwork_show', {id:artwork.id})}}"><img class="know-more" src="{{ asset('build/images/plus.svg') }}"> En savoir plus</a>
+                    <p class="mx-auto mt-1">
+                        <a href="{{ path('artwork_show', {id:artwork.id})}}"><img class="know-more px-1" src="{{ asset('build/images/plus.svg') }}"> En savoir plus</a>
                     </p>
                     
                 </div>
@@ -21,4 +28,13 @@
             {% endfor %}
         </div>
     </div>
+    {% else %}
+    <div class="d-flex mt-4 justify-content-center">
+        <p>Aucune oeuvre ne correspond à votre recherche.</p>
+    </div>
+    {% endif %}  
+    <div class= 'd-flex justify-content-center'>
+    {{ knp_pagination_render(artworks) }}
+    </div>
+
 {% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="icon"  href="{{ asset('build/images/favicon.ico') }}"/>
+		<title>
+			{% block title %} Dashboard - AFAC 974
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body class="d-flex flex-column bg-special">
+
+		{% include 'include/_navbar_dashboard.html.twig' %}
+		{% include 'include/_addFlash.html.twig'%}
+		{% block body %}{% endblock %}
+	</body>
+</html>

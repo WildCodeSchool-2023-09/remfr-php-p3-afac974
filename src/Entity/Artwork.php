@@ -48,16 +48,18 @@ class Artwork
     private ?bool $isSigned = null;
 
     #[ORM\ManyToOne(inversedBy: 'artworks')]
-    private ?Artist $artist = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Type $type = null;
+    #[ORM\JoinColumn(
+        name:"user_id",
+        referencedColumnName: "id",
+        onDelete: "SET NULL"
+    )]
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'artwork', targetEntity: Comment::class)]
     private Collection $comments;
 
     #[ORM\Column(length: 255)]
-    private ?string $picture = 'default_poster_value.svg';
+    private ?string $picture = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DatetimeInterface $updatedAt = null;
@@ -71,8 +73,11 @@ class Artwork
 
     #[ORM\Column]
     private ?int $year = null;
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'artworks')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favorites')]
     private Collection $favoritedBy;
+
+    #[ORM\ManyToOne(inversedBy: 'artworks')]
+    private ?Type $type = null;
 
     public function __construct()
     {
@@ -157,30 +162,24 @@ class Artwork
         return $this;
     }
 
-    public function getArtist(): ?Artist
+    public function getUser(): ?User
     {
-        return $this->artist;
+        return $this->user;
     }
 
-    public function setArtist(?Artist $artist): static
+    public function setUser(?User $user): static
     {
-        $this->artist = $artist;
+        $this->user = $user;
 
         return $this;
     }
-
-    public function getType(): ?Type
+    public function removeUser(): void
     {
-        return $this->type;
+        if ($this->user !== null) {
+            $this->user->removeArtwork($this);
+            $this->user = null;
+        }
     }
-
-    public function setType(?Type $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Comment>
      */
@@ -270,6 +269,28 @@ class Artwork
     public function removeFavoritedBy(User $favoritedBy): static
     {
         $this->favoritedBy->removeElement($favoritedBy);
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function removeType(Type $type): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->type === $type) {
+            $this->type = null;
+        }
 
         return $this;
     }

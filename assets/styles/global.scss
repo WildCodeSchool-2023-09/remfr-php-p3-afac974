@@ -1,5 +1,6 @@
 $color-form: #c9dbe2 ;
 $primary:#4E4A78;
+$secondary:#fff;
 $bs-btn-color: #fff;
 $font-family-titres: 'Bebas Neue', sans-serif;
 $font-family-textes: 'Pill Gothic 600mg', sans-serif;
@@ -47,7 +48,13 @@ h1, h2, h3, h4, h5, h6 {
 a {
     text-decoration: none !important;
 }
-
+.a-caroussel{
+    color: $secondary !important;
+}
 textarea.form-control {
     resize: none !important;
+}
+
+.btn-font-plus{
+    font-size: 2rem !important;
 }

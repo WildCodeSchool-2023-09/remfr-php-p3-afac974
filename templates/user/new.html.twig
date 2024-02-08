@@ -4,36 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Créer votre compte</h1>
-
+	<h1 class="pt-3 d-flex justify-content-center" >Créer votre compte</h1>
+	<div class="container">
 	<div id="fb-root"></div>
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0&appId=897364282059711" nonce="Qet7h1QQ"></script>
 
-	<div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="" data-auto-logout-link="false" data-use-continue-as="true"></div>
-
-	{#}<script>
-							var finished_rendering = function () {
-					console.log("finished rendering plugins");
-					var spinner = document.getElementById("spinner");
-					spinner.removeAttribute("style");
-					spinner.removeChild(spinner.childNodes[0]);
-					}
-					FB.Event.subscribe('xfbml.render', finished_rendering);
-						</script>
-						<div id="spinner" style="
-								        background: #4267b2;
-								        border-radius: 5px;
-								        color: white;
-								        height: 40px;
-								        text-align: center;
-								        width: 250px;">
-							Loading
-							<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-use-continue-as="true"></div>
-						</div>
-					{#}
-
+	<div class="fb-login-button p-3" data-width="" data-size="large" data-button-type="continue_with" data-layout="" data-auto-logout-link="false" data-use-continue-as="true"></div>
+	<div class="border-general mb-5">
+	<p class="text-center">Nous vous conseillons d'ajouter une photo de profil et une description 
+	si vous comptez faire une demande de rôle artiste sur notre page de contact</p>
 	{{ include('user/_form.html.twig') }}
 	<form>
-		<a class="btn btn-lg btn-primary" href="{{ path('app_user_index') }}">Retour à la page de connexion</a>
+		<a class="btn btn-lg btn-primary" href="{{ path('app_login') }}">Retour à la page de connexion</a>
 	</form>
+	</div>
+	</div>
 {% endblock %}

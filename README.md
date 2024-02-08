@@ -1,4 +1,4 @@
-# Project 3 - Starter Kit - Symfony
+# Project 3 - AFAC 974 - Symfony
 
 ## Change Log
 See [CHANGELOG.md](CHANGELOG.md) for more information.

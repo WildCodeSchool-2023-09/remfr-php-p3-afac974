@@ -2,15 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Comment;
-use App\Entity\Artwork;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Artwork;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CommentType extends AbstractType
 {
@@ -23,8 +24,11 @@ class CommentType extends AbstractType
                     'min' => 1,
                     'max' => 10,
                 ],
+                'help' => 'Notez cette oeuvre de 1 à 10',
             ])
-            ->add('content')
+            ->add('content', TextareaType::class, [
+                'help' => 'Laissez un commentaire sur cette oeuvre',
+            ])
         ;
     }
 

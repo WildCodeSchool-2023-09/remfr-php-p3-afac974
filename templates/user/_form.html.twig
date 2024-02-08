@@ -1,6 +1,23 @@
-{{ form_start(form) }}
-
-<button class="btn btn-lg btn-primary">
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+ 		<div class="mb-3">
+            {{ form_row(form.email) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.name) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.lastname) }}
+        </div>
+		<div class="mb-3">
+            {{ form_row(form.pseudonym) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.posterFile) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.description) }}
+        </div>
+	<button type="submit" class="btn btn-lg btn-primary mb-2">
 	{{ button_label|default('Créer mon compte') }}
-</button>
+	</button>
 {{ form_end(form) }}

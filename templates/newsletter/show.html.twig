@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{news.title}}{% endblock %}
+
+{% block body %}
+
+{# Partie concernant l'exposition #}
+<h1 class="text-center mt-5">{{news.title}}</h1>
+
+<div class="container border-general mt-5 mb-5 px-4">
+
+    {% if expo is not null %}
+
+    <div class="row justify-content-center gap-4">
+        {% if expo.picture is not null %}
+        <img class="col-6" src="/uploads/expo/{{ expo.picture }}" alt="{{ expo.title }}">
+        {% endif %}
+        
+        <div class="card-body col-5">
+
+            <h2 class="card-title mb-1">News - nouvelle exposition</h2>
+
+            <div class="row">
+                {% if expo.location is not null %}
+                <div class="col">
+                    <h3 class="mt-5">Location</h3>
+                    <p class="pe-3">{{expo.location}}</p>
+                </div>
+                {% endif %}
+                {% if expo.dateEvent is not null %}
+                <div class="col">
+                    <h3 class="mt-5">Date de cette exposition</h3>
+
+                    <p class="pe-3">{{ expo.dateEvent|date('Y-m-d') }}</p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                {% if expo.description is not null %}
+                <div class="col">
+                    <h3 class="mt-5">Description</h3>
+                     
+                    <p class="pe-3">{{expo.description}}</p> 
+                </div>
+                {% endif %}   
+                {% if expo.user is not null %}
+                <div class="col">
+                    <h3 class="mt-5">Artiste</h3>
+                    <p class="pe-3">{{expo.user.name}} {{expo.user.lastname}}</p> 
+                    <a href="{{ path('home_OneArtist', {'name' : expo.user.name})}}"><img class="favorite" src="{{ asset('build/images/brush.svg') }}">Plus d'infos sur l'artiste</a>   
+                </div>
+                {% endif %}   
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="card-body col-5">
+        <h2 class="card-title mb-1">News - {{news.title}}</h2>
+        <div class="row">
+            <div class="col">
+                <h3 class="mt-5">Description</h3>
+
+                <p class="pe-3">{{news.description}}</p>    
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
