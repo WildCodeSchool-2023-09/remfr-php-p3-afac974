@@ -34,13 +34,13 @@ class DashboardNewsController extends AbstractController
             5 /*limit per page*/
         );
 
-        /*$expos = [];
+        $expos = [];
         foreach ($pagination as $news) {
             $expoId = $news->getExpoId();
             if ($expoId !== null) {
                 $expos[$expoId] = $expoRepository->findOneBy(['id' => $expoId]);
             }
-        }*/
+        }
 
         return $this->render('admin/news/index.html.twig', [
             'news' => $pagination,

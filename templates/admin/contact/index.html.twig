@@ -31,7 +31,7 @@
                     <td>{{ contact.demand }}</td>
                     <td>{{ contact.content }}</td>
                     <td>
-                        <form method="post" action="{{ path('admin_delete_contact', {'id': contact.id}) }}" onsubmit="return confirm('Are you sure you want to delete this contact?');">
+                        <form method="post" action="{{ path('admin_contact_delete', {'id': contact.id}) }}" onsubmit="return confirm('Are you sure you want to delete this contact?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
                             <button type="submit" class="btn btn-danger"> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">

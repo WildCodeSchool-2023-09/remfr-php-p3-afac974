@@ -60,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Vich\UploadableField(mapping: 'user_poster', fileNameProperty: 'poster')]
     #[Assert\File(
-        maxSize: '1M',
+        maxSize: '2M',
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/svg'],
         mimeTypesMessage: 'Please upload a valid image file'
     )]
