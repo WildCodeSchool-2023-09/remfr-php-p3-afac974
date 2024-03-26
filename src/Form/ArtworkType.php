@@ -50,6 +50,7 @@ class ArtworkType extends AbstractType
             ])
             ->add('picture', TextType::class, [
                 'label' => 'Nom de l\'oeuvre',
+
             ])
             ->add('pictureFile', VichFileType::class, [
                 'required'      => true,
