@@ -63,7 +63,7 @@ class ArtworkController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'This artwork has been edited successfully');
+            $this->addFlash('success', 'Cette oeuvre a été modifiée avec succès');
 
             return $this->redirectToRoute('artwork_showMyArtworks');
         }
@@ -99,7 +99,7 @@ class ArtworkController extends AbstractController
             $entityManager->remove($artwork);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This artwork has been deleted successfully');
+            $this->addFlash('danger', 'Cette oeuvre a bien été supprimée');
         }
 
         return $this->redirectToRoute('artwork_showMyArtworks', [], Response::HTTP_SEE_OTHER);

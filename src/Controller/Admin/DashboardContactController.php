@@ -73,7 +73,7 @@ class DashboardContactController extends AbstractController
             $entityManager->remove($contact);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This contact has been deleted successfully');
+            $this->addFlash('danger', 'Cette demande de contact a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_contact_index', [], Response::HTTP_SEE_OTHER);

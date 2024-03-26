@@ -39,8 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     protected array $roles = [];
 
-    // test en implémentant la partie artiste
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -60,7 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Vich\UploadableField(mapping: 'user_poster', fileNameProperty: 'poster')]
     #[Assert\File(
-        maxSize: '1M',
+        maxSize: '2M',
         mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/svg'],
         mimeTypesMessage: 'Please upload a valid image file'
     )]

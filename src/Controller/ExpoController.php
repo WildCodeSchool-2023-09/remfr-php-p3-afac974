@@ -99,7 +99,7 @@ class ExpoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'This expo has been edited successfully');
+            $this->addFlash('success', 'Cette exposition a été modifiée avec succès');
 
             return $this->redirectToRoute('expo_showMyExpos');
         }
@@ -136,7 +136,7 @@ class ExpoController extends AbstractController
             $entityManager->remove($expo);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This expo has been deleted successfully');
+            $this->addFlash('danger', 'Cette exposition a bien été supprimée');
         }
 
         return $this->redirectToRoute('expo_index', [], Response::HTTP_SEE_OTHER);

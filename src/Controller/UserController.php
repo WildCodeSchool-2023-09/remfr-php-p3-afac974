@@ -79,7 +79,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'The user has been edited successfully');
+            $this->addFlash('success', 'Votre compte à bien été modifié.');
 
             return $this->redirectToRoute('home_index');
         }

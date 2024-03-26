@@ -34,13 +34,13 @@ class DashboardNewsController extends AbstractController
             5 /*limit per page*/
         );
 
-        /*$expos = [];
+        $expos = [];
         foreach ($pagination as $news) {
             $expoId = $news->getExpoId();
             if ($expoId !== null) {
                 $expos[$expoId] = $expoRepository->findOneBy(['id' => $expoId]);
             }
-        }*/
+        }
 
         return $this->render('admin/news/index.html.twig', [
             'news' => $pagination,
@@ -75,7 +75,7 @@ class DashboardNewsController extends AbstractController
             $entityManager->remove($news);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This news has been deleted successfully');
+            $this->addFlash('danger', 'Cette newsletter a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_news_index', [], Response::HTTP_SEE_OTHER);

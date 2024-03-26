@@ -117,7 +117,7 @@ class DashboardArtworkController extends AbstractController
             $entityManager->remove($artwork);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This artwork has been deleted successfully');
+            $this->addFlash('danger', 'Cette oeuvre a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_artwork_index', [], Response::HTTP_SEE_OTHER);

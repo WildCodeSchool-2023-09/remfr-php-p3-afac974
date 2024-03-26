@@ -47,7 +47,7 @@
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                             </svg>
                         </a>
-                        <form method="post" action="{{ path('admin_artwork_delete', {'id': artwork.id}) }}" onsubmit="return confirm('Are you sure you want to delete this artwork?');">
+                        <form method="post" action="{{ path('admin_artwork_delete', {'id': artwork.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette oeuvre?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artwork.id) }}">
                             <button type="submit" class="btn btn-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
