@@ -75,7 +75,7 @@ class DashboardNewsController extends AbstractController
             $entityManager->remove($news);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This news has been deleted successfully');
+            $this->addFlash('danger', 'Cette newsletter a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_news_index', [], Response::HTTP_SEE_OTHER);

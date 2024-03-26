@@ -39,8 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     protected array $roles = [];
 
-    // test en implémentant la partie artiste
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 

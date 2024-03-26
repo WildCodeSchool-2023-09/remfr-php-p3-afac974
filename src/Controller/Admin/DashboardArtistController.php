@@ -75,7 +75,7 @@ class DashboardArtistController extends AbstractController
             $entityManager->remove($artist);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This artist has been deleted successfully');
+            $this->addFlash('danger', 'Cet artiste a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_artist_index', [], Response::HTTP_SEE_OTHER);

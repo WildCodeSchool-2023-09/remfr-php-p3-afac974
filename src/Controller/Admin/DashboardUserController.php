@@ -75,7 +75,7 @@ class DashboardUserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'The user has been edited successfully');
+            $this->addFlash('success', 'Cet utilisateur a bien été édité');
 
             return $this->redirectToRoute('admin_user_index');
         }
@@ -94,7 +94,7 @@ class DashboardUserController extends AbstractController
             $entityManager->remove($user);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This user has been deleted successfully');
+            $this->addFlash('danger', 'Cet utilisateur a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);

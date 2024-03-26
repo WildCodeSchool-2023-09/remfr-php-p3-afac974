@@ -44,7 +44,7 @@ class DashboardExpoController extends AbstractController
             $entityManager->remove($expo);
             $entityManager->flush();
 
-            $this->addFlash('danger', 'This expo has been deleted successfully');
+            $this->addFlash('danger', 'Cette exposition a bien été supprimé');
         }
 
         return $this->redirectToRoute('admin_expo_index', [], Response::HTTP_SEE_OTHER);
